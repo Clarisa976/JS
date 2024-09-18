@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio2</title>
+</head>
+<body>
+    <h1>Cambio de imágenes</h1>
+    <img id="myFPImage" onclick="cambiaPic()" src="img/1.png"
+        width="100" height="180">
+    <p>Haz click sobre la imagen para cambiarla.</p>
+    <script>
+        function cambiaPic() {
+            var image = document.getElementById('myFPImage');
+            if (image.src.match("img/1.png")) {
+                image.src = "img/2.png";
+            } else if (image.src.match("img/2.png")) {
+                image.src = "img/3.png";
+            } else if (image.src.match("img/3.png")) {
+                image.src = "img/4.png";
+            }
+            else {
+                image.src = "img/1.png";
+            }
+        }
+    </script>
+</body>
+</html>
