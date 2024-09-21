@@ -27,7 +27,28 @@
         COMPLETA EL CÓDIGO EN ESTA SECCIÓN DEL PROGRAMA.
         */
 
-        for (i; i < arr1.length; i) {
+        //mientras que el arr3 sea menor que la suma del arr1 y arr2 se ejecutará el bucle
+        while (arr3.length < (arr1.length + arr2.length)){
+            //comprobamos que no quedan elementos en los arrays
+            //introduciendo de esta forma los elementos de cada array en el arr3
+        if (i == (arr1.length)){
+            arr3.push(arr2[j]);
+            j++;//incrementamos j para avanzar a la siguiente posición
+        } else if (j == (arr2.length)){
+            arr3.push(arr1[i]);
+            i++;//incrementamos i para avanzar a la siguiente posición
+
+            //ahora comprobamos que i sea menor o igual a j para saber cual añadir a arr3
+        } else if (arr1[i] <= arr2[j]){
+            arr3.push(arr1[i]);
+            i++;
+        } else if (arr1[i] >= arr2[j]){
+            arr3.push(arr2[j]);
+            j++;
+        }
+       }
+
+       /* for (i; i < arr1.length; i) {
             for (j; j < arr2.length; j) {
 
                 if (arr1[i] < arr2[j]) {
@@ -38,7 +59,7 @@
                     j++;
                 }
             }
-        }
+        }*/
 
         console.log(arr3);
 
