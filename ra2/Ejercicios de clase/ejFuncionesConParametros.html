@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funciones con parámetros</title>
+</head>
+
+<body>
+    <h1>Ejercicio de funciones con parámetros</h1>
+    <p>Realiza una función que tome uno, dos o tres parámetros.
+        Si le introduzco solo un parámetro hará el cubo,
+        si le introduzco dos, hará la multiplicación de ambos
+        parámetros y si le introduzco tres la suma de ambos.
+        Pon ejemplos de su uso.
+        calcula(5); calcula(5,5); calcula(5,5,5);
+    </p>
+
+
+
+    <script>
+        function calcula(params1, params2, params3) {
+            /*arguments es un objeto similar a Array accesible 
+            dentro de funciones que contiene los valores de los 
+            argumentos pasados a esa función.*/
+            if (arguments.length === 1) {
+                //Si le introduzco solo un parámetro hará el cubo
+                return Math.pow(params1,3);
+            } else if (arguments.length === 2) {
+                //si le introduzco dos, hará la multiplicación de ambos parámetros
+                return params1 * params2;
+            } else if (arguments.length === 3) {
+                //si le introduzco tres la suma de ambos
+                return params1 + params2 + params3;
+            }
+        }
+        console.log(calcula(5));
+        console.log(calcula(5, 5));
+        console.log(calcula(5, 5, 5));
+    </script>
+
+</body>
+
+
+</html>

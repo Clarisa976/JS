@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARRAY VAMPIRO</title>
+</head>
+
+<body>
+    <h1>ARRAY VAMPIRO</h1>
+    <script>
+        let arr = [1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1];
+        /*INCLUYE TU CÓDIGO AQUÍ*/
+        function vampus(indice,array) {
+            for (let i = indice; i < array.length/2; i++) {
+
+                if (array[i] !== array[array.length - 1 - i]) {
+                    return console.log("no es un vampiro");
+                }
+            }
+            return console.log("es un vampiro");
+
+        }
+        console.log(vampus(0,arr));
+    </script>
+</body>
+
+</html>
