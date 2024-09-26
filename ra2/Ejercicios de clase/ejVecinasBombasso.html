@@ -33,7 +33,36 @@
         }
 
         /*COLOCA AQUÍ TU CÓDIGO*/
-        
+        function comprobarVecinas(x, y) {
+            for (let i = x - 1; i <= x + 1; i++) {//comprobamos la anterior y la siguiente
+                for (let j = y - 1; j <= y + 1; j++) {//comprobamos arriba y abajo
+                    if (i >= 0 && i < arr.length //comprobamos los límites
+                        && j >= 0 && j < arr[0].length
+                        && arr[i][j] === "*") {//comprobamos que no haya una bomba ya puesta
+                        return false; //si hay no se puede
+                    }
+                }
+            }
+            return true;//sino se puede colocar
+        }
+
+        function ponerBomba(numeroBombas) {
+            let contadorBombas = 0;
+            while (contadorBombas < numeroBombas) {
+                let x = generateRandomInt(0, arr.length);
+                let y = generateRandomInt(0, arr[0].length);
+
+                //comprueba que no hay una bomba y si se puede poner una bomba
+                if (arr[x][y] === " " && comprobarVecinas(x, y)) {
+                    arr[x][y] = "*"; //pone una bomba
+                    contadorBombas++; //aumenta el contador
+                }
+            }
+        }
+        ponerBomba(15);
+        console.log(arr);
+
+
     </script>
 </body>
 
