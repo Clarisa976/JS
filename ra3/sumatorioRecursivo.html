@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumatorio recursivo</title>
+</head>
+
+<body>
+    <script>
+
+        let factorial = (num) => {
+            if (num == 0) {
+                return 1;
+            } else {
+                return (num * factorial(num - 1));
+            }
+        }
+        console.log(factorial(5));
+        let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        /*Escriba una función recursiva que calcule 
+        y devuelva la suma de todos los elementos de una
+        matriz, donde la matriz y su tamaño se dan como parámetros.
+        Ejemplo de llamada:
+        sumatorio (array, tamaño)*/
+
+        let sumatorio = (array, tamanio) => {
+
+            if (tamanio == 0) {
+                return 0;
+            } else {
+                return array[tamanio-1] + sumatorio(array, tamanio - 1);
+            }
+        }
+        console.log(sumatorio(array, array.length));
+    </script>
+</body>
+
+</html>
