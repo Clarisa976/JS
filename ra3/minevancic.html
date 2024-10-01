@@ -19,26 +19,56 @@
 
         for (let i = 0; i < minas.length; i++) {
             for (let j = 0; j < minas[i].length; j++) {
-               if (minas[i][j]==1) {
-                for (let p = i-1; p < i+1; p++) {
-                    for (let o = j-1; o < j+1; o++) {
-                       if (p>=0&& p< minas.length 
-                       && o>=0 && o<minas[0].length) {
-
-                        if (minas[o][p] ==0) {
-                             minas[o][p] = 2;
+               if (minas[i][j] == 1) {
+                // Revisar las casillas alrededor de la mina
+                for (let p = i-1; p <= i+1; p++) {
+                    for (let o = j-1; o <= j+1; o++) {
+                       if (p >= 0 && p < minas.length && o >= 0 && o < minas[0].length) {
+                        // Solo aumentar si no es mina (1)
+                        if (minas[p][o] == 0) {
+                             minas[p][o] = 2;
                         }
-                        
                        }
                     }
-                    
                 }
                }
-                
             }
-            
-            
         }
+        for (let i = 0; i < minas.length; i++) {
+            for (let j = 0; j < minas[i].length; j++) {
+               if (minas[i][j] == 2) {
+                // Revisar las casillas alrededor de la mina
+                for (let p = i-1; p <= i+1; p++) {
+                    for (let o = j-1; o <= j+1; o++) {
+                       if (p >= 0 && p < minas.length && o >= 0 && o < minas[0].length) {
+                        // Solo aumentar si no es mina (1)
+                        if (minas[p][o] == 0) {
+                             minas[p][o] = 3;
+                        }
+                       }
+                    }
+                }
+               }
+            }
+        }
+        for (let i = 0; i < minas.length; i++) {
+            for (let j = 0; j < minas[i].length; j++) {
+               if (minas[i][j] == 3) {
+                // Revisar las casillas alrededor de la mina
+                for (let p = i-1; p <= i+1; p++) {
+                    for (let o = j-1; o <= j+1; o++) {
+                       if (p >= 0 && p < minas.length && o >= 0 && o < minas[0].length) {
+                        // Solo aumentar si no es mina (1)
+                        if (minas[p][o] == 0) {
+                             minas[p][o] = 4;
+                        }
+                       }
+                    }
+                }
+               }
+            }
+        }
+        
         console.log(minas);
         /*
         let minas = [
@@ -49,20 +79,6 @@
             [3,3,3,3,2,1,2],
             [4,4,4,3,2,2,2]
         ];
-
-        function comprobarVecinas(x, y) {
-            for (let i = x - 1; i <= x + 1; i++) {//comprobamos la anterior y la siguiente
-                for (let j = y - 1; j <= y + 1; j++) {//comprobamos arriba y abajo
-                    if (i >= 0 && i < arr.length //comprobamos los límites
-                        && j >= 0 && j < arr[0].length
-                        && arr[i][j] === "*") {//comprobamos que no haya una bomba ya puesta
-                        return false; //si hay no se puede
-                    }
-                }
-            }
-            return true;//sino se puede colocar
-        }
-
         */
     </script>
 </body>
