@@ -17,14 +17,24 @@
             [0,0,0,0,0,0,0]
         ];
 
+
+        //agregar una variable para el número
+
+        //función para comprobar si quedan ceros
+        function quedanCeros() {
+            
+            
+        }
+        //función para poner minas
+        
         for (let i = 0; i < minas.length; i++) {
             for (let j = 0; j < minas[i].length; j++) {
                if (minas[i][j] == 1) {
-                // Revisar las casillas alrededor de la mina
+                //comprobar vecinas
                 for (let p = i-1; p <= i+1; p++) {
                     for (let o = j-1; o <= j+1; o++) {
                        if (p >= 0 && p < minas.length && o >= 0 && o < minas[0].length) {
-                        // Solo aumentar si no es mina (1)
+                        //aumentar
                         if (minas[p][o] == 0) {
                              minas[p][o] = 2;
                         }
@@ -37,11 +47,11 @@
         for (let i = 0; i < minas.length; i++) {
             for (let j = 0; j < minas[i].length; j++) {
                if (minas[i][j] == 2) {
-                // Revisar las casillas alrededor de la mina
+                //comprobar vecinas
                 for (let p = i-1; p <= i+1; p++) {
                     for (let o = j-1; o <= j+1; o++) {
                        if (p >= 0 && p < minas.length && o >= 0 && o < minas[0].length) {
-                        // Solo aumentar si no es mina (1)
+                        //aumentar
                         if (minas[p][o] == 0) {
                              minas[p][o] = 3;
                         }
@@ -54,11 +64,11 @@
         for (let i = 0; i < minas.length; i++) {
             for (let j = 0; j < minas[i].length; j++) {
                if (minas[i][j] == 3) {
-                // Revisar las casillas alrededor de la mina
+                //comprobar vecinas
                 for (let p = i-1; p <= i+1; p++) {
                     for (let o = j-1; o <= j+1; o++) {
                        if (p >= 0 && p < minas.length && o >= 0 && o < minas[0].length) {
-                        // Solo aumentar si no es mina (1)
+                        //aumento
                         if (minas[p][o] == 0) {
                              minas[p][o] = 4;
                         }
