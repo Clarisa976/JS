@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálcula la letra del DNI</title>
+</head>
+
+<body>
+
+    <label for="DNI">Introduzca su DNI: </label>
+    <input type="text" name="DNI" id="DNI" onblur="comprobarLetra()" value="">
+
+    </p>
+    <p id="respuesta"></p>
+
+    <p>
+        <script>
+            var letras = ['T', 'R', 'W', 'A', 'G', 'M',
+                'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J',
+                'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
+
+
+
+            function comprobarLetra() {
+                let dniIntroducido = document.getElementById("DNI").value;
+                var mensajeMostrar = document.getElementById("respuesta");
+
+                //comprobar que son 9
+
+                //comprobar que son 8 números
+
+                //comprobar que es una letra
+                
+                mensajeMostrar.innerHTML = dniIntroducido;
+                console.log(dniIntroducido);
+            }
+        </script>
+</body>
+
+</html>

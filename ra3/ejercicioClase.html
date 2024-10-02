@@ -23,24 +23,31 @@
 
     <script>
         let minas = [
-            [0,0,0,0,0,0,0],
-            [0,1,0,0,0,0,0],
-            [0,1,0,0,0,0,0],
-            [0,0,0,0,0,1,0],
-            [0,0,0,0,0,1,0],
-            [0,0,0,0,0,0,0]
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0]
         ];
 
         //cambiamos los 0 por 99 para que  la mínima no sea 0
+        for (let i = 0; i < minas.length; i++) {
+            for (let j = 0; j < minas[i].length; j++) {
+                if (minas[i][j] === 0) {
+                    minas[i][j] = 99;
+                }
+            }
+        }
         let flag = 1;
-        while (flag==1) {
+        while (flag == 1) {
             flag = 0;
             //recorrer la matriz
             //si la casilla no es un 1 tenemos que coger la mínima casilla
             //adyacente y sumarle 1 para finalmente actualizar la casilla
             //si el número es menor que el de la propia casilla
 
-
+            
 
 
 
@@ -58,9 +65,9 @@
             }
             //console.log(arr1);//así vemos todo el cambio
         }*/
-    }
+        }
 
-    console.log(minas);
+        console.log(minas);
 
     </script>
 </body>
