@@ -17,25 +17,42 @@
 
     <p>
         <script>
-            var letras = ['T', 'R', 'W', 'A', 'G', 'M',
+           const LETRAS = ['T', 'R', 'W', 'A', 'G', 'M',
                 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J',
                 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
 
-
-
-            function comprobarLetra() {
-                let dniIntroducido = document.getElementById("DNI").value;
-                var mensajeMostrar = document.getElementById("respuesta");
-
-                //comprobar que son 9
-
-                //comprobar que son 8 números
-
-                //comprobar que es una letra
-                
-                mensajeMostrar.innerHTML = dniIntroducido;
-                console.log(dniIntroducido);
+            //comprobar que son 8 números
+            function numeroValido(numero) {
+                if (numero < 0 || numero > 99999999) {
+                    return false;
+                }
+                return true;
             }
+            //calcular la letra del número introducido
+            function calcularLetraValida(numero) {
+                var letraCorrespondiente = numero % 23;
+                return LETRAS[letraCorrespondiente];
+            }
+            //comprobar que es un dni válido
+            function comprobarLetra() {           
+            var dni = document.getElementById("DNI").value;
+            var numeroDNI = dni.slice(0, -1);//quitamos el último elemento
+            var letraDNI = dni.slice(-1).toUpperCase();//guardamos la letra en mayúsculas
+            var respuesta = document.getElementById("respuesta");
+
+            //console.log(dni);
+            if (!numeroValido(numeroDNI)) {
+                respuesta.innerHTML = "El número no es valido.";
+            } else {
+                var letraComprobar = calcularLetraValida(numeroDNI);
+                if (letraComprobar == letraDNI) {
+                    respuesta.innerHTML = "El número y la letra del DNI son correctos.";
+                } else {
+                    respuesta.innerHTML = "La letra del DNI no es correcta.";
+                }
+            }
+        }
+            
         </script>
 </body>
 
