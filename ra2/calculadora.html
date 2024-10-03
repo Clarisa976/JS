@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        table{
+            border:1px solid gray;
+            border-collapse: collapse;
+            width: 20rem;
+            height: auto;
+        }
+        tr, td{
+            display: flex;
+            width: 100%;
+            height: auto;
+            border: 1px solid gray;
+        }
+        #pantalla_calculadora{
+            border: 1px solid grey;
+            height: auto;
+        }
+        #mostrar_pantalla{
+            background-color: azure;
+            text-align: end;
+            align-content: center;
+            height: 3rem;
+            width: 100%;
+        }
+        button{
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        
+        
+    </style>
+</head>
+
+<body>
+    <h1>Calculadora</h1>
+    <table>
+        <tr id="pantalla_calculadora">
+            <td><div id="mostrar_pantalla"></div></td>
+        </tr>
+        <tr>
+            <td><button id="uno">1</button></td>
+            <td><button id="dos">2</button></td>
+            <td><button id="tres">3</button></td>
+            <td><button id="suma">+</button></td>
+        </tr>
+        <tr>
+            <td><button id="cuatro">4</button></td>
+            <td><button id="cinco">5</button></td>
+            <td><button id="seis">6</button></td>
+            <td><button id="resta">-</button></td>
+        </tr>
+        <tr>
+            <td><button id="siete">7</button></td>
+            <td><button id="ocho">8</button></td>
+            <td><button id="nueve">9</button></td>
+            <td><button id="multiplicacion">x</button></td>
+        </tr>
+        <tr>
+            <td><button id="borrar">C</button></td>
+            <td><button id="cero">0</button></td>
+            <td><button id="igual">=</button></td>
+            <td><button id="division">/</button></td>
+        </tr>
+    </table>
+
+    <script>
+
+        let btn_uno = document.getElementById("uno");
+    </script>
+</body>
+
+</html>
