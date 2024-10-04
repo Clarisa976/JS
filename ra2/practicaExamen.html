@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2>JavaScript Arrays</h2>
+    <p>
+        Se pide que crees un programa que muestre los elementos no repetidos de
+        un array.
+        Si el número está repetido dos o más veces no deberá ser mostrado.
+        No puedes modificar el array inicial ni puedes crear ningún otro array,
+        pila o estructura similar.
+        Solamente puedes utilizar el método length de arrays y ningún otro más
+        Muestra el resultado en el campo demo.
+    </p>
+    <p id="demo"></p>
+    <script>
+        var arr1 = [1, 4, 6, 8, 9, 45, 8, 6, 4, 15, 98, 45, 15];
+        /* INCLUYE AQUÍ TU PROGRAMA*/
+        
+            var contador = 0;
+            var numero=0;
+            
+            for (let i = 0; i < arr1.length; i++) {
+                while (contador<=2) {        
+                    if (arr1[i]==numero) {
+                        contador++;
+                        console.log(arr1[i]+"-"+contador);
+                    }else{
+                        console.log("patata");
+                    }
+                   
+                
+            }
+            }
+
+    </script>
+
+</body>
+
+</html>
