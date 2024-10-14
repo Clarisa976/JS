@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angry-bats</title>
 </head>
+
 <body>
     <script>
         /*
@@ -18,48 +20,49 @@
             ['P', 'P', 'G', 'H', 'H', 'R'],
             ['P', 'P', 'G', 'H', 'H', 'G'],
             ['P', 'G', 'M', 'H', 'H', 'G'],
-            ['G', 'R', 'M', 'H', 'G', 'G'],
-            ['R', 'R', 'H', 'H', 'G', 'P']
+            ['H', 'R', 'M', 'H', 'G', 'G'],
+            ['H', 'R', 'H', 'H', 'G', 'P']
         ];
 
         //console.log(biocenosis);
         var copia = hacerCopia(biocenosis);
         console.log("Antes de la pandemia");
         console.log(copia);
-        //pandemic(biocenosis,0, 0);
-        //pandemic(biocenosis,4, 2);
-        pandemic(biocenosis,2, 2);
-        
+        //angrybats(biocenosis,0, 0);
+        //angrybats(biocenosis,4, 2);
+        angrybats(biocenosis, 2, 2);
+
         console.log("Después de la pandemia");
         console.log(biocenosis);
 
-        function pandemic(matriz,x, y) {
+        function angrybats(matriz, x, y) {
             // INCLUYE TU CÓDIGO AQUÍ
             //indicamos quien es el infectado
-            if (matriz[x][y]!=="M") {
+            if (matriz[x][y] !== "M") {
                 console.log("no se puede infectar D:")
-            }else{
+            } else {
 
-            
-            const PACIENTE_CERO = matriz[x][y];
+                //funcion para que mueran de forma recursiva
+                function muertesPorContagio(x, y) {
+                    if (x >= 0 && x < matriz.length && y >= 0 && y < matriz[0].length) {
+                        if (matriz[x][y] === 'H') {
+                            matriz[x][y] = '';
 
-            //funcion para que mueran de forma recursiva
-            function muertesPorContagio(x, y) {
-                if (x >= 0 && x < matriz.length 
-                && y >= 0 && y < matriz[0].length 
-                && matriz[x][y] === PACIENTE_CERO) {
-                    matriz[x][y] = "*";
-                
-                //mueren por contagio recursivo
+                            //comprobamos que sean humanos
+                            muertesPorContagio(x - 1, y);//arriba;
+                            muertesPorContagio(x + 1, y);//abajo;
+                            muertesPorContagio(x, y - 1);//izquierda;
+                            muertesPorContagio(x, y + 1);//derecha;
+                        }
+                    }
+                }
+                //se mueren
                 muertesPorContagio(x-1,y);//arriba;
                 muertesPorContagio(x+1,y);//abajo;
                 muertesPorContagio(x,y-1);//izquierda;
                 muertesPorContagio(x,y+1);//derecha;
-               } 
             }
-            muertesPorContagio(x,y);
         }
-}
         //función para hacer una copia de la matriz
         function hacerCopia(matriz) {
             return JSON.parse(JSON.stringify(matriz));
@@ -72,4 +75,5 @@
 
     </script>
 </body>
+
 </html>
