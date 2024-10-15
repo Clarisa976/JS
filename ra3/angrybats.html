@@ -44,9 +44,9 @@
 
                 //funcion para que mueran de forma recursiva
                 function muertesPorContagio(x, y) {
-                    if (x >= 0 && x < matriz.length && y >= 0 && y < matriz[0].length) {
+                    if (x >= 0 && x < matriz.length && y >= 0 && y < matriz[x].length) {
                         if (matriz[x][y] === "H") {
-                            matriz[x][y] = "";
+                            matriz[x][y] = " ";
 
                             //comprobamos que sean humanos
                             muertesPorContagio(x - 1, y);//arriba;
