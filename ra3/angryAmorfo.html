@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angry Bats Recursivo</title>
+<style>
+table {
+border-collapse: collapse;
+margin-bottom: 1rem;
+}
+
+td,
+tr {
+border: black 1px solid;
+padding: 1rem;
+}
+</style>
+</head>
+
+<body>
+<h1>Angry Bats</h1>
+<p id="txt"></p>
+<button type="button" onclick="mostrarArray(matriz)">Mostrar</button>
+<button type="button" onclick="mostrarArray(matriz2)">Mostrar Resuelto</button>
+<script>
+var matriz = [
+["P", "P", "G", "H", "H", "R"],
+["P", "P", "G", "H", "H", "G"],
+["P", "G", "M", "H", "H", "G"],
+["G", "R", "M", "H", "G", "G"],
+["R", "R", "H", "H", "G", "P"]
+];
+
+var matriz2 = JSON.parse(JSON.stringify(matriz));
+
+let angrybats = (fila, columna) => {
+console.log(fila+" "+columna)
+
+
+if (fila < 0 || fila >= matriz2.length || columna < 0 || columna >= matriz2[fila].length) {
+return;
+}
+
+let valorActual = matriz2[fila][columna];
+console.log(valorActual)
+if (valorActual !== "H" && valorActual !== "M") {
+return;
+}
+//Si en la posición del array es un humano (h) directamente se elimina
+if (valorActual === "H") {
+matriz2[fila][columna] = " ";
+}
+if (valorActual === "M") {
+matriz2[fila][columna] = "m";
+}
+console.log("aqui")
+
+//Llamamos a la recursión para estas posiciones
+//console.log(matriz2[fila - 1][columna])
+if (fila - 1 >= 0 && (matriz2[fila - 1][columna]=="H" || matriz2[fila - 1][columna]=="M")) {
+    angrybats(fila - 1, columna); // Arriba
+}
+
+if (fila + 1 < matriz2.length && (matriz2[fila + 1][columna]=="H" || matriz2[fila + 1][columna]=="M")) {
+    angrybats(fila + 1, columna); // Abajo
+}
+
+if (columna - 1 >= 0 && (matriz2[fila][columna - 1]=="H" || matriz2[fila][columna - 1]=="M")) {
+    angrybats(fila, columna - 1); // Izquierda
+}
+
+if (columna + 1 < matriz2[fila].length && (matriz2[fila][columna + 1]=="H" || matriz2[fila][columna + 1]=="M")) {
+    angrybats(fila, columna + 1); // Derecha
+}
+
+}
+
+//cuando uso funciones de tipo arrow, recordar que solo se pueden llamar despues de haber creado la función
+angrybats(2, 2);
+console.log(matriz)
+console.log(matriz2)
+
+</script>
+</body>
+
+</html>

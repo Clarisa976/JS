@@ -45,14 +45,17 @@
                 //funcion para que mueran de forma recursiva
                 function muertesPorContagio(x, y) {
                     if (x >= 0 && x < matriz.length && y >= 0 && y < matriz[0].length) {
-                        if (matriz[x][y] === 'H') {
-                            matriz[x][y] = '';
+                        if (matriz[x][y] === "H") {
+                            matriz[x][y] = "";
 
                             //comprobamos que sean humanos
                             muertesPorContagio(x - 1, y);//arriba;
                             muertesPorContagio(x + 1, y);//abajo;
                             muertesPorContagio(x, y - 1);//izquierda;
                             muertesPorContagio(x, y + 1);//derecha;
+                        }else if (matriz[x][y]==="M") {
+                            matriz[x][y] = "m";
+                            console.log("mucielagos infectaos")
                         }
                     }
                 }
