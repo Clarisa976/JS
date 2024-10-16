@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luisito</title>
+</head>
+<body>
+    <script>
+        let mapa = 
+        [['*','','','','',''],
+        ['*','','','','',''],
+        ['*','','','','',''],
+        ['*','','','','',''],
+        ['*','*','*','*','*','*']];
+
+        function huida(matriz, x, y) {
+            let visitadas = [];
+            for (let i = 0; i < matriz.length; i++) {
+                visitadas[i] = [];
+                for (let j = 0; j < matriz[0].length; j++) {
+                    visitadas[i][j] = false;
+                }
+            }
+
+            function fuga(x, y) {
+                //miramos límites
+                if (x < 0 || x >= matriz.length || y < 0 || y >= matriz[0].length) {
+                    return false;
+                }
+                //comprobamos que se pueda pasar por ahí
+                if (matriz[x][y] !== '*') {
+                    return false;
+                }
+                //comprobamos que no se haya estado ya
+                if (visitadas[x][y]) {
+                    return false;
+                }
+                //marcamos si ya se visitó
+                visitadas[x][y] = true;
+                //comprobamos que es el final del mapa
+                if (x === matriz.length - 1) {
+                    return true;
+                }
+                //se huye
+                if (fuga(x + 1, y)) return true;
+                if (fuga(x - 1, y)) return true;
+                if (fuga(x, y + 1)) return true;
+                if (fuga(x, y - 1)) return true;
+
+                return false;
+            }
+
+            if (fuga(x, y)) {
+                console.log("fuga con exito");
+            } else {
+                console.log("no hay escape");
+            }
+        }
+            
+        
+        </script>
+</body>
+</html>
