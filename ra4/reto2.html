@@ -1,37 +1,47 @@
 <html>
-  <head>
-    <title>retos JavaScript</title>
-  </head>
-  <body>
-    <h1>retos JavaScript</h1>
-    <div id="prueba1"></div>
-    <div id="prueba2"></div>
-    <div id="prueba3"></div>
-    <div id="prueba4"></div>
-    <div id="prueba5"></div>
-    <div id="prueba6"></div>
-    <div id="prueba7"></div>
-    <script>
-var cars = ["Saab", "Volvo", "BMW",["Honda", "Toyota",["Lexus", "Mercedes", "Lada"], "Hyunday"]];
-var carrakos = ["Chevrolet", "Tesla", "BMW",["Honda", "Infiniti",["Lexus", "Mercedes", "Kia"], "Hyunday"],["Mazda", "Mercedes", "Jeep",["KTM", "Nissan", "Isuzu"]]];
-//Alguien sabe hacer una lista única de coches con los dos arrays (sin repeticiones)?
-let resultado1 = document.getElementById("prueba1");
 
-//Alguien sabría decirme los coches de carrakos que no estén en cars?
+<head>
+  <title>retos JavaScript</title>
+</head>
 
-var cars = ["Saab", "Volvo", "BMW",["Honda", "Toyota",["Lexus", "Mercedes", "Lada"], "Hyunday"]];
-var buddies = [{firstName:"Chuck", lastName:"Norris", car:"Honda"},{firstName:"Yakie", lastName:"Chang", car:"BMV"},{firstName:"Bruce", lastName:"Lee", car:"Honda"},{firstName:"Steven", lastName:"Seagal", car:"Lada"}];
-//-Nombre y apellidos de los buddies que usan un Honda
+<body>
+  <h1>retos JavaScript</h1>
+  <script>
+    var cars = ["Saab", "Volvo", "BMW", ["Honda", "Toyota", ["Lexus", "Mercedes", "Lada"], "Hyunday"]];
+    var carrakos = ["Chevrolet", "Tesla", "BMW", ["Honda", "Infiniti", ["Lexus", "Mercedes", "Kia"], "Hyunday"], ["Mazda", "Mercedes", "Jeep", ["KTM", "Nissan", "Isuzu"]]];
+    //Alguien sabe hacer una lista única de coches con los dos arrays (sin repeticiones)?
+    let todoscoches = cars.flat(2).concat(carrakos.flat(Infinity)).sort().map((valor, indice, array) => {
+      if (indice === 0) return valor;
+      if (indice > 0 && valor != array[indice - 1]) return valor;
+    }).filter(v => v != undefined)
+    console.log(todoscoches);
+    //Alguien sabría decirme los coches de carrakos que no estén en cars?
+    let cars2 = cars.flat(Infinity);
+    let carrakos2 = carrakos.flat(Infinity);
+    console.log(carrakos2.map(k => {
+      let aux = cars2.find(f => f == k);
+      if (aux == undefined) return k;
+    }).filter(v => v != undefined));
 
-//-Marcas utilizadas por los buddies
+    var cars = ["Saab", "Volvo", "BMW", ["Honda", "Toyota", ["Lexus", "Mercedes", "Lada"], "Hyunday"]];
+    var buddies = [{ firstName: "Chuck", lastName: "Norris", car: "Honda" }, { firstName: "Yakie", lastName: "Chang", car: "BMV" }, { firstName: "Bruce", lastName: "Lee", car: "Honda" }, { firstName: "Steven", lastName: "Seagal", car: "Lada" }];
+    //-Nombre y apellidos de los buddies que usan un Honda
+    console.log(buddies.filter((v) => v.car == 'Honda').map(v => v.firstName + ' ' + v.lastName))
+    //-Marcas utilizadas por los buddies
+    console.log(buddies.map((v) => v.car))
+    //-Marcas no utilizadas por los buddies.
+    let buddiescars = buddies.map((v) => v.car);
+    console.log(cars.flat(Infinity).filter(v => v != buddiescars.find(d => d == v)))
+    //-Cuantas marcas han sido utilizadas
+    todoscoches = cars.flat(2).concat(carrakos.flat(Infinity)).concat(buddiescars.flat(Infinity)).sort().map((valor, indice, array) => {
+      if (indice === 0) return valor;
+      if (indice > 0 && valor != array[indice - 1]) return valor;
+    }).filter(v => v != undefined)
+    console.log(todoscoches.filter(v => v != buddiescars.find(d => d == v)))
+    //-Cuantas marcas no han sido utilizadas
+    console.log(todoscoches.filter(v => v != buddiescars.find(d => d != v)))
+  </script>
+  </script>
+</body>
 
-//-Marcas no utilizadas por los buddies.
-
-//-Cuantas marcas han sido utilizadas
-
-//-Cuantas marcas no han sido utilizadas
-
-
-    </script>
-  </body>
 </html>
