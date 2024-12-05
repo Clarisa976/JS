@@ -11,3 +11,4 @@ import 'bootstrap/dist/css/bootstrap.css';
 npm install reactstrap bootstrap
 
 git add * -f
+
