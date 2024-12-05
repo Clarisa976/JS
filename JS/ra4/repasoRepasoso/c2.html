@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge II</title>
+</head>
+<body>
+    <!-- ¿Serías capaz en un array de nombres de localizar las TRES  personas más populares? -->
+    <script>
+        let nombres = ["paco", "paca", "pepe", "pepa", "paco", "pepa", "francisco", "antonia", "pepa", "jose", "josefa", "paco", "joselito", "pepa", "jose", "josefa", "paco", "joselito", "pepa", "jose"]
+
+        var popularUno = ""
+        var popularDos = ""
+        var popularTres = ""
+        var numPopularUno = 0;
+        var numPopularDos = 0;
+        var numPopularTres = 0;
+
+        nombres.map(t =>{
+            if(t!=popularUno&& nombres.filter(c=>c==t).length>numPopularUno){
+                popularTres=popularDos
+                numPopularTres=numPopularDos
+                numPopularDos=numPopularUno
+                popularDos=popularUno
+                popularUno=t
+                numPopularUno=nombres.filter(c=>c==t).length
+            }
+            if(t!=popularDos && t!=popularUno&& nombres.filter(c=>c==t).length>numPopularDos){
+                popularTres=popularDos
+                numPopularTres=numPopularDos
+                popularDos=t
+                numPopularDos=nombres.filter(c=>c==t).length
+
+            }
+            if(t!=popularTres&& t!=popularDos && t!=popularUno&& nombres.filter(c=>c==t).length>numPopularTres){
+                popularTres=t
+                numPopularTres=nombres.filter(c=>c==t).length
+
+            }
+        })
+
+
+
+
+        console.log("1º) "+popularUno + ":" + numPopularUno)
+        console.log("2º) "+popularDos + ":" + numPopularDos)
+        console.log("3º) "+popularTres + ":" + numPopularTres)
+
+       
+    </script>
+</body>
+</html>

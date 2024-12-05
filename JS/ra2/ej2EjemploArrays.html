@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos de array</title>
+</head>
+<body>
+    <p id="parrafo"></p>
+    <script>
+        var total = 0;
+        var array = [1,3,5];
+
+        array.forEach(calcular);
+        //mostrar el resultado de la suma de los valores del array
+        //multiplicados por su posición
+        function calcular(valor,index,array) {
+            total += valor * index;
+           
+        }
+
+        //otra forma sería usar una función flecha:
+       // array.forEach(valor,index,array => { total += valor * index;});
+        document.getElementById("parrafo").innerHTML = total;
+    </script>
+    
+</body>
+</html>

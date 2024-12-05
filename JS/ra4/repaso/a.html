@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>godos</title>
+</head>
+
+<body>
+    <script>
+        const GODOS = '{"GODOS":[{"nombre":"Ataúlfo","anioIni":410,"aniofin":415},{"nombre":"Sigerico","anioIni":415},{"nombre":"Walia","anioIni":415,"aniofin":418},{"nombre":"Teodoredo","anioIni":418,"aniofin":451},{"nombre":"Turismundo","anioIni":451,"aniofin":453},{"nombre":"Teodorico II","anioIni":453,"aniofin":466},{"nombre":"Eurico","anioIni":466,"aniofin":484},{"nombre":"Alarico II","anioIni":484,"aniofin":507},{"nombre":"Gesaleico","anioIni":507,"aniofin":511},{"nombre":"Amalarico","anioIni":511,"aniofin":531},{"nombre":"Teudis","anioIni":531,"aniofin":548},{"nombre":"Teudiselo","anioIni":548,"aniofin":59},{"nombre":"Ágila I","anioIni":549,"aniofin":555},{"nombre":"Atanagildo","anioIni":551,"aniofin":567},{"nombre":"Liuva I","anioIni":567,"aniofin":572},{"nombre":"Leovigildo","anioIni":570,"aniofin":586},{"nombre":"Recaredo I","anioIni":586,"aniofin":601},{"nombre":"Luiva II","anioIni":601,"aniofin":603},{"nombre":"Witerico","anioIni":603,"aniofin":610},{"nombre":"Gundemaro","anioIni":610,"aniofin":612},{"nombre":"Sisebuto","anioIni":612,"aniofin":621},{"nombre":"Recaredo II","anioIni":621},{"nombre":"Suintila","anioIni":621,"aniofin":631},{"nombre":"Sisenando","anioIni":631,"aniofin":636},{"nombre":"Chintila","anioIni":636,"aniofin":639},{"nombre":"Tulga","anioIni":639,"aniofin":642},{"nombre":"Chindasvinto","anioIni":642,"aniofin":653},{"nombre":"Recesvinto","anioIni":649,"aniofin":672},{"nombre":"Wamba","anioIni":672,"aniofin":680},{"nombre":"Ervigio","anioIni":680,"aniofin":687},{"nombre":"Égica","anioIni":687,"aniofin":702},{"nombre":"Witiza","anioIni":702,"aniofin":709},{"nombre":"Rodrigo","anioIni":709,"aniofin":711}]}'
+
+
+        const SAJONES = '{"SAJONES":[{"nombre":"Recaredo I"},{"nombre":"Gundemaro"}, {"nombre":"Sisebuto"},{"nombre":"Suintila"},{"nombre":"Chintila" },{"nombre":"Tulgarico"}]}';
+
+        let JSONGodos = JSON.parse(GODOS);
+        let JSONSajones = JSON.parse(SAJONES);
+        console.log(JSONGodos);
+        console.log(JSONSajones);
+
+        // 1) Almacena en la variable par true o false dependiendo si el número de reyes godos fue par o impar
+        console.log("La cantidad de reyes godos es par:");
+        //si el resultado de la división es 0 es par sino es impar
+        let es_par=JSONGodos.GODOS.length%2 ?true:false;
+        console.log(es_par)
+
+        // 2) Muestra el nombre de todos los godos
+        console.log("El nombre de todos los reyes godos es:");
+        let nombres =  JSONGodos.GODOS.map(nombre => nombre)
+        console.log(nombres)       
+
+        // 3) cuantos (en número) godos reinaron entre el 600 y el 700 pero no en años anteriores o posteriores
+        console.log("Cuántos Godos reinaron entre el 600 y el 700 incluidos:");
+        let reyes_entre_600_700 = JSONGodos.GODOS.filter(reino => reino.anioIni>=600&& reino.aniofin<=700)
+        console.log(reyes_entre_600_700)
+
+        // 4)¿Existió un godo que reinó entre el 600 y 700 que se llamaba Gesaleico? Responde Sí o No
+        //Seguramente necesitarás usar el operador ternario
+        let existio_Gesaleico = JSONGodos.GODOS.filter(reino => reino.anioIni>=600&& reino.aniofin<=700).find(reino => reino.nombre == 'Gesaleico')!==undefined ? "Sí":"No";
+        console.log("¿Existió un godo que reinó entre el 600 y 700 que se llamaba Gesaleico?")
+        console.log(existio_Gesaleico)
+
+        // 5) Cuantos godos eran sajones. Se quiere saber SOLO los nombres(en array si quieres)
+        console.log("Reyes godos que eran sajones:")
+        let reyes_godos_sajones = JSONGodos.GODOS.filter(reyG => JSONSajones.SAJONES.find(reyS => reyS.nombre===reyG.nombre)!==undefined).map(reyG => reyG.nombre)
+        console.log(reyes_godos_sajones)
+
+
+        // 6) El nombre de los 10 primeros reyes godos (en array siquieres)
+        console.log("Los primeros 10 reyes Godos:")
+        let diez_primeros_reyes = JSONGodos.GODOS.map(rey => rey.nombre).filter((r,indice,array)=>indice<10)
+        console.log(diez_primeros_reyes) 
+
+        // 7) El nombre de los 10 últimos reyes godos (en array siquieres)
+        console.log("Los últimos 10 reyes Godos:")
+        let diez_ultimos_reyes = JSONGodos.GODOS.map(rey => rey.nombre).filter((r,indice,array)=>indice>=array.length-10)
+        console.log(diez_ultimos_reyes) 
+
+
+    </script>
+</body>
+
+</html>

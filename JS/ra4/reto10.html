@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>REYES GODOS. BUSCAMAN</title>
+</head>
+
+<body>
+    <h1>Vikingos</h1>
+    <p id="respuesta"></p>
+
+    <h2>RETO 10. VIKINGOS</h2>
+    <p id="comunicado"></p>
+    <script>
+        var vikings = '{"vikingos":[{"reino":"Noruega","reyes":["Hakon","Harald","Ivar","Olaf","Bjorn","Ragnar"]},{"reino":"Dinamarca","reyes":["Frodo","Hamming","Angantyr","Horik"]}]}';
+        // skriv inn koden din her. Vær forsiktig med at json-en jukser. Det er ikke en matrise, men et objekt.
+        let vikingos = JSON.parse(vikings)
+        let fue_rey = (nombre) => {
+            let reino = vikingos.vikingos.find(e =>
+                e.reyes.find(f => f.toUpperCase() === nombre.toUpperCase()) !== undefined
+            );
+
+            if (reino) {
+                document.getElementById("respuesta").innerHTML = nombre + " reinó en " + reino.reino;
+                return 1;
+            } else {
+                document.getElementById("respuesta").innerHTML = nombre + " no fue rey";
+                return 0;
+            }
+        }
+        //jc
+        let encontrarRey = (rey) => {
+            let found = 0;
+            vikingos.vikingos.map(e => {
+                let rey_tmp = e.reyes.find(f => f == rey)
+                if (rey_tmp != undefined) {
+                    document.getElementById("comunicado").innerHTML += "<br>" + rey + " es un rey del reino de" + e.reino;
+                    found = 1;
+                }
+            })
+            if (!found) document.getElementById("comunicado").innerHTML += "<br>" + rey + " No es rey ni es na";
+            return found;
+        }
+
+        encontrarRey("Ivar")
+        encontrarRey("FelipeVI")
+        console.log("Fue rey frodo? " + fue_rey("frodo"))
+
+    </script>
+
+</body>
+
+</html>

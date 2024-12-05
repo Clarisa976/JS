@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2>JavaScript Arrays. 2 arrays ordenados.</h2>
+    <p> Tenemos dos arrays arr1 y arr2 y queremos insertarlos de forma
+        ordenada en un tercer array arr3.
+        Importante:
+        *Hay que insertarlo de forma ordenada en un tercer array.
+        *Solo puedes utilizar el método de arrays push() y length().
+        *No puedes modificar los arrays arr1 ni arr2.
+        **No puedes crear copias de los arrays
+        *No puedes crear más variables que las que se te dan.
+        *Muestra el resultado (arr3) en el campo demo.
+        *Tu programa deberá funcionar para dos arrays ordenados de cualquier
+        tamaño.
+        *Los números se pueden repetir siempre que estén ordenados.
+    </p>
+    <p id="demo"></p>
+    <script>
+        var arr1 = [1, 4, 6, 8, 9, 15];
+        var arr2 = [2, 5, 7, 9, 15, 19];
+        var arr3 = []
+        let i = 0;
+        let j = 0;
+        /*
+        COMPLETA EL CÓDIGO EN ESTA SECCIÓN DEL PROGRAMA.
+        */
+
+        //mientras que el arr3 sea menor que la suma del arr1 y arr2 se ejecutará el bucle
+        while (arr3.length < (arr1.length + arr2.length)){
+            //comprobamos que no quedan elementos en los arrays
+            //introduciendo de esta forma los elementos de cada array en el arr3
+        if (i == (arr1.length)){
+            arr3.push(arr2[j]);
+            j++;//incrementamos j para avanzar a la siguiente posición
+        } else if (j == (arr2.length)){
+            arr3.push(arr1[i]);
+            i++;//incrementamos i para avanzar a la siguiente posición
+
+            //ahora comprobamos que i sea menor o igual a j para saber cual añadir a arr3
+        } else if (arr1[i] <= arr2[j]){
+            arr3.push(arr1[i]);
+            i++;
+        } else if (arr1[i] >= arr2[j]){
+            arr3.push(arr2[j]);
+            j++;
+        }
+       }
+
+       /* for (i; i < arr1.length; i) {
+            for (j; j < arr2.length; j) {
+
+                if (arr1[i] < arr2[j]) {
+                    arr3.push(arr1[i]);
+                    i++;//se hace entonces la iteración
+                } else {
+                    arr3.push(arr2[j]);
+                    j++;
+                }
+            }
+        }*/
+
+        console.log(arr3);
+
+        document.getElementById("demo").innerHTML = arr3;
+    </script>
+</body>
+
+</html>

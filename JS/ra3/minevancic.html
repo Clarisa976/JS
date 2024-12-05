@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minevancic</title>
+</head>
+<body>
+    <script>
+        //1 es mina y 0 nada
+        let minas = [
+            [0,0,0,0,0,0,0],
+            [0,1,0,0,0,0,0],
+            [0,1,0,0,0,0,0],
+            [0,0,0,0,0,1,0],
+            [0,0,0,0,0,1,0],
+            [0,0,0,0,0,0,0]
+        ];
+
+
+        //agregar una variable para el número
+
+        //función para comprobar si quedan ceros
+        function quedanCeros() {
+            
+            
+        }
+        //función para poner minas
+        
+        for (let i = 0; i < minas.length; i++) {
+            for (let j = 0; j < minas[i].length; j++) {
+               if (minas[i][j] == 1) {
+                //comprobar vecinas
+                for (let p = i-1; p <= i+1; p++) {
+                    for (let o = j-1; o <= j+1; o++) {
+                       if (p >= 0 && p < minas.length && o >= 0 && o < minas[0].length) {
+                        //aumentar
+                        if (minas[p][o] == 0) {
+                             minas[p][o] = 2;
+                        }
+                       }
+                    }
+                }
+               }
+            }
+        }
+        for (let i = 0; i < minas.length; i++) {
+            for (let j = 0; j < minas[i].length; j++) {
+               if (minas[i][j] == 2) {
+                //comprobar vecinas
+                for (let p = i-1; p <= i+1; p++) {
+                    for (let o = j-1; o <= j+1; o++) {
+                       if (p >= 0 && p < minas.length && o >= 0 && o < minas[0].length) {
+                        //aumentar
+                        if (minas[p][o] == 0) {
+                             minas[p][o] = 3;
+                        }
+                       }
+                    }
+                }
+               }
+            }
+        }
+        for (let i = 0; i < minas.length; i++) {
+            for (let j = 0; j < minas[i].length; j++) {
+               if (minas[i][j] == 3) {
+                //comprobar vecinas
+                for (let p = i-1; p <= i+1; p++) {
+                    for (let o = j-1; o <= j+1; o++) {
+                       if (p >= 0 && p < minas.length && o >= 0 && o < minas[0].length) {
+                        //aumento
+                        if (minas[p][o] == 0) {
+                             minas[p][o] = 4;
+                        }
+                       }
+                    }
+                }
+               }
+            }
+        }
+        
+        console.log(minas);
+        /*
+        let minas = [
+            [2,2,2,3,4,4,4],
+            [2,1,2,3,3,3,3],
+            [2,1,2,3,2,2,2],
+            [2,2,2,3,2,1,2],
+            [3,3,3,3,2,1,2],
+            [4,4,4,3,2,2,2]
+        ];
+        */
+    </script>
+</body>
+</html>

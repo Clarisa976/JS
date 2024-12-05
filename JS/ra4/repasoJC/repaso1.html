@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repaso de JC 1</title>
+</head>
+
+<body>
+    <script>
+        /*
+        Ejercicio 1. De los siguientes arrays:
+        const array1 = [5, 12, 8, 130, 44];
+        const array2 = [5, 8, 130, 44];
+
+        Se piden los elementos del array 1 mayor de 10 pero que estén en el segundo array
+        Saldría el 130
+        Solamente puede utilizar funciones map, find y filter de arrays. No puede utilizar if, for o while.
+        Tiene que hacer el recuento solamente en una línea de código.
+        */
+
+
+        const array1 = [5, 12, 8, 130, 44]
+        const array2 = [5, 8, 130, 44]
+
+        const found = array1.filter(e => e > 10 && e == array2.find(f => e == f))
+        console.log(found)
+
+        /*
+        Ejercicio 3. De los siguientes arrays:
+        const array1 = [5, 12, 8, 130, 44];
+        const array2 = [5, 8, 130, 44];
+        const array3 = [5, 8, 44];
+
+        Se piden los elementos del array 1 mayor de 10 pero que estén en el segundo array y no en el tercero.
+        Saldría el 130.
+        Solamente puede utilizar funciones map, find y filter de arrays. No puede utilizar if, for o while.
+        */
+
+        const arr1 = [5, 12, 8, 130, 44];
+        const arr2 = [5, 8, 130, 44];
+        const arr3 = [5, 8, 44];
+
+        const encontrao = arr1.filter(e=>e>10&&e==arr2.find(f => e == f)&&e!=arr3.find(f => e == f))
+        console.log(encontrao)
+    </script>
+</body>
+
+</html>

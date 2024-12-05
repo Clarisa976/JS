@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quitar negrita</title>
+</head>
+
+<body>
+    <div id="busca">
+        <p>Caperucita roja, era una nena<sub>mu wena</sub> que le gustaba ir
+            a casa de su <sup>awelita</sup>
+        </p>
+        <p>Un día, un lobito <sup>marvao</sup></p>
+        <p>Se metió en la casa de la awela<sup>a comer puchero</sup> con
+            tagarnina</p>
+    </div>
+    <button type="button" onclick="cambiarNegrita(document.getElementById('busca'))">A</button>
+    <script>
+        function cambiarNegrita(obj) {
+            for (let i = 0; i < obj.children.length; i++) {
+                cambiarNegrita(obj.children[i])    
+                if (obj.children[i].tagName =="SUP") {
+                    let negrita = document.createElement("strong")
+                    negrita.innerHTML = obj.children[i].innerHTML
+                    obj.replaceChild(negrita, obj.children[i])
+                    //obj.children[i].innerHTML.replace('strong','sup')
+                }
+                
+            }
+        }
+    </script>
+</body>
+
+</html>

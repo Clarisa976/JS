@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge I</title>
+</head>
+
+<body>
+    <!-- ¿Serías capaz en un array de nombres de localizar la persona más popular? -->
+    <script>
+        let nombres = ["paco", "paca", "pepe", "pepa", "paco", "pepa", "francisco", "antonia", "pepa", "jose", "josefa", "paco", "joselito", "pepa"]
+        
+        let contadorUno = 0;
+        let nombreUno = "";
+        let popular = (array)=> {
+            array.map(p => {
+                let cantidad = array.filter(n => n == p).length;
+                if (cantidad > contadorUno) {
+                    contadorUno = cantidad;
+                    nombre = p;
+                }
+            });
+        }
+        popular(nombres);
+        console.log("1º) "+ nombre +" - " + contadorUno + " veces.");
+    </script>
+</body>
+
+</html>

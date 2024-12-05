@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTERSECTION LIST</title>
+</head>
+
+<body>
+    PRIMERA LISTA:
+    <ul id="lista1">
+        <li>manzana</li>
+        <li>pera</li>
+        <ul>
+            <li>conferencia</li>
+            <ul>
+                <li>conferenciaverde</li>
+                <li>conferenciaamarilla</li>
+                <li>conferenciaroja</li>
+            </ul>
+            <li>peradeagua</li>
+            <li>peritadulce</li>
+            <ul>
+                <li>Dimas</li>
+                <li>Gestas</li>
+                <li>Malakatos</li>
+                <li>Jose</li>
+            </ul>
+        </ul>
+        <li>limon</li>
+        <li>limon</li>
+        <li>LIMON</li>
+    </ul>
+    Segunda lista:
+    <ul id="lista2">
+        <li>manzana</li>
+        <li>manzana</li>
+        <li>manzana</li>
+        <li>manzana</li>
+        <li>pera</li>
+        <li>limon</li>
+    </ul>
+
+
+    <script>
+
+        //el contenido del script lo colocaré aquí
+        let lista1 = [
+            "manzana",
+            "pera",
+            "conferencia",
+            "conferenciaverde",
+            "conferenciaamarilla",
+            "conferenciaroja",
+            "peradeagua",
+            "peritadulce",
+            "Dimas",
+            "Gestas",
+            "Malakatos",
+            "Jose",
+            "limon",
+            "limon",
+            "LIMON"
+        ];
+        let lista2 = [
+            "manzana",
+            "manzana",
+            "manzana",
+            "manzana",
+            "pera",
+            "limon"
+        ];
+        
+
+        //función para obtener la intersección sin duplicados
+        function interseccion(lista1, lista2) {
+            let set1 = []
+            let set2 = []
+
+            //alacenamos los elementos únicos de la lista1 en set1
+            for (let i = 0; i < lista1.length; i++) {
+                const element = lista1[i].toUpperCase();
+                let existe = false
+                //evitamos duplicados
+                for (let j = 0; j < set1.length; j++) {
+                    if (set1[j] === element) {
+                        existe = true
+                        break
+                    }
+                }
+                if (!existe) {
+                    set1.push(element)
+                }
+            }
+            //alacenamos los elementos únicos de la lista2 en set2
+            for (let i = 0; i < lista2.length; i++) {
+                const element = lista2[i].toUpperCase();
+                let existe = false
+                //evitamos duplicados
+                for (let j = 0; j < set2.length; j++) {
+                    if (set2[j] === element) {
+                        existe = true
+                        break
+                    }
+                }
+                if (!existe) {
+                    set2.push(element)
+                }
+            }
+            let listaFinal = []
+            //intersección de las listas
+            for (let i = 0; i < set1.length; i++) {
+                const element = set1[i];
+                for (let j = 0; j < set2.length; j++) {
+                    if (element === set2[j]) {
+                        //evitamos que haya duplicados
+                        let existe = false
+                        for (let k = 0; k < listaFinal.length; k++) {
+                            if (listaFinal[k] === set1[i]) {
+                                existe = true;
+                                break;
+                            }
+                        }
+                        if (!existe) {
+                            listaFinal.push(set1[i]);
+                        }
+                    }
+
+                }
+
+            }
+            //rodenamos antes del return
+            listaFinal.sort()
+            return listaFinal
+
+        }
+        console.log(interseccion(lista1,lista2))
+
+    </script>
+</body>
+
+</html>

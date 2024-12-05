@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PANDEMIC</title>
+</head>
+
+<body>
+
+    <p id="txt">
+    <p>
+
+        <script>
+            /*
+            H-humanos
+            M-Murciélagos
+            G-Gatos
+            P-Perros
+            R-Ratas
+            */
+            let matriz = [
+                ['P', 'P', 'G', 'H', 'H', 'R'],
+                ['P', 'P', 'G', 'H', 'H', 'G'],
+                ['P', 'G', 'R', 'H', 'H', 'G'],
+                ['G', 'R', 'R', 'H', 'G', 'G'],
+                ['R', 'R', 'H', 'H', 'G', 'P']
+            ];
+
+            //console.log(biocenosis);
+            var copia = hacerCopia(matriz);
+            console.log("Antes de la pandemia");
+            console.log(copia);
+            //pandemic(biocenosis,0, 0);
+            //pandemic(biocenosis,4, 2);
+            pandemic(4, 0);
+
+            console.log("Después de la pandemia");
+            console.log(matriz);
+
+            function pandemic(x, y) {
+                let flag = 1;
+                const PACIENTE_CERO = matriz[x][y];
+                while (flag) {
+                    flag = 0;
+                    //recorremos la matriz
+                    for (let i = 0; i < matriz.length; i++) {
+                        for (let j = 0; j < matriz[i].length; j++) {
+                            //si la posición coincide con el paciente infectado
+                            //se pone * y se cambia el flag a 1
+                            if (matriz[i][j] === PACIENTE_CERO) {
+                                matriz[i][j] = "+";
+                                flag = 1;
+                            } 
+                            //recorremos la matriz vieno las vecinas y controlando
+                            //los límites para cambiar las adyacentes
+                            if ((i > 0 && matriz[i - 1][j] === '+') ||
+                                (i < matriz.length - 1 && matriz[i + 1][j] === '+') ||
+                                (j > 0 && matriz[i][j - 1] === '+') ||
+                                (j < matriz[i].length - 1 && matriz[i][j + 1] === '+')) {
+
+                            }
+                        }
+                        //si especie[x,y]=e y al lado=" "
+                        //[x,y]->" " y flag=1
+
+                    }
+                }
+            }
+
+
+
+
+            //función para hacer una copia de la matriz
+            function hacerCopia(matriz) {
+                return JSON.parse(JSON.stringify(matriz));
+            }
+            /*para copiar una matriz jc usa json para copiar los valors:
+            var x -> []
+            var y=JSON.parse(JSON.stringify(x));
+            
+            */
+
+        </script>
+
+</body>
+
+</html>

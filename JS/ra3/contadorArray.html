@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador numero de veces que sale un numero en un array</title>
+</head>
+
+<body>
+    <h1>Encuentra cuantas veces aparece un número en un array multidimensional</h1>
+    <script>
+        let numeros = [1, [2, 3, 4, 1, 1, 1, 1, 1], [8, 1, 5, [5, 1]], 27];
+        //let numeros = [1,[2,3,4],[8,15,[5,1]],27];
+        function contadorNumeros(arr, num) {
+            let contadorVeces = 0; // contador
+            for (let i = 0; i < arr.length; i++) {
+                //si es un array se hace una llamada recusrisiva
+                //sino compruebo
+                if (Array.isArray(arr[i])) {
+                    contadorVeces += contadorNumeros(arr[i], num);
+
+                } else if (arr[i] === num) {
+                    contadorVeces++;
+                    
+                }
+                
+            }
+            return contadorVeces;
+        }
+        console.log(contadorNumeros(numeros, 1));
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de frutica</title>
+</head>
+
+<body>
+    <p>Tenemos las dos listas que ves aquí debajo</p>
+    <ol id="lista1">
+        <li>Ciruela</li>
+        <li>CiruelaClaudia</li>
+        <ul>
+            <li>Mandarina</li>
+            <ul>
+                <li>Litchi</li>
+                <li>Chirimollo</li>
+                <li>Rodrigo</li>
+            </ul>
+            <li>Mandarina</li>
+            <li>PeraConferencia</li>
+            <ul>
+                <li>Nispero</li>
+                <li>Alcarcil</li>
+                <li>Jobito</li>
+                <li>Mandarina</li>
+                <li>Nispero</li>
+                <li>Alcarcil</li>
+            </ul>
+        </ul>
+        <li>PeraLimonera</li>
+    </ol>
+    <ol id="lista2">
+        <li>ManzanaGolden</li>
+        <li>PeraLimonera</li>
+        <li>Mandarina</li>
+        <ul>
+            <li>Nispero</li>
+            <li>Alcarcil</li>
+        </ul>
+    </ol>
+    <p>Se pide que modifiques la lista con id="lista2"
+        para que tenga este
+        aspecto:<br>
+    <ol>
+        <li>ManzanaGolden 0</li>
+        <li>PeraLimonera 1</li>
+        <li>Mandarina 3</li>
+        <ul>
+            <li>Nispero 2</li>
+            <li>Alcarcil 2</li>
+        </ul>
+    </ol>
+    </p>
+    <p>
+        Si te das cuenta lo que hemos hecho ha sido contar cuantas veces aparece
+        en la primera lista cada elemento de la segunda<br>
+        <br>
+        Requisitos:<br>
+        -Tu programa tendrá que ser legible y tener el menor número de líneas.<br>
+        -Tu programa solo debe utilizar funciones flecha (arrow).<br>
+        -Para el programa Mandarina y Mandarina son la misma persona.<br><br>
+        Otros requisitos (importante):
+        -Se penalizará la utilización de arrays<br>
+        -Se penalizará la utilización de variables globales<br>
+        -Tu programa deberá estar refactorizado para una ejecución eficiente en el
+        cliente. Una función con más de 20 líneas se considera no refactorizada.<br>
+        <br>
+        Ten en cuenta los requisitos en la realización de tu código. Los nodos
+        bajo lista1 y lista2 solo serán de tipo LI y UL (tenlo en cuenta al realizar
+        tu código).<br>
+        <br>
+        Puedes utilizar solamente el libro de texto para consulta pero NO está
+        permitido que utilices Internet ni otro código que hayas escrito con
+        anterioridad. El libro no puede tener añadido nada aparte de lo impreso.<br>
+        La máquina en la que haces el examen tiene que estar limpia de código
+        fuente relacionado con la asignatura. <br>
+    </p>
+    <script>
+         /*CREA UNA FUNCIÓN QUE DADO UN NODO CUENTE CUÁNTAS PERSONAS CON UN NOMBRE HAY
+        POR DEBAJO DE ÉL (INCLUIDO)*/
+        let conteo = (obj, aux)=>{
+            let contador = 0
+            for (let i = 0; i < obj.children.length; i++) {
+                if (obj.children[i].tagName=='UL') {
+                    contador += conteo(obj.children[i],aux)
+                }else{
+                    if (aux.toUpperCase()===obj.children[i].innerHTML.toUpperCase()) {
+                        contador++
+                    }
+                }
+            }
+            return contador
+        }
+        /*CREA OTRA FUNCIÓN QUE RECORRE LA SEGUNDA LISTA Y LLAME A LA FUNCIÓN
+        ANTERIOR PARA QUE BUSQUE
+        A ESA PERSONA EN LA PRIMERA LISTA Y LE AGREGUE LAS VECES QUE APARECE EN LA
+        PRIMERA*/
+        let conteoRepe = (obj,lista)=>{
+            for (let i = 0; i < obj.children.length; i++) {
+                if(obj.children[i].tagName=='UL'){
+                    conteoRepe(obj.children[i],lista)
+                }else{
+                    obj.children[i].innerHTML+= " - "+conteo(lista,obj.children[i].innerHTML)
+                }
+            }
+        }
+        //LLAMA A ESTA SEGUNDA FUNCIÓN
+        let lista1 = document.getElementById("lista1")
+        let lista2 = document.getElementById("lista2")
+        conteoRepe(lista2,lista1)
+    </script>
+</body>
+
+</html>

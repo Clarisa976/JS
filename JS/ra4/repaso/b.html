@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2510</title>
+</head>
+
+<body>
+    <h1>Ej1</h1>
+    <div id="respuesta1"></div>
+    <h2>Ej2</h2>
+    <div id="respuesta2"></div>
+    <script>
+        /*ej1 -> nombre de las frutas tropicales con un stock mayor de 21*/
+        let frutas = ["aguacate", "pera", "manzana", "naranja", "tomate", "granada",
+            "mango", "litchi", "nispero"];
+        let tropicales = ["aguacate", "mango", "litchi", "nispero"];
+        let tropicStock =
+            [{ fruta: "manzana", stock: 55 }, { fruta: "aguacate", stock: 50 },
+            { fruta: "mango", stock: 10 },
+            { fruta: "litchi", stock: 20 }, { fruta: "nispero", stock: 25 }];
+
+        let frutasTropicales = tropicStock.filter(f => f.stock >= 21).map(e => e.fruta);
+        document.getElementById("respuesta1").innerHTML += "<br> Frutas con un stock mayor o igual a 21: " + frutasTropicales;
+
+        /*ej2->
+        Se pide que hagas un programa que muestre la media de TODAS las
+        notas de DWEC de los alumnos que tenemos en nuestro JSON. Hoy hay 3
+        alumnos pero podrían ser 3000.
+        */
+        var valumnos = {
+            "alumnos": [{
+                "nombre": "Fulanito",
+                "notas": {
+                    "DWEC": 8,
+                    "DWESE": 0.71,
+                    "ED": 7.04,
+                    "SSOO": 3.37,
+                    "BBDD": 0.22,
+                    "PROG": 1.09,
+                    "EINEM": 6.17
+                }
+            },
+            {
+                "nombre": "Menganito",
+                "notas": {
+                    "DWEC": 7,
+                    "DWESE": 0.71,
+                    "ED": 7.04,
+                    "SSOO": 3.37,
+                    "BBDD": 0.22,
+                    "PROG": 1.09,
+                    "EINEM": 6.17
+                }
+            }
+                ,
+            {
+                "nombre": "Cetanito", "notas": {
+                    "DWEC": 6,
+                    "DWESE": 0.71,
+                    "ED": 7.04,
+                    "SSOO": 3.37,
+                    "BBDD": 0.22,
+                    "PROG": 1.09,
+                    "EINEM": 6.17
+                }
+            }
+            ]
+        };
+        // ESCRIBE TU CÓDIGO AQUÍ
+        let totalNotas = valumnos.alumnos.flatMap(alumno => alumno.notas.DWEC);
+        let suma = totalNotas.reduce((suma,valor)=> suma+valor)
+        document.getElementById("respuesta2").innerHTML+="La media de la suma de todas las notas de los alumnos de DWEC es: "+Math.floor(suma/totalNotas.length)
+    </script>
+</body>
+
+</html>

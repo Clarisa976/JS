@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de clase</title>
+</head>
+
+<body>
+    <h1>Creación de una ventana de login</h1>
+    <form id="formulario">
+        <input type="text" name="usuario" id="usuario" placeholder="usuario"><br>
+        <input type="password" name="clave" id="clave" placeholder="password"><br>
+        <button type="button" onclick="comprobar()">Log In</button>
+
+    </form>
+    <h2 id="txtSugerencia"></h2>
+    <script>
+        function comprobar() {
+            let usuario = document.getElementById('usuario').value;
+            let clave = document.getElementById('clave').value;
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txtSugerencia").innerHTML = this.responseText;
+                }
+            };
+
+            xmlhttp.open("GET", "http://localhost/Proyectos/JS/ra7/ejClase2//getSugerencia.php?usuario=" + usuario + "&clave=" + clave, true);
+            //xmlhttp.open("GET", "http://localhost/Proyectos/DWECL/js/ra7/ejClase2/getSugerencia.php?usuario=" + usuario + "&clave=" + clave, true);
+
+            xmlhttp.send();
+        }
+    </script>
+</body>
+
+</html>

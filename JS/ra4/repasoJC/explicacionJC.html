@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operador SPREAD</title>
+</head>
+<body>
+    <script>
+        //imaginamos que tenemos una variable suma con tres parámetros
+        const suma = (a,b,c)=>{
+            return a+b+c
+        }
+
+        const numeros = [1,2,3]
+        
+        //lo más normal sería llamar a la a la función suma e ir indicando los parámetos del array en la suma pero con el operador spread lo usamos así:
+        console.log(...numeros)
+        //si el tamaño del array fuese mayor o menor que el número de parámetros que te pide petaría
+
+        const numeros2 = [4,5,6]
+
+        //también se puede usar para unir dos arrays
+        let numeros3 = [...numeros,...numeros2]
+        console.log(numeros3)
+
+        //más ejemplos
+
+        let persona1 ={
+            nombre:"Dimas", edad:9
+        }
+        let persona2 ={
+            nombre:"Emma", edad:20
+        }
+
+        //copia
+        let copia = {...persona1}
+        persona1.nombre="DIMAS"//comprobamos que es una copia y no una clonación
+        console.log(copia)
+
+        
+        let ambos = {...persona1,...persona2}
+        console.log(ambos)//los machaca no los rejunta
+    </script>
+</body>
+</html>

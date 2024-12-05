@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodos de fruticas</title>
+</head>
+
+<body>
+    <!--El objetivo es crear un nodo que tenga un ul
+   con tantas li como frutas haya en el siguiente array:
+   let frutas = ["manzana","banana","pera","mango","tomate","aguacate"];-->
+    <h1>Fruticas</h1>
+    <button type="submit" onclick=cargarFrutas()>Dale</button>
+    <ul id="listaFrutas"></ul>
+    <script>
+        let frutas = ["manzana", "banana", "pera", "mango", "tomate", "aguacate"];
+        const cargarFrutas = ()=> {
+            //elementos del li
+            frutas.map(fruta => {
+                let ul = document.createElement("li");
+                let li = document.createTextNode(fruta);
+                ul.appendChild(li);
+                document.getElementById("listaFrutas").appendChild(ul);
+            });
+
+        }
+
+    </script>
+    </script>
+</body>
+
+</html>

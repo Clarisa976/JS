@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superíndices
+
+    </title>
+</head>
+
+<body>
+    <div id="busca">
+        <p>Texto normal.<sub>subindice</sub> T<sup>2</sup>T<sup>22</sup>
+        </p>
+        <p>Texto normal.<sup>Texto superíndice.</sup></p>
+        <p>Ecuación:X<sup>2</sup>+3X+1</p>
+    </div>
+    <button type="button" onclick="superIndice(document.getElementById('busca'))">A</button>
+    <script>
+        function superIndice(obj) {        
+            for (let i = 0; i < obj.children.length; i++) {
+                //console.log(obj.children[i].innerHTML)           
+                superIndice(obj.children[i])     
+                if (obj.children[i].tagName=="SUP" && obj.children[i].innerHTML=="2") { 
+                    obj.children[i].innerHTML="3" 
+                }
+                
+            }
+        }
+
+    </script>
+</body>
+
+</html>

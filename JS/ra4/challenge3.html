@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge III</title>
+</head>
+<body>
+    <!-- Crea un array que contenga 100 números aleatorios del uno al 1000, pero que no se repita ninguno. -->
+    <script>
+        function arrayCien(tamaño, max){
+            let lista = [];
+            while(lista.length<tamaño){
+                let numeroRandom = (Math.floor(Math.random() * (max - 0 + 1)) + 0);
+                let rep = lista.filter(u=> u==numeroRandom).length
+                if(rep==0){ //si no está repetido lo mete
+                    lista.push(numeroRandom);
+                }       
+            }
+            return lista;
+        }
+        let lista = arrayCien(100,1000);
+        console.log("Este array tiene: "+ lista.length);
+        console.log(lista);
+    </script>
+</body>
+</html>

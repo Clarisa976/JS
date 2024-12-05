@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1810</title>
+</head>
+
+<body>
+    <script>
+        var ciudades = ["Sevilla", "Vigo", "Leon", ["Caceres",
+            "Marbella", ["Algatocin", "Mijas", "Estepona"], "LosBarrios"]];
+        var ciudadakas = ["Chevrolet", "Gaucin", "Leon", ["Caceres",
+            "SanRoque", ["Algatocin", "Mijas", "Algeciras"],
+            "LosBarrios"], ["LaLinea", "Mijas", "LasRozas", ["Majadahonda",
+                "Boadilla", "Mostoles"]]];
+        var newciudades = ["Sevilla", "Vigo", "Leon", ["Caceres",
+            "Marbella", ["Algatocin", "Vigo", "Estepona"], "LosBarrios", "Vigo"]];
+        var coleguillas = [{
+            firstName: "Jonny", lastName: "Rambo",
+            ciudad: "Leon"
+        }, {
+            firstName: "Arnold", lastName: "Suarchenager",
+            ciudad: "Caceres"
+        }, {
+            firstName: "Chuck", lastName: "Norris",
+            ciudad: "Caceres"
+        }, {
+            firstName: "Yakie", lastName: "Chang",
+            ciudad: "Leon"
+        }, {
+            firstName: "Bruce", lastName: "Lee",
+            ciudad: "Caceres"
+        }, {
+            firstName: "Steven", lastName: "Seagal",
+            ciudad: "Estepona"
+        }];
+        let maleficas = ["Caceres", "Estepona"]
+
+        //Ejercicio 1:
+        //Encuentra las ciudades donde hay amigos (coleguillas) y ordénalas.
+        //Devuelve una lista de las ciudades mencionadas más de una vez, sin repeticiones.
+        let ciudadesConColegas = coleguillas.flat(Infinity).map(ciudades => ciudades.ciudad).sort().filter((valor,index,array)=>coleguillas.filter(ciudades => ciudades.ciudad == valor).length>=2&&array.indexOf(valor)===index)
+        console.log(ciudadesConColegas)
+
+        //Ejercicio 2:
+        //Crea una lista combinada de newciudades y maleficas, ordenada alfabéticamente.
+        //Excluye las ciudades "Caceres" y "Estepona" y elimina los valores indefinidos de la lista final.
+        let ciudadesNuevas = newciudades.flat(Infinity).concat(maleficas).map(c => c).sort().filter(t => t!="Estepona"&& t!="Casares")
+        console.log(ciudadesNuevas)
+
+        //Ejercicio 3:
+        //Ordena alfabéticamente las ciudades de todos los amigos (coleguillas) y crea una lista con estos nombres en ese orden.
+        let ciudadesColegasOrdenadas = coleguillas.flat(Infinity).map(ciudades => ciudades.ciudad).sort()
+        console.log("los coleguillas viven en: " +ciudadesColegasOrdenadas)
+
+        //Ejercicio 4:
+        //Cuenta cuántas veces aparece la ciudad "Vigo" en la lista newciudades.
+        let numeroVigo = newciudades.flat(Infinity).filter(ciudad => ciudad.toLocaleLowerCase() == "vigo").length
+        console.log("Cuántas veces sale Vigo? "+numeroVigo)
+
+    </script>
+</body>
+
+</html>

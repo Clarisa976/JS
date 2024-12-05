@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="resultado"></p>
+<input type="text" id="ciudad" value="ESTE">
+<button onclick="dale()">ejecuta</button>
+
+<script>
+let numeros = [{cp:28924,ciudad:'ESTEPONA'},{cp:29601,ciudad:'MARBELLA'}];
+
+function dale() {
+document.getElementById("resultado").innerHTML ="";
+
+
+numeros.map((dato)=>{let city = document.getElementById("ciudad").value;
+if (dato.ciudad.includes(city.toUpperCase()))
+document.getElementById("resultado").innerHTML =dato.ciudad+"-"+dato.cp;});
+
+
+}
+</script>
+
+</body>
+</html>

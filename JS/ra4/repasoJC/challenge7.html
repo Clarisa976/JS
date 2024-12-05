@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge VII</title>
+</head>
+
+<body>
+    <div>
+        Me sabrías decir de este array cual es la última generación:
+        const REYES =
+        ["Chindatore",["Chindasvinto","Rencesvinto","Lautaro"],["Lauro","Sisebuto",["Fracisbuto","Vigafredo",["Leovigildo","Recaredo"]]],"Amalarico
+        II"];
+
+        Se supone que si un elemento es un subarray es la siguiente generación. Por ejemplo [A,[B]]
+        A es de primera generación
+        B es de segunda generación
+
+        El resultado sería 2
+    </div>
+    <script>
+        const REYES = ["Chindatore", ["Chindasvinto", "Rencesvinto", "Lautaro"], ["Lauro", "Sisebuto", ["Fracisbuto", "Vigafredo", ["Leovigildo", "Recaredo"]]], "Amalarico II"];
+
+        const buscarUltima=(array,generacion)=>{
+            let maxgen = generacion
+
+            array.map(e=>{
+                if(Array.isArray(e)){
+                    let aux= buscarUltima(e,generacion+1)
+                    if (aux>maxgen) {
+                        maxgen=aux
+                    }
+                }
+
+            })
+
+            return maxgen
+        }
+        console.log(buscarUltima(REYES,1))
+        /*function ultimaGeneracion(array, cont) {
+            let result = cont;
+            if (array.filter(v => Array.isArray(v)).length > 0) {
+                array.filter(v => Array.isArray(v)).map(k => {
+                    aux = ultimaGeneracion(k, cont + 1);
+                    if (aux > result) result = aux;
+                })
+            }
+            return result;
+        }
+
+        console.log("La última generación es la " + ultimaGeneracion(REYES, 1));*/
+
+    </script>
+</body>
+
+</html>

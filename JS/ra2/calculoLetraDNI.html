@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálcula la letra del DNI</title>
+</head>
+
+<body>
+
+    <label for="DNI">Introduzca su DNI: </label>
+    <input type="text" name="DNI" id="DNI" onblur="comprobarLetra()" value="">
+
+    </p>
+    <p id="respuesta"></p>
+
+    <p>
+        <script>
+           const LETRAS = ['T', 'R', 'W', 'A', 'G', 'M',
+                'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J',
+                'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
+
+            //comprobar que son 8 números
+            function numeroValido(numero) {
+                if (numero < 0 || numero > 99999999) {
+                    return false;
+                }
+                return true;
+            }
+            //calcular la letra del número introducido
+            function calcularLetraValida(numero) {
+                var letraCorrespondiente = numero % 23;
+                return LETRAS[letraCorrespondiente];
+            }
+            //comprobar que es un dni válido
+            function comprobarLetra() {           
+            var dni = document.getElementById("DNI").value;
+            var numeroDNI = dni.slice(0, -1);//quitamos el último elemento
+            var letraDNI = dni.slice(-1).toUpperCase();//guardamos la letra en mayúsculas
+            var respuesta = document.getElementById("respuesta");
+
+            //console.log(dni);
+            if (!numeroValido(numeroDNI)) {
+                respuesta.innerHTML = "El número no es valido.";
+            } else {
+                var letraComprobar = calcularLetraValida(numeroDNI);
+                if (letraComprobar == letraDNI) {
+                    respuesta.innerHTML = "El número y la letra del DNI son correctos.";
+                } else {
+                    respuesta.innerHTML = "La letra del DNI no es correcta.";
+                }
+            }
+        }
+            
+        </script>
+</body>
+
+</html>

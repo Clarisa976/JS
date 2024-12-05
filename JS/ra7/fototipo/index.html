@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fototipo</title>
+    <style>
+        form{
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+        }
+        div {
+            margin: 0.4rem;
+            padding: 0.3rem;
+            background-color: #ebe9cd;
+            width: 45%;
+        }
+        .botones{
+            width: 90%;
+            text-align: center;
+        }
+        button {
+            margin: 2px 0;
+            padding: 10px;
+            background-color: #a7d6a7;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #549754;
+        }
+
+        #resultadoTest {
+            display: none;
+            width: 100%;
+            text-align: center;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test fototipos</h1>
+    <form action="index.html" method="post">
+        <div id="p1" class="cuestionario">
+            <label for="p1">1. ¿Cuál es el color natural de su piel cuando no está bronceada?</label><br>
+            <button type="button" onclick="puntuacion(1, 0)">0 > Rojiza, blanca</button>
+            <button type="button" onclick="puntuacion(1, 2)">2 > Blanca-beige</button>
+            <button type="button" onclick="puntuacion(1, 4)">4 > Beige</button>
+            <button type="button" onclick="puntuacion(1, 8)">8 > Marrón clara</button>
+            <button type="button" onclick="puntuacion(1, 12)">12 > Marrón</button>
+            <button type="button" onclick="puntuacion(1, 16)">16 > Negra</button>
+        </div>
+        <div id="p2" class="cuestionario">
+            <label for="p">2. ¿De qué color natural es su pelo?</label><br>
+            <button type="button" onclick="puntuacion(2, 0)">0 > Pelirrojo, rubio claro</button>
+            <button type="button" onclick="puntuacion(2, 2)">2 > Rubio, castaño claro</button>
+            <button type="button" onclick="puntuacion(2, 4)">4 > Castaño</button>
+            <button type="button" onclick="puntuacion(2, 8)">8 > Castaño oscuro</button>
+            <button type="button" onclick="puntuacion(2, 12)">12 > Castaño oscuro-negro</button>
+            <button type="button" onclick="puntuacion(2, 16)">16 > Negro</button>
+        </div>
+        <div id="p3" class="cuestionario">
+            <label for="p3">3. ¿De qué color tiene los ojos?</label><br>
+            <button type="button" onclick="puntuacion(3, 0)">0 > Azul claro, verde claro, gris claro</button>
+            <button type="button" onclick="puntuacion(3, 2)">2 > Azules, verdes, grises</button>
+            <button type="button" onclick="puntuacion(3, 4)">4 > Grises, marrón claro</button>
+            <button type="button" onclick="puntuacion(3, 8)">8 > Marrones</button>
+            <button type="button" onclick="puntuacion(3, 12)">12 > Marrón oscuro</button>
+            <button type="button" onclick="puntuacion(3, 16)">16 > Negros</button>
+        </div>
+        <div id="p4" class="cuestionario">
+            <label for="p4">4. ¿Cuántas pecas tiene de manera natural en el cuerpo cuando no está bronceado?</label><br>
+            <button type="button" onclick="puntuacion(4, 0)">0> Muchas</button>
+            <button type="button" onclick="puntuacion(4, 2)">2 > Algunas</button>
+            <button type="button" onclick="puntuacion(4, 4)">4 > Unas cuantas</button>
+            <button type="button" onclick="puntuacion(4, 8)">8 > Ninguna</button>
+        </div>
+        <div id="p5" class="cuestionario">
+            <label for="p5">5. ¿Qué categoría describe mejor su herencia genética?</label><br>
+            <button type="button" onclick="puntuacion(5, 0)">0 > Raza blanca de piel muy blanca</button>
+            <button type="button" onclick="puntuacion(5, 2)">2 > Raza blanca de piel clara</button>
+            <button type="button" onclick="puntuacion(5, 4)">4 > Raza blanca piel morena (Mediterráneo)</button>
+            <button type="button" onclick="puntuacion(5, 8)">8 > Oriente Medio, hindú, asiático,
+                hispano-americano</button>
+            <button type="button" onclick="puntuacion(5, 12)">12 > Aborigen, africano, afroamericano</button>
+        </div>
+        <div id="p6" class="cuestionario">
+            <label for="p6">6. ¿Qué categoría describe mejor su potencial de QUEMADURA exponiéndose al sol una hora en
+                verano?</label><br>
+            <button type="button" onclick="puntuacion(6, 0)">0 > Siempre se quema y no se broncea nunca</button>
+            <button type="button" onclick="puntuacion(6, 2)">2 > Habitualmente se quema, pero puede broncearse
+                ligeramente</button>
+            <button type="button" onclick="puntuacion(6, 4)">4 > Se quema ocasionalmente, pero se broncea
+                moderadamente</button>
+            <button type="button" onclick="puntuacion(6, 8)"> 8 > Nunca se quema y se broncea con facilidad</button>
+            <button type="button" onclick="puntuacion(6, 10)">10 > Raramente se quema y se broncea
+                profundamente</button>
+            <button type="button" onclick="puntuacion(6, 12)">12 > Nunca se quema</button>
+        </div>
+        <div id="p7" class="cuestionario">
+            <label for="p7">7. ¿Qué categoría describe mejor su potencial de BRONCEADO?</label><br>
+            <button type="button" onclick="puntuacion(7, 0)">0 > Nunca se broncea</button>
+            <button type="button" onclick="puntuacion(7, 2)">2 > Se puede broncear ligeramente</button>
+            <button type="button" onclick="puntuacion(7, 4)">4 > Se puede broncear moderadamente</button>
+            <button type="button" onclick="puntuacion(7, 8)">8 > Se puede broncear profundamente</button>
+        </div>
+        <div id="resultadoTest">
+            <h2 id="resultado"></h2>
+            <h3 id="resultado2"></h3>
+        </div>
+        <p class="botones">
+            <button type="button" onclick="comprobar()">Comprobar</button>
+            <button type="button" onclick="limpiar()">Limpiar</button>
+        </p>
+
+    </form>
+    
+
+    <script>
+        let total = 0;
+        //let respuestas = {};//guardamos las preguntas respondidas
+        function puntuacion(id, puntos) {
+            //si ya esta cambiamos la puntuación
+            //if (respuestas[id] !== undefined) {
+            //    total -= respuestas[id];
+            //}
+            //respuestas[id] = puntos;//cambiamos la respuesta
+            total += puntos;
+            //document.getElementById('resultado').innerText = "Puntuación Total: " + total;
+            //ocultamos la pregunta respondida
+            const pregunta = document.getElementById(`p${id}`);
+            if (pregunta) {
+                pregunta.style.display = 'none';
+            }
+
+        }
+        function comprobar() {
+            console.log("Total enviado al servidor:", total);
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("resultadoTest").style.display='block';
+                    document.getElementById("resultado2").innerHTML = this.responseText;
+                    //document.getElementById('resultado').innerText = "Puntuación Total: " + total;
+                }
+            };
+            //xmlhttp.open("GET", "http://localhost/Proyectos/JS/ra7/fototipo/getFototipo.php?total=" + total, true);
+            xmlhttp.open("GET", "http://localhost/Proyectos/DWECL/js/ra7/fototipo/getFototipo.php?total=" + total, true);
+
+            xmlhttp.send();
+        }
+        function limpiar() {
+            //recarga la página
+            window.location.reload();
+        }
+    </script>
+</body>
+
+</html>

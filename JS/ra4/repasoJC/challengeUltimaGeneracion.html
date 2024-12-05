@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge VII</title>
+</head>
+
+<body>
+    <div>
+        Me sabrías decir de este array cual es la última generación:
+        const REYES =
+        ["Chindatore",["Chindasvinto","Rencesvinto","Lautaro"],["Lauro","Sisebuto",["Fracisbuto","Vigafredo",["Leovigildo","Recaredo"]]],"Amalarico
+        II"];
+
+        Se supone que si un elemento es un subarray es la siguiente generación. Por ejemplo [A,[B]]
+        A es de primera generación
+        B es de segunda generación
+
+        El resultado sería 2
+    </div>
+    <script>
+        const REYES = ["Chindatore",["Chindasvinto","Rencesvinto","Lautaro"],["Lauro","Sisebuto",["Fracisbuto","Vigafredo",["Leovigildo","Recaredo"]]],"Amalarico II"];
+
+        const buscarUltima=(array,generacion)=>{
+            let maxgen = generacion
+
+            array.map(e=>{
+                if(Array.isArray(e)){
+                    let aux= buscarUltima(e,generacion+1)
+                    if (aux>maxgen) {
+                        maxgen=aux
+                    }
+                }
+
+            })
+
+            return maxgen
+        }
+
+        const ultimaGeneracion=(array,generacion,cual)=>{
+            let godos = []
+            array.map(e=>{
+                if(Array.isArray(e)){
+                    //de los elementos de ese array y no del array
+                    godos.push(...ultimaGeneracion(e,generacion+1,cual))
+                    //ultimaGeneracion(e,generacion+1,cual)
+                    
+                }else{
+                    if(generacion==cual){
+                        //console.log(e)
+                        godos.push(e)
+                    }
+                }
+
+            })
+
+            return godos
+        }
+       //ultimaGeneracion(REYES,1,buscarUltima(REYES,1))
+       console.log(ultimaGeneracion(REYES,1,buscarUltima(REYES,1)))
+
+       //operador spread (...)
+       /*
+       cuando le hacemos un push de una array que tiene una array dentro podríamos usar un flat(infinity)
+       
+       */
+
+    </script>
+</body>
+
+</html>

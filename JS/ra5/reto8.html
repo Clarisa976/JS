@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title>retos JavaScript</title>
+</head>
+
+<body>
+    <h1>retos JavaScript</h1>
+    <ul id="carrakos"> </ul>
+
+    <script>
+
+        var carrakos = ["Chevrolet", "Tesla", "BMW", ["Honda", "Infiniti", ["Lexus", "Mercedes", "Kia"], "Hyunday"], ["Mazda", "Mercedes", "Jeep", ["KTM", "Nissan", "Isuzu"]]];
+
+        let ulPadre = document.getElementById("carrakos");
+        const hacerLista = (array, ulPadre) => {
+            //recorremos cada elemento del array
+            array.map(coches => {
+                //verificamos si el elemento actual es un array
+                if (Array.isArray(coches)) {
+                    //si es un array creamos un ul
+                    let ul = document.createElement("ul");
+                    //llamamos de forma recursiva a la función
+                    hacerLista(coches, ul);
+                    ulPadre.appendChild(ul);
+                } else {
+                    //sino no es un array creamos un li
+                    let li = document.createElement("li");
+                    //creamos el nodo de texto
+                    let dentro_li = document.createTextNode(coches);
+                    //añadimos el nodo de texto
+                    li.appendChild(dentro_li);
+                    //agregamos al padre el li
+                    ulPadre.appendChild(li);
+                }
+            })
+        }
+
+
+        hacerLista(carrakos, ulPadre);
+
+
+    </script>
+</body>
+
+</html>

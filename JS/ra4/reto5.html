@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto 5</title>
+</head>
+
+<body>
+    <h1>retos JavaScript</h1>
+    <p>
+        Se pide que saques por consola lo siguiente:
+        // frutas del array frutas que sean tropicales
+        // frutas del array frutas que NO sean tropicales
+        //Nombre de las frutas con un stock mayor de 21
+
+        Se proporciona código starter.
+    </p>
+    <script>
+        let frutas = ["aguacate", "pera", "manzana", "naranja", "tomate", "granada", "mango", "litchi", "nispero"];
+        let tropicales = ["aguacate", "mango", "litchi", "nispero"];
+        let tropicStock = [
+            { fruta: "aguacate", stock: 50 },
+            { fruta: "mango", stock: 10 },
+            { fruta: "litchi", stock: 20 },
+            { fruta: "nispero", stock: 25 }
+        ];
+        // frutas del array frutas que sean tropicales
+        let fruticasTropicales = tropicStock.filter(v => tropicales.find(f => f == v.fruta) != undefined).map(v => v.fruta);
+        console.log("Frutas que son tropicales: " + fruticasTropicales);
+
+        // frutas del array frutas que NO sean tropicales
+        let fruticasNoTropicales = frutas.filter(fruta => !tropicales.includes(fruta));
+        console.log("Frutas que no son tropicales: " + fruticasNoTropicales);
+
+        //Nombre de las frutas con un stock mayor de 21
+        let frutasStock = tropicStock.filter(f => f.stock >=21).map(f => f.fruta);
+        console.log("Frutas con un stock mayor a 21: "+ frutasStock);
+
+    </script>
+</body>
+
+</html>

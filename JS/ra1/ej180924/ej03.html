@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio3</title>
+</head>
+
+<body>
+    <h1>Cuestionario</h1>
+    <p id="pregunta1" class="txtCambiar">1º - ¿El cielo es azul?</p>
+    <button type="button" class="btnTrue" onclick="myFunction('pregunta1', true)">Verdadero</button>
+    <button type="button" class="btnFalse" onclick="myFunction('pregunta1', false)">Falso</button>
+    
+    <p id="pregunta2" class="txtCambiar">2º - ¿1+1 son?</p>
+    <button type="button" class="btnTrue" onclick="myFunction('pregunta2', true)">2</button>
+    <button type="button" class="btnFalse" onclick="myFunction('pregunta2', false)">7</button>
+    
+    <p id="pregunta3" class="txtCambiar">3º - ¿Perros o gatos?</p>
+    <button type="button" class="btnTrue" onclick="myFunction('pregunta3', true)">Perros</button>
+    <button type="button" class="btnFalse" onclick="myFunction('pregunta3', true)">Gatos</button>
+    
+    <p id="pregunta4" class="txtCambiar">4º - ¿Calor o Frio?</p>
+    <button type="button" class="btnTrue" onclick="myFunction('pregunta4', true)">Frio</button>
+    <button type="button" class="btnFalse" onclick="myFunction('pregunta4', false)">Calor</button>
+    
+    <p id="pregunta5" class="txtCambiar">5º - ¿Fumar o vapear?</p>
+    <button type="button" class="btnTrue" onclick="myFunction('pregunta5', false)">Fumar</button>
+    <button type="button" class="btnFalse" onclick="myFunction('pregunta5', false)">Vapear</button>
+    
+    <p id="pregunta6" class="txtCambiar">6º - ¿Físico o digital?</p>
+    <button type="button" class="btnTrue" onclick="myFunction('pregunta6', true)">Físico</button>
+    <button type="button" class="btnFalse" onclick="myFunction('pregunta6', true)">Digital</button>
+    
+    <p id="pregunta7" class="txtCambiar">7º - Buenos días</p>
+    <button type="button" class="btnTrue" onclick="myFunction('pregunta7', true)">Buenos días</button>
+    <button type="button" class="btnFalse" onclick="myFunction('pregunta7', false)">Buenas tardes</button>
+    
+
+    <script>
+        /* Le pasamos dos parámetros a la función para poder usar la misma en todas las preguntas
+            Al pasarle el boolean solo hay que identificar en cada botón si es verdadero o no y así
+            lo filtramos directamente con el condicional
+        */
+        function myFunction(id, esVerdad) {
+            var x = document.getElementById(id);
+            if (esVerdad) {
+                x.style.color = "green";
+            } else {
+                x.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

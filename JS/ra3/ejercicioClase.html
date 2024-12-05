@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--
+    flag = 1
+    while flag
+        flag = 0
+
+        for         cambio->flag=1
+    
+    end
+
+    1 3 6 5 7
+    1 3 5 6 7
+    -->
+
+    <script>
+        let minas = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0]
+        ];
+
+        //cambiamos los 0 por 99 para que  la mínima no sea 0
+        for (let i = 0; i < minas.length; i++) {
+            for (let j = 0; j < minas[i].length; j++) {
+                if (minas[i][j] === 0) {
+                    minas[i][j] = 99;
+                }
+            }
+        }
+        let flag = 1;
+        while (flag == 1) {
+            flag = 0;
+            //recorrer la matriz
+            //si la casilla no es un 1 tenemos que coger la mínima casilla
+            //adyacente y sumarle 1 para finalmente actualizar la casilla
+            //si el número es menor que el de la propia casilla
+
+            
+
+
+
+
+            /*
+            //método burbuja
+            for (let i = 0; i < arr1.length - 1; i++) {
+            //comprobamos los elementos
+            if (arr1[i] > arr1[i + 1]) {
+                //si no están ordenados, los ordenamos
+                let temp = arr1[i+1];
+                arr1[i+1] = arr1[i];
+                arr1[i] = temp;
+                flag = 1; //cambiamos el valor
+            }
+            //console.log(arr1);//así vemos todo el cambio
+        }*/
+        }
+
+        console.log(minas);
+
+    </script>
+</body>
+
+</html>

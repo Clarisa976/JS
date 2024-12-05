@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de clase</title>
+</head>
+<body>
+    <p><b>Escribe el nombre de alguna ciudad d&oacute;nde quieres ir: </b></p>
+    <form>
+        Ciudad: <input type="text" onkeyup="muestraSugerencia(this.value)">
+    </form>
+    <p>Sugerencias: <span id="txtSugerencia"></span></p>
+    <script>
+        function muestraSugerencia(str) {
+            if (str.length == 0) {
+                document.getElementById("txtSugerencia").innerHTML = "";
+                return;
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("txtSugerencia").innerHTML = this.responseText;
+                    }
+                };
+                //xmlhttp.open("GET", "http://localhost/DWEC/AJAX/getSugerencia.php?param=" + str, true);
+                xmlhttp.open("GET", "http://localhost/Proyectos/DWECL/js/ra7/ejClase/getSugerencia.php?param=" + str, true);
+               
+                xmlhttp.send();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inversión de un array</title>
+</head>
+
+<body>
+    <h2>EJERCICIO inversión de un array.</h2>
+    <p> Realiza un programa al que se le introduzca un texto y devuelva el mismo texto pero con las letras invertidas.
+        Por ejemplo la entrada:
+
+        Buenos días hoy es lunes
+        Daría la salida:
+        soneuB saíd yoh se senul
+
+
+        truco: prueba el siguiente código...
+        let text = "Hello world!";
+        let result = text.substring(1, 4);
+
+        substring() extrae parte de un string.
+    </p>
+    <p id="demo"></p>
+    <script>
+        let txtEjemplo = "Buenos días, buenas tardes, buenas noches";
+        // var tamanioTxt = txtEjemplo.length;
+        let txtResultado = "";
+        //usamos un bucle for para recorrer el txtEjemplo e invertirlo
+        for (let i = txtEjemplo.length - 1; i >= 0; i--) {
+            //vamos guardando cada elemento invertido
+            let txtInvertido = txtEjemplo.substring(i, i + 1);
+            //lo añadimos al resultado
+            txtResultado += txtInvertido;
+        }
+        document.getElementById("demo").innerHTML = txtResultado;
+    </script>
+</body>
+
+</html>

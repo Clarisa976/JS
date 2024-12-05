@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palabras ordenadas</title>
+</head>
+
+<body>
+    <h1>Lista de palabras en orden alfabético</h1>
+    <p>Realiza un programa el cual reciba un texto determinado
+        y muestre una lista de las palabras introducidas de
+        forma alfabética junto con el número de veces que
+        aparece esa palabra.
+        Se obviará todo lo que no sea una palabra como
+        puntos, comas, etc.
+    </p>
+    <input type="text" name="textoIntroducido" id="txtIntroducido">
+    <input type="button" value="Contar" onclick="palabras()">
+    <p id="resultado"></p>
+
+    <script>
+        function palabras() {
+            let txt = document.getElementById("txtIntroducido").value;
+            txt = txt.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").toLowerCase();//ignoramos los caracteres especiales
+            let array = txt.split(/\s+/);//separamos
+            array = array.sort();//ordenar
+            console.log(array);//mostramos por consola para ver como va
+
+            //contamos las veces que se llega a repetir una palabra
+            let contadorPalabras = 0;
+            for (let i = 0; i < array.length; i++) {
+                for (let j = 0; j < array.length; j++) {
+                    if (array[i] == array[j]) {
+                        contadorPalabras++;
+                    }
+                }
+                //lo mostramos en la web
+                document.getElementById("resultado").innerHTML += array[i] + " - " + contadorPalabras + "<br>";
+                console.log(array[i] + " - " + contadorPalabras);//mostramos por consola
+                i = i + contadorPalabras - 1;
+                contadorPalabras = 0;
+
+                
+            }
+
+
+        }
+    </script>
+
+
+</body>
+
+</html>

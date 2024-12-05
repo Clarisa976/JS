@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>KULEVRA_LIGHT</title>
+</head>
+
+<body>
+
+
+    <p id="txt">
+    <p>
+
+
+        <script>
+            let mapa = [['*', '', '', '*', '*', '*'],
+            ['*', '', '', '', '', ''],
+            ['*', '', '', '', '*', '*'],
+            ['*', '', '', '', '', ''],
+            ['*', '*', '*', '*', '*', '*']];
+            mapaback = JSON.parse(JSON.stringify(mapa))
+
+
+
+
+            const maxFilas = mapa.length;
+            const maxColumnas = mapa[0].length;
+
+            function kulevra(fila, columna) {
+                let contador = 0;
+                if (fila >= maxFilas || fila < 0) return 0;
+                if (columna >= maxColumnas || columna < 0) return 0;
+
+                if (mapa[fila][columna] == "") return 0;
+
+                if (mapa[fila][columna] == "*") {
+                    mapa[fila][columna] = ""
+                    contador++;
+                }
+
+                //arriba
+                if (fila > 0 && mapa[fila - 1][columna] == "*") {
+                    contador += kulevra(fila - 1, columna)
+                }
+
+                //abajo
+                if (fila < (maxFilas - 1) && mapa[fila + 1][columna] == "*") {
+                    contador += kulevra(fila + 1, columna)
+                }
+
+                //izquierda
+                if (columna > 0 && mapa[fila][columna - 1] == "*") {
+                    contador += kulevra(fila, columna - 1)
+                }
+                //derecha
+                if (columna < (maxColumnas - 1) && mapa[fila][columna + 1] == "*") {
+                    contador += kulevra(fila, columna + 1)
+                }
+
+                return contador;
+            }
+
+
+            console.table(mapaback);
+            console.log("En la posición 0,0 hay una culebra de " + kulevra(0, 0) + " posiciones")
+            mapa = JSON.parse(JSON.stringify(mapaback))
+            console.log("En la posición 0,1 hay una culebra de " + kulevra(0, 1) + " posiciones")
+            mapa = JSON.parse(JSON.stringify(mapaback))
+            console.log("En la posición 0,4 hay una culebra de " + kulevra(0, 4) + " posiciones")
+            mapa = JSON.parse(JSON.stringify(mapaback))
+            console.log("En la posición 2,4 hay una culebra de " + kulevra(2, 4) + " posiciones")
+            mapa = JSON.parse(JSON.stringify(mapaback))
+            console.log("En la posición 3,0 hay una culebra de " + kulevra(3, 0) + " posiciones")
+
+
+
+        </script>
+
+
+</body>
+
+</html>

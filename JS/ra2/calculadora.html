@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        table {
+            border: 1px solid gray;
+            border-collapse: collapse;
+            width: 20rem;
+            height: auto;
+        }
+
+        tr,
+        td {
+            display: flex;
+            width: 100%;
+            height: auto;
+            border: 1px solid gray;
+        }
+
+        #pantalla_calculadora {
+            border: 1px solid grey;
+            height: auto;
+        }
+
+        #mostrar_pantalla {
+            background-color: azure;
+            text-align: end;
+            align-content: center;
+            height: 3rem;
+            width: 100%;
+        }
+
+        button {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Calculadora</h1>
+    <table>
+        <tr id="pantalla_calculadora">
+            <td>
+                <div id="mostrar_pantalla"></div>
+            </td>
+        </tr>
+        <tr>
+            <td><button id="uno" onclick="aniadirValor('1')">1</button></td>
+            <td><button id="dos" onclick="aniadirValor('2')">2</button></td>
+            <td><button id="tres" onclick="aniadirValor('3')">3</button></td>
+            <td><button id="suma" onclick="aniadirValor('+')">+</button></td>
+        </tr>
+        <tr>
+            <td><button id="cuatro" onclick="aniadirValor('4')">4</button></td>
+            <td><button id="cinco" onclick="aniadirValor('5')">5</button></td>
+            <td><button id="seis" onclick="aniadirValor('6')">6</button></td>
+            <td><button id="resta" onclick="aniadirValor('-')">-</button></td>
+        </tr>
+        <tr>
+            <td><button id="siete" onclick="aniadirValor('7')">7</button></td>
+            <td><button id="ocho" onclick="aniadirValor('8')">8</button></td>
+            <td><button id="nueve" onclick="aniadirValor('9')">9</button></td>
+            <td><button id="multiplicacion" onclick="aniadirValor('*')">x</button></td>
+        </tr>
+        <tr>
+            <td><button id="borrar" onclick="borrar()">C</button></td>
+            <td><button id="cero" onclick="aniadirValor('0')">0</button></td>
+            <td><button id="igual" onclick="calcular()">=</button></td>
+            <td><button id="division" onclick="aniadirValor('/')">/</button></td>
+        </tr>
+    </table>
+
+    <script>
+
+        //función para obtener el contenido de la pantalla
+        function contenido_pantalla() {
+            return document.getElementById("mostrar_pantalla");
+        }
+        //función para borrar lo que haya en la pantalla
+        function borrar() {
+            mostrar_pantalla.textContent = "";
+        }
+        //función con la que añadiremos contenido a la pantalla
+        function aniadirValor(valor) {
+            if (contenido_pantalla().textContent.includes("=") && valor != "+" && valor != "-" && valor != "*" && valor != "/") {
+                mostrar_pantalla.textContent = valor;
+            } else if (contenido_pantalla().textContent.includes("=")) {
+                mostrar_pantalla.textContent = "uwu";
+            } else {
+                mostrar_pantalla.textContent += valor;
+            }
+        }
+        //función para calcular las operaciones usando eval
+        function calcular() {
+            if (mostrar_pantalla.textContent === "" || mostrar_pantalla.textContent === undefined) {
+                mostrar_pantalla.textContent = "intenta primero poner algo";
+            } else {
+                contenido_pantalla().textContent += " = " + eval(mostrar_pantalla.textContent);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

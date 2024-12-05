@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>INTERSECTION LIST</title>
+</head>
+
+<body>
+    <h4>PRIMERA LISTA:</h4>
+    <ul id="lista1">
+        <li>manzana</li>
+        <li>pera</li>
+        <ul>
+            <li>conferencia</li>
+            <ul>
+                <li>conferenciaverde</li>
+                <li>conferenciaamarilla</li>
+                <li>conferenciaroja</li>
+            </ul>
+            <li>peradeagua</li>
+            <li>peritadulce</li>
+            <ul>
+                <li>Dimas</li>
+                <li>Gestas</li>
+                <li>Malakatos</li>
+                <li>Jose</li>
+            </ul>
+        </ul>
+        <li>limon</li>
+        <li>limon</li>
+        <li>LIMON</li>
+    </ul>
+    <h4>Segunda lista:</h4>
+    <ul id="lista2">
+        <li>manzana</li>
+        <li>manzana</li>
+        <li>manzana</li>
+        <li>manzana</li>
+        <li>pera</li>
+        <li>limon</li>
+    </ul>
+
+
+    <script>
+
+        //el contenido del script lo colocaré aquí
+
+        // Como dice el profesor
+
+        const inserta = (desde, hasta) => {
+            if (desde.nodeName == "LI") {
+                hasta.push(desde.innerHTML.toUpperCase());
+            } else {
+                for (let i = 0; i < desde.children.length; i++) {
+                    inserta(desde.children[i], hasta);
+                }
+            }
+        }
+
+        const eliminaDuplicados = (array) => {
+            return array.filter((v, i, ar) => v != ar[i + 1]);
+        }
+
+        const buscaDuplicados = (arrayIni) => {
+            return eliminaDuplicados(arrayIni.filter((v, i, ar) => v == ar[i + 1]));
+        }
+
+
+        //Declarar las listas
+        var lista1 = [];
+        var lista2 = [];
+        var newlista = [];
+
+
+        // Insertar las dos listas del DOM en 2 arrays diferentes
+        inserta(document.getElementById("lista1"), lista1);
+        inserta(document.getElementById("lista2"), lista2);
+
+        //Ordenar las dos listas y eliminar duplicados. Si ordeno las listas puedo quitar los duplicados de forma fácil porque estarán juntos.
+        lista1.sort();
+        lista1 = eliminaDuplicados(lista1);
+        lista2.sort();
+        lista2 = eliminaDuplicados(lista2);
+
+        //Crear una nueva lista concatenando el resultado de las dos anteriores.
+        lista1 = lista1.concat(lista2);
+
+        //Ordenar la nueva lista
+        lista1.sort();
+
+        //Los duplicados en esa nueva lista serán la intersección que voy buscando.
+        newlista = buscaDuplicados(lista1);
+
+        //mostrar el resultado
+        console.log("Lista de la intersección sin duplicados:")
+        console.log(newlista);
+    </script>
+
+</body>
+
+</html>

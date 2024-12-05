@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repaso de JC 1</title>
+</head>
+
+<body>
+    <script>
+        var godosJSON = '{"reyesgodos":[{"nombre":"Alarico","hijos":["Atanagildo","Recesvinto","Leovigildo"]},{"nombre":"RecaredoI","hijos":["Sisebuto","RecaredoII"]},{"nombre":"Suintila","hijos":["Chindasvinto","Recesvinto","Wamba","Égica","Witiza","Rodrigo"]}]}  ';
+        let godos = JSON.parse(godosJSON).reyesgodos
+        //Nombre del padre de los godos que se llamen Recesvinto
+        let padreRecesvinto = godos.filter(n => n.hijos.find(h=> h=="Recesvinto")).map(m=>m =m.nombre)
+        console.log("Cómo se llama el padre de Recesvinto? "+padreRecesvinto)
+
+        //Nombre del padre de los godos que se llamen Recesvinto y que no tengan un hijo llamado Leovigildo 
+        let padreRecesvintoNoLeovigildo = godos.filter(n => n.hijos.find(h=> h=="Recesvinto")&& !n.hijos.find(h=>h=="Leovigildo")).map(m=>m =m.nombre)
+        console.log("Cómo se llama el padre de Recesvinto que no tenga un hijo llamado Leovigildo? "+padreRecesvintoNoLeovigildo)
+
+
+        /*el más repe*/
+        const array1 = [5, 12, 8, 130, 44,5,12,5,21,3,5]
+        let numero = undefined
+        array1.map(e=>{
+            let c =array1.filter(f=>f==e).length
+            if(c>cuantos){
+                cuantos=c
+                numero=e
+            }
+        })
+        console.log(numero+" "+cuantos+" veces")
+
+    </script>
+</body>
+
+</html>

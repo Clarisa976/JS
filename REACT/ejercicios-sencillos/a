@@ -1,0 +1,13 @@
+npx create-react-app .
+npm install reactstrap react react-dom
+npm install --save bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+npm i bootstrap
+npm i reactstrap react react-dom
+import 'bootstrap/dist/css/bootstrap.css';
+
+npm install reactstrap bootstrap
+
+git add * -f

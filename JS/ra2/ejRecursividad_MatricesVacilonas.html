@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrices vacilonas</title>
+</head>
+<body>
+    <h1>Matrices vacilonas</h1>
+    <input type="number" id="numero" value="3" min="1" max="10" />
+    <p id="parrafo"></p>
+    <input type="button" onclick="generarMatriz()" value="Generar matriz" />
+    <script>
+        //realiza un programa que cree una matriz
+        //el grado deberá ser configurable (nxn)
+        //realiza el ejercicio preferiblemente de forma recursiva
+
+
+        function generarMatriz(){
+            var tamanio = document.getElementById("numero").value;
+            var matriz = crearMatriz(tamanio);
+            document.getElementById("parrafo").innerHTML = mostrarMatriz(matriz);
+        }
+
+
+        function crearMatriz(tamanio) {
+            var array = new Array(tamanio);
+            for (let i = 0; i < tamanio; i++) {
+                array[i] = new Array(tamanio);
+                for (let j = 0; j < tamanio; j++) {
+                    //posición x+(y-1) o (x-1)+y
+                    array[i][j] = matriz(i,j);
+                    
+                }
+            }
+            return array;
+        }
+        function matriz(x,y) {
+            if (y == 0 || x == 0) {//si está en el borde de la matriz lo convierte todo en 1
+                return 1;
+            } else {
+                //suma el valor de la casilla de la izquierda y la de arriba para que sea recursivo
+                return matriz(x-1,y)+matriz(x,y-1);
+            }
+        }
+        function mostrarMatriz(matriz) {
+            var resultado = "";
+            for (let p = 0; p < matriz.length; p++) {
+                for (let o = 0; o < matriz[p].length; o++) {
+                    resultado += matriz[p][o] + " "; 
+                }
+                resultado += "<br>";//salto de línea
+            }
+            return resultado;
+        }
+
+    </script>
+</body>
+</html>

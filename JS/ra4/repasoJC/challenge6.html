@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Es corto, no muy largo pero hay que pensar => Challenge VI</title>
+</head>
+<body>
+    <script>
+        /*
+        Me sabrías decir de este array cuales son los reyes de generación PAR:
+        const REYES = ["Chindatore",["Chindasvinto","Rencesvinto","Lautaro"],["Lauro","Sisebuto",["Fracisbuto","Vigafredo",["Leovigildo","Recaredo"]]],"Amalarico II"];
+
+        Se supone que si un elemento es un subarray es la siguiente generación. Por ejemplo [A,[B]]
+        A es de primera generación
+        B es de segunda generación
+
+
+        En este caso mostraría B
+        */
+
+        const REYES = ["Chindatore",
+            ["Chindasvinto","Rencesvinto","Lautaro"],["Lauro","Sisebuto",
+                ["Fracisbuto","Vigafredo",
+                    ["Leovigildo","Recaredo"]]],
+                        "Amalarico II"];
+
+        /*hacer un programia que le saque el nombre del rey y la generación a la que pertenece*/
+
+        const buscaReyes = (array, contador)=>{
+            array.map(e=>{
+                if(Array.isArray(e)){
+                    //si es un array llama a la función con el elemento y el contador ++
+                    buscaReyes(e,contador+1)
+
+                }else{
+                    //muestra al rey
+                    console.log(e + " - Generación: "+contador)
+                }
+            })
+        }
+        buscaReyes(REYES,1)
+
+        const reyesPares = (array, esPar)=>{
+            array.map(e=>{
+                if(Array.isArray(e)){
+                    //si es un array llama a la función con el elemento y el contador ++
+                    reyesPares(e,!esPar)
+
+                }else{
+                    if (esPar) {
+                         //muestra al rey
+                    console.log(e + " es de la generación par ")
+                    }
+                   
+                }
+            })
+        }
+        console.log("Reyes pares: ")
+        reyesPares(REYES,false)
+    </script>
+</body>
+</html>

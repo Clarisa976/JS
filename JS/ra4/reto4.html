@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto 4</title>
+</head>
+
+<body>
+    <p>
+        Se pide que hagas un programa que muestre la media de TODAS las notas de los 3 alumnos que tenemos en nuestro
+        JSON.
+        Mi script solo tiene 3 líneas (aparte del JSON por supuesto).
+    </p>
+    <p id="result"></p>
+    <script>
+        var valumnos = {
+            "alumnos": [{
+                "nombre": "Fulanito",
+                "notas": {
+                    "DWEC": 8,
+                    "DWESE": 0.71,
+                    "ED": 7.04,
+                    "SSOO": 3.37,
+                    "BBDD": 0.22,
+                    "PROG": 1.09,
+                    "EINEM": 6.17
+                }
+            },
+            {
+                "nombre": "Menganito",
+                "notas": {
+                    "DWEC": 7,
+                    "DWESE": 0.71,
+                    "ED": 7.04,
+                    "SSOO": 3.37,
+                    "BBDD": 0.22,
+                    "PROG": 1.09,
+                    "EINEM": 6.17
+                }
+            }
+                ,
+            {
+                "nombre": "Cetanito",
+                "notas": {
+                    "DWEC": 6,
+                    "DWESE": 0.71,
+                    "ED": 7.04,
+                    "SSOO": 3.37,
+                    "BBDD": 0.22,
+                    "PROG": 1.09,
+                    "EINEM": 6.17
+                }
+            }
+            ]
+        };
+        let notas = valumnos.alumnos.map(valor => valor.notas.DWEC)
+            .concat(valumnos.alumnos.map(valor => valor.notas.DWESE))
+            .concat(valumnos.alumnos.map(valor => valor.notas.ED))
+            .concat(valumnos.alumnos.map(valor => valor.notas.SSOO))
+            .concat(valumnos.alumnos.map(valor => valor.notas.BBDD))
+            .concat(valumnos.alumnos.map(valor => valor.notas.PROG))
+            .concat(valumnos.alumnos.map(valor => valor.notas.EINEM));
+        /*let notas2 = valumnos.alumnos.flatMap(alumno => Object.values(alumno.notas));*/
+        let suma = notas.reduce((suma, valor) => suma + valor);
+
+        console.log(notas);
+        console.log(suma);
+        console.log("La suma de las notas es " + suma + " y la media es " + suma/notas.length)
+        
+    </script>
+</body>
+
+</html>

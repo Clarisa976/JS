@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>Rusos contra alemanes</h1>
+    <p id="matriz"></p>
+    <h2 id="ganador"></h2>
+    <script>
+        let matriz = [
+            ["A", "A", "", "", "R", "", "", "", ""],
+            ["A", "A", "", "", "R", "", "", "", ""],
+            ["", "", "", "", "R", "", "", "", ""],
+            ["", "", "", "", "R", "", "", "", ""],
+            ["", "", "", "", "R", "", "", "", ""],
+            ["", "", "", "", "R", "", "", "", ""],
+            ["", "", "", "", "R", "", "", "", ""],
+            ["", "", "", "", "R", "", "", "A", "A"],
+            ["", "", "", "", "", "", "", "A", "A"]
+        ];
+    var copia = hacerCopia(matriz);
+    console.log("Antes de la guerra");
+    console.log(copia);
+        
+        function se_juntan(array, i, j) {
+            if (i < 0 || i >= array.length || j < 0 || j >= array[i].length) {
+                return;
+            }
+            if (array[i][j] === 'R' || array[i][j] === '*') {
+                return;
+            }
+            if (array[i][j] === 'A' || array[i][j] === '') {
+                array[i][j] = '*'; //lo marcamos como visitado
+                se_juntan(array, i - 1, j); //arriba
+                se_juntan(array, i + 1, j); //abajo
+                se_juntan(array, i, j - 1); //izquierda
+                se_juntan(array, i, j + 1); //derecha
+            }
+        }
+
+        //buscamos la primera a
+        let start_i = -1, start_j = -1;
+        for (let i = 0; i < matriz.length; i++) {
+            for (let j = 0; j < matriz[i].length; j++) {
+                if (matriz[i][j] === 'A') {
+                    start_i = i;
+                    start_j = j;
+                    break;
+                }
+            }
+            if (start_i !== -1) break;
+        }
+
+        //si ha a se rejuntan
+        if (start_i !== -1 && start_j !== -1) {
+            se_juntan(matriz, start_i, start_j);
+        }
+
+        //contamos las a que no se juntan
+        function contarA(array) {
+            let cont = 0;
+            for (let i = 0; i < array.length; i++) {
+                for (let j = 0; j < array[i].length; j++) {
+                    if (array[i][j] === 'A') {
+                        cont += 1;
+                    }
+                }
+            }
+            return cont;
+        }
+
+        //quien gana
+        if (contarA(matriz) > 0) {
+            document.getElementById("ganador").innerHTML = "Es invierno, ganaron los rusos";
+        } else {
+            document.getElementById("ganador").innerHTML = "Ganaron los alemanes";
+        }
+        function hacerCopia(matriz) {
+                return JSON.parse(JSON.stringify(matriz));
+            }
+        
+        console.log("Después de la guerra");
+        console.log(matriz);
+    </script>
+</body>
+
+</html>

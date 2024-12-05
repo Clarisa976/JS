@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercio de eventos</title>
+</head>
+<style>
+    div{
+        width: 8rem;
+        height: 6rem;
+        margin: 2rem;
+        padding: 2rem;
+        text-align: center;
+        background-color: aquamarine;
+        border: 0.1rem solid black;
+    }
+</style>
+
+<body>
+    <h1>Ejercicios de eventos con el ratón</h1>
+
+    <h2>ONMOUSEOVER</h2>
+    <div  id="prueba1" onmouseover="funcionMouseOver('prueba1')">
+        <p>Prueba a ver que pasa cuando pones el ratón sobre el div</p>
+
+    </div>
+
+    <h2>ONMOUSEOUT</h2>
+    <div  id="prueba2" onmouseover="funcionMouseOver('prueba2')" onmouseout="funcionMouseOut('prueba2')">
+        <p>Prueba a ver que pasa cuando pones el ratón sobre el div</p>
+
+    </div>
+
+    <h2>ONBLUR</h2>
+    
+    <p>Buenos días!</p> <input type="text" name="prueba3" id="txtBlur" onblur="funcionOnBlur()">
+
+    </div>
+
+    <script>
+        //fución para cuando se pone el ratón por encima
+        function funcionMouseOver(identificador) {
+            var aux = document.getElementById(identificador);
+            aux.style.backgroundColor = "grey";
+            
+        }
+        //fución para cuando se pone el ratón se retira de encima
+        function funcionMouseOut(identificador) {
+            var aux = document.getElementById(identificador);
+            aux.style.backgroundColor = "aquamarine";
+        }
+
+        //función para cuando perdemos el foco
+        function funcionOnBlur() {
+            var aux = document.getElementById("prueba3");
+            alert("has perdido el foco :D");
+        }
+    </script>
+
+</body>
+
+</html>

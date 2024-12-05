@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio5</title>
+</head>
+<body>
+    <button type="button" onclick="ruso()">Ruso</button>
+    <button type="button" onclick="espanol()">Español</button>
+    <button type="button" onclick="ingles()">Inglés</button>
+    <p id="mensaje"></p>
+    <script>
+        function ruso(){
+            var txt = document.getElementById("mensaje");
+            txt.innerHTML = "добро пожаловать"/*
+            /*dobro pozhalovat'*/
+            txt.style.color = "cyan";
+        }
+        function espanol() {
+            var txt = document.getElementById("mensaje");
+            txt.innerHTML = "¡Bienvenido!";
+            txt.style.color = "green";
+        }
+        function ingles(){
+            var txt = document.getElementById("mensaje");
+            txt.innerHTML = "Welcome!";
+            txt.style.color = "pink";
+        }
+    </script>
+</body>
+</html>

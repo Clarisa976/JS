@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karratraka</title>
+
+</head>
+<body>
+    <h1>Secuencia de Karratraka</h1>
+    <p id="secuencia"></p>
+    <script>
+        //1 1 3 5 9 15 25 41 67 109...
+        const CASO_BASE = 1;
+        let num=2;
+
+        function karratraka(posicion){
+            if (posicion<3){
+                return CASO_BASE;
+            }else{
+                return karratraka(posicion-1)+karratraka(posicion-2)+CASO_BASE;
+            }
+
+                 
+        }
+        let repeticiones= 15;
+        for (let i = 1; i < repeticiones; i++) {
+           let x = document.getElementById("secuencia")
+           x.innerHTML= x.innerHTML+"  " + karratraka(i);
+            
+        }
+
+        console.log(karratraka(repeticiones));
+       
+    </script>
+</body>
+</html>

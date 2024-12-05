@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PANDEMIC</title>
+</head>
+
+<body>
+
+    <p id="txt">
+    <p>
+
+        <script>
+            /*
+            H-humanos
+            M-Murciélagos
+            G-Gatos
+            P-Perros
+            R-Ratas
+            */
+            let biocenosis = [
+                ['P', 'P', 'G', 'H', 'H', 'R'],
+                ['P', 'P', 'G', 'H', 'H', 'G'],
+                ['P', 'G', 'R', 'H', 'H', 'G'],
+                ['G', 'R', 'R', 'H', 'G', 'G'],
+                ['R', 'R', 'H', 'H', 'G', 'P']
+            ];
+
+            console.log(biocenosis);
+            pandemic(0, 0);
+            //pandemic(4, 2);
+            console.log(biocenosis);
+
+            function pandemic(x, y) {
+                // INCLUYE TU CÓDIGO AQUÍ
+                const INFECTADO = biocenosis[x][y];
+
+                function exterminar(x, y) {
+                    //miramos las vecinas de la posición dada
+                    //para asegurarnos de que no se va fuera de la matriz 
+                    //y por último miramos si es el infectado
+                    if (x >= 0 && x < biocenosis.length
+                        && y >= 0 && y < biocenosis[0].length
+                        && biocenosis[x][y] === INFECTADO) {
+                            //dejamos el hueco en vacío del infectado
+                            biocenosis[x][y] = " ";
+
+                            //procedemos al exterminio recursivo
+                            exterminar(x-1,y);//al de arriba
+                            exterminar(x+1,y);//al de abajo
+                            exterminar(x,y-1);//al de la izquierda
+                            exterminar(x,y+1);//al de la derecha
+                    }
+                }
+                
+                exterminar(x,y);//comienza el exterminio
+            }
+
+
+        </script>
+
+</body>
+
+</html>

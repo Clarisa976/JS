@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>repaso</title>
+</head>
+
+<body>
+    <script>
+        var cars = ["Saab", "Volvo", "BMW", ["Honda", "Toyota", ["Lexus",
+            "Mercedes", "Lada"], "Hyunday"]];
+        var carrakos = ["Chevrolet", "Tesla", "BMW", ["Honda",
+            "Infiniti", ["Lexus", "Mercedes", "Kia"], "Hyunday"], ["Mazda",
+                "Mercedes", "Jeep", ["KTM", "Nissan", "Isuzu"]]];
+        var newcars = ["Saab", "Volvo", "BMW", ["Honda", "Toyota", ["Lexus",
+            "Volvo", "Lada"], "Hyunday", "Volvo"]];
+        buddies = [{
+            firstName: "Jonny", lastName: "Rambo",
+            car: "BMW"
+        }, {
+            firstName: "Arnold", lastName: "Suarchenager",
+            car: "Honda"
+        }, {
+            firstName: "Chuck", lastName: "Norris",
+            car: "Honda"
+        }, {
+            firstName: "Yakie", lastName: "Chang",
+            car: "BMW"
+        }, {
+            firstName: "Bruce", lastName: "Lee",
+            car: "Honda"
+        }, { firstName: "Steven", lastName: "Seagal", car: "Lada" }];
+
+        let xungas = ["Honda", "Lada"]
+        //EJERCICIO 1 ¿Cuántas veces aparece la palabra Volvo en newcars en una línea?
+        let volvoRepe = newcars.flat(Infinity).filter(coche => coche == "Volvo").length
+        console.log("Cuántas veces se repite volvo en newcars? " + volvoRepe)
+        //EJERCICIO 2 Ver si una marca es trendy. Una marca es trendy si esta es utilizada por más de
+        //un buddy. Crea en este mismo ejercicio un array trendy con dichas marcas. Muestra el array
+        //trendy por consola. Se pide que lo realices en 3-4 líneas de código.
+        let marcaTrendy = buddies.map(coche => coche.car)
+            .filter((c, index, array) => buddies.filter(coche => coche.car == c).length >= 2 && array.indexOf(c) === index)//la segunda condición elimina repetidos
+        console.log(marcaTrendy)
+
+        //EJERCICIO 3 Muestra por consola las marcas del array newcars que usen los buddies, que
+        //están obviamente en newcars pero que no estén en el array xungas. Muestra el resultado
+        //por consola. Puede aparecer alguna marca repetida (no importa). Realiza este programa en
+        //una línea de código.
+        let masUsadas = newcars.flat(Infinity).filter(coche => buddies.find(cochecitos => cochecitos.car == coche) != undefined).filter(coche => xungas.find(x => x == coche) === undefined)
+        console.log("Coches más usados pero que no están en xungas: " + masUsadas)
+        //EJERCICIO 4 Se quiere conocer la marca más trendy de todas usada por los buddies (la más
+        //preferida). Realiza este programa en 2 líneas de código.
+        let masTrendy = ""
+        newcars.flat(Infinity).map(coche => {
+            if (masTrendy != coche && buddies.filter(cochecito => cochecito.car == coche).length > buddies.filter(cochecito => cochecito.car == masTrendy).length) {
+                masTrendy = coche
+            }
+        })
+
+        console.log("El coche más trendy es: " + masTrendy)
+
+    </script>
+</body>
+
+</html>
