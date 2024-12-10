@@ -1,19 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from 'reactstrap';
-import { Component } from 'react';
+import React, { Component } from 'react';
+import Flashcard from './componentes/FlashcardComponent';
+import { GODOS  } from './shared/datos';
 
-function App (props){
-  
-    return (
-      <>
-        <Button color={this.state.color}> Dale</Button>
-        <Button color='info' onClick={()=>this.azul()} >Azul</Button>
-        <Button color='danger' onClick={()=>this.rojo()}>Rojo</Button>
-      </>
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      imagen: "/assets/images/yes.png"
+    }
+  }
+  render() {
+    const lista = GODOS.map(
+      (rey)=> <Flashcard 
+                key={rey.id}
+                imagen={rey.imagen} 
+                titulo={rey.nombre}
+                texto={rey.texto}
+              />
     );
-  
+    return (
+      <div className="App">
+        {lista}
+      </div>
+    );
+  }
 }
 
 export default App;
