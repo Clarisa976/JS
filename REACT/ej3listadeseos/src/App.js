@@ -17,6 +17,11 @@ class App extends Component {
     this.setState({ deseos: aux })
   }
 
+  quitar(elemento) {
+    let aux = this.state.deseos.slice();
+    aux = aux.filter(item => item !== elemento)
+    this.setState({ deseos: aux });
+  }
   render() {
     return (
       <div className="App">
@@ -24,7 +29,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1> Lista de deseos </h1>
           Añade tu regalo favorito
-          <DesireList deseos={this.state.deseos} />
+          <DesireList deseos={this.state.deseos} quitar={(elemento)=>this.quitar(elemento)}/>
           <Desire onAddDeseo={(e) => this.handleAniadirDeseo(e)} />
         </header>
       </div>
@@ -39,7 +44,10 @@ class DesireList extends Component {
         {
           this.props.deseos.map(d => {
             return (
-              <PrintDeseo deseo={d} />
+              <li>
+                {d} {" "} &nbsp;
+                <Borrar deseo={d} quitar={(elemento)=>this.props.quitar(elemento)}/>
+              </li>
             )
           })
         }
@@ -47,12 +55,18 @@ class DesireList extends Component {
     )
   }
 }
+/*
 function PrintDeseo(props) {
   return (
     <li>{props.deseo}</li>
   )
 }
-
+  */
+function Borrar(props){
+  return(
+    <button className='borrar' onClick={(deseo)=>props.quitar(props.deseo)}> Borrar{props.deseo} </button>
+  )
+}
 class Desire extends Component {
   render() {
     return (
