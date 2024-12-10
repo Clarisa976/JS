@@ -4,19 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from 'reactstrap';
 import { Component } from 'react';
 
-class App extends Component{
-  constructor(props){
-    super(props)
-    this.state={
-      color:'secondary'
-    }
-  //this.rojo=this.color.blind(this)
-  //this.azul=this.color.blind(this)
-}
-  rojo(){this.setState({color:'danger'})}
-  azul(){this.setState({color:'info'})}
-
-  render(){
+function App (props){
+  
     return (
       <>
         <Button color={this.state.color}> Dale</Button>
@@ -24,7 +13,7 @@ class App extends Component{
         <Button color='danger' onClick={()=>this.rojo()}>Rojo</Button>
       </>
     );
-  }
+  
 }
 
 export default App;
