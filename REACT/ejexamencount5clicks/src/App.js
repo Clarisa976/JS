@@ -44,11 +44,14 @@ function Botoncillo(props) {
   return (
     // MUESTRA AQUÍ EL BOTÓN CON EL COLOR CORRESPONDIENTE
     <>
+    
     <Button color={props.color} onClick={()=>props.pulsar(props.numBoton)}></Button>
     </>
   );
 }
 export default App;
+
+
 
 /*EJERCICIO COMPLEJO:
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -101,6 +104,7 @@ function Botoncillo(props) {
   );
 }
 export default App;
+
 */
 /*
 Juan Carlos Moreno Perez
