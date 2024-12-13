@@ -13,7 +13,7 @@ class App extends Component {
 
   setSeleccionado(num) {
     let aux = this.state.botoncitos;
-    aux[num] = 'danger';
+    aux[num] = 'info';
     let auxContador = this.state.contadores;
     auxContador[num] += 1;
     this.setState({ botoncitos: aux,
