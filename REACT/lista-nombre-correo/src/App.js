@@ -1,79 +1,40 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { Component } from 'react';
+import UserList from './componentes/UserList';
+import UserForm from './componentes/UserForm';
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      deseos: ["GAMBAS", "JAMÓN"],
+      users: [
+        {id:1,name:"perico",email:"perico@ejemplo.com"},
+        {id:2,name:"juanito",email:"juanito@ejemplo.com"},
+        {id:3,name:"andrés",email:"andrés@ejemplo.com"}
+      ],
     }
   }
-
-  handleAniadirDeseo(event) {
+  handleOnAddUser(event){
     event.preventDefault();
-    let aux = this.state.deseos.slice();
-    aux.push(event.target.deseo.value)
-    this.setState({ deseos: aux })
-  }
-
-  quitar(elemento) {
-    let aux = this.state.deseos.slice();
-    aux = aux.filter(item => item !== elemento)
-    this.setState({ deseos: aux });
+    let user ={
+      id:this.state.users.length+1,
+      name: event.target.name.value,
+      email:event.target.email.value
+    }
+    let copiaUsers = this.state.users;
+    copiaUsers.push(user);
+    this.setState({users:copiaUsers});
   }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1> Lista de deseos </h1>
-          Añade tu regalo favorito
-          <DesireList deseos={this.state.deseos} quitar={(elemento)=>this.quitar(elemento)}/>
-          <Desire onAddDeseo={(e) => this.handleAniadirDeseo(e)} />
-        </header>
+        <h1>Añade usuarios</h1>
+          <UserList users={this.state.users}/>
+          <UserForm onAddUser={(e)=>this.handleOnAddUser(e)}/>
+
       </div>
     );
-  }
-}
-
-class DesireList extends Component {
-  render() {
-    return (
-      <ul>
-        {
-          this.props.deseos.map(d => {
-            return (
-              <li>
-                {d} {" "} &nbsp;
-                <Borrar deseo={d} quitar={(elemento)=>this.props.quitar(elemento)}/>
-              </li>
-            )
-          })
-        }
-      </ul>
-    )
-  }
-}
-/*
-function PrintDeseo(props) {
-  return (
-    <li>{props.deseo}</li>
-  )
-}
-  */
-function Borrar(props){
-  return(
-    <button className='borrar' onClick={(deseo)=>props.quitar(props.deseo)}> Borrar{props.deseo} </button>
-  )
-}
-class Desire extends Component {
-  render() {
-    return (
-      <form onSubmit={this.props.onAddDeseo}>
-        <input type="text" placeholder="Escribe tu deseo" name="deseo" />
-      </form>
-    )
   }
 }
 
