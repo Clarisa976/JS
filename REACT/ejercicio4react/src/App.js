@@ -1,4 +1,4 @@
-import './App.css';
+/*import './App.css';
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Component } from 'react';
@@ -46,8 +46,7 @@ class App extends Component {
 }
 
 export default App;
-/*
-
+ */
 import './App.css';
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -73,20 +72,30 @@ class App extends Component {
       name: event.target.nombre.value,
       email: event.target.email.value
     };
+
     let aux = this.state.users;
-    aux.push(user);
+    if(aux.find(u => u.email === user.email)){
+      //no hace nada, sino está lo agrega
+      console.log("El email ya existe");
+    }else{
+      aux.push(user);
+      this.setState({ users: aux });}
+    
+  }
+  eventoBorrarUsuario(id){
+    let aux = this.state.users.filter(u => u.id !== id);
     this.setState({ users: aux });
   }
 
   render() {
-    const User = ({ name, email }) => {
-      return <li>{name} - {email}</li>;
+    const User = ({ id, name, email, eventoBorrarUsuario }) => {
+      return <li>{name} - {email} <Button onClick={()=>eventoBorrarUsuario(id)}>X</Button></li>;
     };
 
-    const UserList = ({ users }) => {
+    const UserList = ({ users, eventoBorrarUsuario }) => {
       return (
         <ul>
-          {users.map(u => <User key={u.id} name={u.name} email={u.email} />)}
+          {users.map(u => <User key={u.id} id={u.id} name={u.name} email={u.email} eventoBorrarUsuario={eventoBorrarUsuario}/>)}
         </ul>
       );
     };
@@ -107,7 +116,10 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Me mola Myfpschool</h2>
         </div>
-        <UserList users={this.state.users} />
+        <UserList 
+            users={this.state.users}
+            eventoBorrarUsuario={(id) => this.eventoBorrarUsuario(id)}
+         />
         <p><strong>Añade usuarios</strong></p>
         <UserForm onAddUser={(e) => this.handleOnAddUser(e)} />
       </div>
@@ -118,4 +130,4 @@ class App extends Component {
 export default App;
 
 
-*/
+

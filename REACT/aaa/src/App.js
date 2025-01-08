@@ -1,46 +1,70 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
-import { Button } from 'reactstrap';
+import React, { Component } from 'react'
+import { Button } from 'reactstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-function Boton(props) {
-  return (
-    <Button color={props.color} onClick={props.cambia}>
-      {props.texto}
-    </Button>
-  )
+const MapaBotones = (props) => {
+  // este componente pinta el tablero 9x9 con las props que le paso.
+  let matriz = [];
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (i === 0) {
+        matriz.push(<Button color={props.listaBotones[i][j]} outline onClick={()=>props.clica(i, j)} />);
+      } else {
+        if (props.listaBotones[i][j]!=="secondary") {
+          matriz.push(<Button color={props.listaBotones[i][j]} />);
+        } else {
+          matriz.push(<Button color={props.listaBotones[i][j]} outline />);
+        }
+      }
+    }
+    matriz.push(<br />);
+  }
+  return matriz;
 }
 
-class App extends React.Component {
+
+
+class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      letrero: "Esta aplicación saluda en varios idiomas",
+      listaBotones: Array(9).fill(null),
+      // no se puede modificar el state
     }
   }
-  cambia({ saludo }) {
-    this.setState({ letrero: saludo })
+
+  clica = (x, y) => {
+    // x se supone que la columna, y la fila
+    let aux = this.state;
+    let contador = 8;
+    let visitado = false;
+    while (contador>= 0 && !visitado) {
+      if (aux.listaBotones[contador][y] === "secondary") {
+        aux.listaBotones[contador][y] = "primary";
+        visitado = true;
+      }
+      contador--;
+    }
+    this.setState({aux});
+  }
+
+  componentWillMount() {
+    // aquí es donde creo las nueve columnas con los datos iniciales.
+    let auxLista = this.state.listaBotones;
+    for (let i = 0; i < 9; i++) {
+      auxLista[i] = Array(9).fill("secondary");
+    }
+    this.setState({ listaBotones: auxLista });
   }
 
   render() {
     return (
       <div className="App">
-        <h1>{this.state.letrero}</h1>
-        <Boton cambia={() => this.cambia({ saludo: "Hello!" })} texto="Inglés" color="danger" />
-        <Boton cambia={() => this.cambia({ saludo: "Salut!" })} texto="Francés" color="info" />
-        <Boton cambia={() => this.cambia({ saludo: "¡Hola!" })} texto="Español" color="success" />
+        <h1> BUCHACA </h1>
+        <MapaBotones listaBotones={this.state.listaBotones} clica={this.clica} />
       </div>
     );
   }
 }
 
 export default App;
-
-/*
-cambia() {
-if (this.state.color === "danger") {
-this.setState({ color: "success" })
-} else {
-this.setState({ color: "danger" })
-}
-}
-*/
