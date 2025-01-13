@@ -2,69 +2,84 @@ import React, { Component } from 'react'
 import { Button } from 'reactstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const MapaBotones = (props) => {
+const MapaBotones = ({ handleClick, listaBotones }) => {
   // este componente pinta el tablero 9x9 con las props que le paso.
-  let matriz = [];
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (i === 0) {
-        matriz.push(<Button color={props.listaBotones[i][j]} outline onClick={()=>props.clica(i, j)} />);
+  const botonesLogico = JSON.parse(JSON.stringify(listaBotones))
+  const tablero = []
+
+  botonesLogico.map((fila, numFila) => {
+    const filaAux = []
+    fila.map((col, numCol) => {
+      // Si es un azul le pongo solo el color para no habilitar el click
+      if (col === 'azul') {
+        filaAux.push(<Button color='primary'></Button>)
       } else {
-        if (props.listaBotones[i][j]!=="secondary") {
-          matriz.push(<Button color={props.listaBotones[i][j]} />);
-        } else {
-          matriz.push(<Button color={props.listaBotones[i][j]} outline />);
-        }
+        // Si es primera fila le pongo el handleClick y si no solo el color
+        const boton = numFila === 0 ? <Button onClick={() => handleClick(numCol)} outline></Button> : <Button outline></Button>
+        filaAux.push(boton)
       }
-    }
-    matriz.push(<br />);
-  }
-  return matriz;
+      return col
+    })
+
+    // Le añado un br al final de la fila para el salto de linea
+    filaAux.push(<br></br>)
+    // Añado la fila creada al tablero
+    tablero.push(filaAux)
+    return fila
+  })
+
+  return (
+    <div className='tablero'>
+      {tablero}
+    </div>
+  )
 }
 
-
-
 class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
-      listaBotones: Array(9).fill(null),
+      listaBotones: this.componentWillMount(9)
       // no se puede modificar el state
     }
   }
 
-  clica = (x, y) => {
+  clica (x) {
     // x se supone que la columna, y la fila
-    let aux = this.state;
-    let contador = 8;
-    let visitado = false;
-    while (contador>= 0 && !visitado) {
-      if (aux.listaBotones[contador][y] === "secondary") {
-        aux.listaBotones[contador][y] = "primary";
-        visitado = true;
+    const botonesAux = JSON.parse(JSON.stringify(this.state.listaBotones))
+    // Compruebo la columna que ha clickado y pongo el color en la fila que toque
+    for (let i = botonesAux.length - 1; i >= 0; i--) {
+      // Empiezo a recorrer la fila por abajo, y la primera que encuentre que no sea azul la pongo y me salgo del bucle
+      if (botonesAux[i][x] !== 'azul') {
+        botonesAux[i][x] = 'azul'
+        break
       }
-      contador--;
     }
-    this.setState({aux});
+    // Cambio el estado de la lista al nuevo después del click
+    this.setState({ listaBotones: botonesAux })
   }
 
-  componentWillMount() {
+  componentWillMount (tam) {
     // aquí es donde creo las nueve columnas con los datos iniciales.
-    let auxLista = this.state.listaBotones;
-    for (let i = 0; i < 9; i++) {
-      auxLista[i] = Array(9).fill("secondary");
+    const botonesAux = []
+    for (let i = 0; i < tam; i++) {
+      const fila = []
+      for (let j = 0; j < tam; j++) {
+        fila.push(null)
+      }
+      botonesAux.push(fila)
     }
-    this.setState({ listaBotones: auxLista });
+    return botonesAux
   }
 
-  render() {
+  render () {
     return (
       <div className="App">
         <h1> BUCHACA </h1>
-        <MapaBotones listaBotones={this.state.listaBotones} clica={this.clica} />
+        <MapaBotones listaBotones={this.state.listaBotones} handleClick={(x) => this.clica(x)} />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
