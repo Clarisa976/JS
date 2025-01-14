@@ -2,84 +2,84 @@ import React, { Component } from 'react'
 import { Button } from 'reactstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const MapaBotones = ({ handleClick, listaBotones }) => {
+const MapaBotones = (props) => {
   // este componente pinta el tablero 9x9 con las props que le paso.
-  const botonesLogico = JSON.parse(JSON.stringify(listaBotones))
-  const tablero = []
-
-  botonesLogico.map((fila, numFila) => {
-    const filaAux = []
-    fila.map((col, numCol) => {
-      // Si es un azul le pongo solo el color para no habilitar el click
-      if (col === 'azul') {
-        filaAux.push(<Button color='primary'></Button>)
+  let matriz = [];
+  //doble bucle for para la matriz 9x9
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (i == 0) {
+        matriz.push(<Button color={props.listaBotones[i][j]} outline onClick={() => props.clica(i, j)} />);
       } else {
-        // Si es primera fila le pongo el handleClick y si no solo el color
-        const boton = numFila === 0 ? <Button onClick={() => handleClick(numCol)} outline></Button> : <Button outline></Button>
-        filaAux.push(boton)
+        if (props.listaBotones[i][j] != "secondary") {
+          matriz.push(<Button color={props.listaBotones[i][j]} />);
+        } else {
+          matriz.push(<Button color={props.listaBotones[i][j]} outline />);
+        }
       }
-      return col
-    })
-
-    // Le añado un br al final de la fila para el salto de linea
-    filaAux.push(<br></br>)
-    // Añado la fila creada al tablero
-    tablero.push(filaAux)
-    return fila
-  })
-
-  return (
-    <div className='tablero'>
-      {tablero}
-    </div>
-  )
+    }
+    matriz.push(<br />);
+  }
+  return matriz;
 }
 
 class App extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      listaBotones: this.componentWillMount(9)
+      listaBotones: Array(9).fill(null),
+      iniciarJuego: false
       // no se puede modificar el state
     }
   }
 
-  clica (x) {
+  clica = (x, y) => {
     // x se supone que la columna, y la fila
-    const botonesAux = JSON.parse(JSON.stringify(this.state.listaBotones))
-    // Compruebo la columna que ha clickado y pongo el color en la fila que toque
-    for (let i = botonesAux.length - 1; i >= 0; i--) {
-      // Empiezo a recorrer la fila por abajo, y la primera que encuentre que no sea azul la pongo y me salgo del bucle
-      if (botonesAux[i][x] !== 'azul') {
-        botonesAux[i][x] = 'azul'
-        break
+    let aux = this.state;
+    let contador = 8;
+    let visitado = false;
+    while (contador >= 0 && !visitado) {
+      if (aux.listaBotones[contador][y] === 'secondary') {
+        aux.listaBotones[contador][y] = 'info';
+        visitado = true;
       }
+      contador--;
     }
-    // Cambio el estado de la lista al nuevo después del click
-    this.setState({ listaBotones: botonesAux })
+    this.setState({ aux });
   }
 
-  componentWillMount (tam) {
+  componentWillMount() {
     // aquí es donde creo las nueve columnas con los datos iniciales.
-    const botonesAux = []
-    for (let i = 0; i < tam; i++) {
-      const fila = []
-      for (let j = 0; j < tam; j++) {
-        fila.push(null)
-      }
-      botonesAux.push(fila)
+    let aux = this.state.listaBotones;
+    for (let i = 0; i < 9; i++) {
+      aux[i] = Array(9).fill('secondary');
     }
-    return botonesAux
+    this.setState({ listaBotones: aux });
   }
+  iniciarJuego = () => {
+    if (!this.state.listaBotones[0]) { // Verificamos si listaBotones no está inicializado
+      const copiaListaBotones = Array(9).fill(null).map(() => Array(9).fill("secondary"));
+      this.setState({ listaBotones: copiaListaBotones, iniciarJuego: true });
+    } else {
+      this.setState({ iniciarJuego: true });
+    }
+  };
 
-  render () {
+  render() {
     return (
       <div className="App">
-        <h1> BUCHACA </h1>
-        <MapaBotones listaBotones={this.state.listaBotones} handleClick={(x) => this.clica(x)} />
+        <h1> </h1>
+        <div>
+          <Button onClick={this.iniciarJuego}>Jugar</Button>
+        </div>
+        <div>
+        {this.state.iniciarJuego && (
+          <MapaBotones listaBotones={this.state.listaBotones} clica={this.clica} />
+        )}
+        </div>
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;
