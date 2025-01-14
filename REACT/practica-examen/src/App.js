@@ -74,7 +74,7 @@ class App extends Component {
         </div>
         <div>
         {this.state.iniciarJuego && (
-          <MapaBotones listaBotones={this.state.listaBotones} clica={this.clica} />
+          <MapaBotones listaBotones={this.state.listaBotones} clica={(x,y)=>this.clica(x,y)} />
         )}
         </div>
       </div>

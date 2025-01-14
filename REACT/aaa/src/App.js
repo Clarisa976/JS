@@ -2,80 +2,72 @@ import React, { Component } from 'react'
 import { Button } from 'reactstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const MapaBotones = (props) => {
-  // este componente pinta el tablero 9x9 con las props que le paso.
-  let matriz = [];
-  //doble bucle for para la matriz 9x9
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (i == 0) {
-        matriz.push(<Button color={props.listaBotones[i][j]} outline onClick={() => props.clica(i, j)} />);
-      } else {
-        if (props.listaBotones[i][j] != "secondary") {
+function Botonera(props) {
+  // componente que renderiza el tablero
+  //si se puede jugar
+  if (props.playable) {
+    let matriz = [];
+    //doble bucle para hacer el tablero8x8
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        //si es par
+        if ((i+j) % 2 === 0) {
           matriz.push(<Button color={props.listaBotones[i][j]} />);
         } else {
-          matriz.push(<Button color={props.listaBotones[i][j]} outline />);
+          matriz.push(<Button outline />);          
         }
       }
+      matriz.push(<br />);
     }
-    matriz.push(<br />);
+    return matriz;
   }
-  return matriz;
+
 }
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listaBotones: Array(9).fill(null),
-      iniciarJuego: false
+      listaBotones: [],
+      playable: false
       // no se puede modificar el state
     }
   }
 
-  clica = (x, y) => {
-    // x se supone que la columna, y la fila
-    let aux = this.state;
-    let contador = 8;
-    let visitado = false;
-    while (contador >= 0 && !visitado) {
-      if (aux.listaBotones[contador][y] === 'secondary') {
-        aux.listaBotones[contador][y] = 'info';
-        visitado = true;
-      }
-      contador--;
-    }
-    this.setState({ aux });
-  }
 
-  componentWillMount() {
-    // aquí es donde creo las nueve columnas con los datos iniciales.
-    let aux = this.state.listaBotones;
-    for (let i = 0; i < 9; i++) {
-      aux[i] = Array(9).fill('secondary');
-    }
-    this.setState({ listaBotones: aux });
-  }
-  iniciarJuego = () => {
-    if (!this.state.listaBotones[0]) { // Verificamos si listaBotones no está inicializado
-      const copiaListaBotones = Array(9).fill(null).map(() => Array(9).fill("secondary"));
-      this.setState({ listaBotones: copiaListaBotones, iniciarJuego: true });
+
+  jugar() {
+    let copiaJugable = this.state.playable;
+    let copiaLista = this.state.listaBotones;
+
+    if (copiaJugable) {
+      //si ya se ha jugado no se hace nada
+      copiaJugable = false;
     } else {
-      this.setState({ iniciarJuego: true });
+      //sino se crea el tablero
+      copiaJugable = true;
+      //los cinco primeros
+      for (let i = 0; i < 5; i++) {
+        copiaLista[i] = Array(8).fill('secondary');
+      }
+      //los que van en verde
+      for (let j = 5; j < 8; j++) {
+        copiaLista[j] = Array(8).fill('success');
+      }
     }
-  };
-
+    this.setState({ listaBotones: copiaLista, playable: copiaJugable });
+  }
   render() {
     return (
       <div className="App">
         <h1> </h1>
+
         <div>
-          <Button onClick={this.iniciarJuego}>Jugar</Button>
+          <Button onClick={() => this.jugar()}>Jugar</Button>
+          {/*aquí se renderiza el componente botonera si se pulsa jugar*/}
         </div>
         <div>
-        {this.state.iniciarJuego && (
-          <MapaBotones listaBotones={this.state.listaBotones} clica={this.clica} />
-        )}
+          <Botonera listaBotones={this.state.listaBotones} playable={this.state.playable} />
         </div>
       </div>
     );
