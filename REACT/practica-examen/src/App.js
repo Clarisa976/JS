@@ -3,24 +3,26 @@ import { Button } from 'reactstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const MapaBotones = (props) => {
-  // este componente pinta el tablero 9x9 con las props que le paso.
-  let matriz = [];
-  //doble bucle for para la matriz 9x9
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (i == 0) {
-        matriz.push(<Button color={props.listaBotones[i][j]} outline onClick={() => props.clica(i, j)} />);
-      } else {
-        if (props.listaBotones[i][j] != "secondary") {
-          matriz.push(<Button color={props.listaBotones[i][j]} />);
+  if (props.iniciarJuego) {
+    // este componente pinta el tablero 9x9 con las props que le paso.
+    let matriz = [];
+    //doble bucle for para la matriz 9x9
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (i == 0) {
+          matriz.push(<Button color={props.listaBotones[i][j]} outline onClick={() => props.clica(i, j)} />);
         } else {
-          matriz.push(<Button color={props.listaBotones[i][j]} outline />);
+          if (props.listaBotones[i][j] != "secondary") {
+            matriz.push(<Button color={props.listaBotones[i][j]} />);
+          } else {
+            matriz.push(<Button color={props.listaBotones[i][j]} outline />);
+          }
         }
       }
+      matriz.push(<br />);
     }
-    matriz.push(<br />);
+    return matriz;
   }
-  return matriz;
 }
 
 class App extends Component {
@@ -56,6 +58,14 @@ class App extends Component {
     }
     this.setState({ listaBotones: aux });
   }
+  /* iniciarJuego = () => {
+  if (!this.state.listaBotones[0]) { // Verificamos si listaBotones no está inicializado
+    const copiaListaBotones = Array(9).fill(null).map(() => Array(9).fill("secondary"));
+    this.setState({ listaBotones: copiaListaBotones, iniciarJuego: true });
+  } else {
+    this.setState({ iniciarJuego: true });
+  }
+};*/
   iniciarJuego = () => {
     if (!this.state.listaBotones[0]) { // Verificamos si listaBotones no está inicializado
       const copiaListaBotones = Array(9).fill(null).map(() => Array(9).fill("secondary"));
@@ -73,9 +83,9 @@ class App extends Component {
           <Button onClick={this.iniciarJuego}>Jugar</Button>
         </div>
         <div>
-        {this.state.iniciarJuego && (
-          <MapaBotones listaBotones={this.state.listaBotones} clica={(x,y)=>this.clica(x,y)} />
-        )}
+
+          <MapaBotones listaBotones={this.state.listaBotones} iniciarJuego={this.state.iniciarJuego} clica={(x, y) => this.clica(x, y)} />
+
         </div>
       </div>
     );
