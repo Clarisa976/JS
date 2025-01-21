@@ -152,14 +152,15 @@ const preguntas = [
 ]
 
 function App() {
-  const [puntuacion, setPuntuacion]=useState(0);
-  const [preguntaActual,setPreguntaActual]=useState(0);
-  const [fin,setFin]=useState(false);
-  const [resultado,setResultado]=useState("");
-  const [alertaColor,setAlertaColor]=useState("secondary");
+  const [puntuacion, setPuntuacion] = useState(0);
+  //const [preguntaActual,setPreguntaActual]=useState(0);
+  // const [fin,setFin]=useState(false);
+  const [respondidas, setRespondidas] = useState([]);
+  const [resultado, setResultado] = useState("");
+  const [alertaColor, setAlertaColor] = useState("secondary");
 
 
-  const handleRespuesta = (puntos) => {
+ /* const handleRespuesta = (puntos) => {
     const nuevaPuntuacion = puntuacion + puntos;
     setPuntuacion(nuevaPuntuacion);
 
@@ -169,61 +170,74 @@ function App() {
       setFin(true);
       calcularPuntuacion(nuevaPuntuacion);
     }
-  };
-
-  const calcularPuntuacion = (puntuacion) => {
-    const preguntasContestadas = preguntas.filter((pregunta) => pregunta.respuestas.length > 0);
-    puntuacion= preguntasContestadas.puntos;
-    let resultado = "";
-    let color = "";  
+  };*/
+  const handleRespuesta = (puntos, index) => {
+    const nuevaPuntuacion = puntuacion + puntos;
+    setPuntuacion(nuevaPuntuacion);
+    setRespondidas([...respondidas, index]);
   
-    if(puntuacion<=4){
-      resultado="En principio no tienes nada de que preocuparte.";
-      color="success";
-      console.log(color);
-    }else if(puntuacion>=5&&puntuacion<=6){
-      resultado="Empiezas a tener signos de dependencia del móvil. Puedes utilizar técnicas como apagar el móvil cuando no lo necesitas, cuando duermes, etc";
-      color="info";
-    }else if(puntuacion>=7&&puntuacion<=8){
-      resultado="Tienes una gran dependencia del móvil. Deberías seguir un plan de «desintoxicación» del móvil como por ejemplo dejar el móvil en casa cuando vas a comprar, apagarlo durante la noche, apagarlo durante horas de clase o trabajo, etc.";
-      color="warning";
-    }else if (puntuacion>=9){
-      resultado="Tus síntomas de dependencia son muy preocupantes. Además de todas las técnicas de los apartados anteriores deberías plantearte un plan de desintoxicación del móvil que consista en estar una o dos semanas sin utilizarlo. Si ves que no puedes hacerlo por ti mismo, pide ayuda a un profesional.";
-      color="danger";
+    //si no quedan preguntas se calcula la puntuación
+    if (respondidas.length + 1 === preguntas.length) {
+      calcularPuntuacion(nuevaPuntuacion);
+    }
+  };
+  
+
+  const calcularPuntuacion = (puntuacionTotal) => {
+    // const preguntasContestadas = preguntas.filter((pregunta) => pregunta.respuestas.length > 0);
+    //puntuacion= preguntasContestadas.puntos;
+    let resultado = "";
+    let color = "";
+
+    if (puntuacion <= 4) {
+      resultado = "En principio no tienes nada de que preocuparte.";
+      color = "success";
+    } else if (puntuacion >= 5 && puntuacion <= 6) {
+      resultado = "Empiezas a tener signos de dependencia del móvil. Puedes utilizar técnicas como apagar el móvil cuando no lo necesitas, cuando duermes, etc";
+      color = "info";
+    } else if (puntuacion >= 7 && puntuacion <= 8) {
+      resultado = "Tienes una gran dependencia del móvil. Deberías seguir un plan de «desintoxicación» del móvil como por ejemplo dejar el móvil en casa cuando vas a comprar, apagarlo durante la noche, apagarlo durante horas de clase o trabajo, etc.";
+      color = "warning";
+    } else if (puntuacion >= 9) {
+      resultado = "Tus síntomas de dependencia son muy preocupantes. Además de todas las técnicas de los apartados anteriores deberías plantearte un plan de desintoxicación del móvil que consista en estar una o dos semanas sin utilizarlo. Si ves que no puedes hacerlo por ti mismo, pide ayuda a un profesional.";
+      color = "danger";
     }
     console.log(color);
     setAlertaColor(color);
     setResultado(resultado);
-    
+
   }
 
 
   return (
     <div className="App">
-{!fin ? (
+      {!resultado ? (
         <Form>
-          <FormGroup>
-            <Label for="pregunta">
-              <strong>Pregunta {preguntaActual + 1}:</strong> {preguntas[preguntaActual].pregunta}
-            </Label>
-            {preguntas[preguntaActual].respuestas.map((respuesta, index) => (
-              <FormGroup key={index}>
-                <Label>
-                  <Input
-                    type="radio"
-                    name={`radio${preguntaActual}`}
-                    onClick={() => handleRespuesta(respuesta.puntos)}
-                  />
-                  {respuesta.respuesta}
-                </Label>
-              </FormGroup>
-            ))}
-          </FormGroup>
+           {preguntas.map((pregunta, index) => (
+          !respondidas.includes(index) && (
+            <FormGroup key={index}>
+              <Label>
+                <strong>Pregunta {index + 1}:</strong> {pregunta.pregunta}
+              </Label>
+              {pregunta.respuestas.map((respuesta, idx) => (
+                <FormGroup check key={idx}>
+                  <Label check>
+                    <Input
+                      type="radio"
+                      name={`radio-${index}`}
+                      onClick={() => handleRespuesta(respuesta.puntos, index)}
+                    />
+                    {respuesta.respuesta}
+                  </Label>
+                </FormGroup>
+              ))}
+            </FormGroup>
+          )
+        ))}
         </Form>
       ) : (
         <Alert color={alertaColor}>
           <h4 className="alert-heading">Fin de la encuesta</h4>
-          <p>{resultado}</p>
           <hr />
           <p>Tu puntuación total es: <strong>{puntuacion}</strong>.</p>
           <p>{resultado}</p>
