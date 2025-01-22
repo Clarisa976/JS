@@ -211,6 +211,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1 class=" m-3 text-start">Test nomofobia :D</h1>
       {!resultado ? (
         <Form>
            {preguntas.map((pregunta, index) => (
