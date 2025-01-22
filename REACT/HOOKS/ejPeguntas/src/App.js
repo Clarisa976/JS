@@ -220,7 +220,7 @@ function App() {
               {pregunta.respuestas.map((respuesta, idx) => (
                 <FormGroup check key={idx}>
                   <Label check>
-                    <Input
+                    <Input 
                       type="radio"
                       name={`radio-${index}`}
                       onClick={() => handleRespuesta(respuesta.puntos, index)}
