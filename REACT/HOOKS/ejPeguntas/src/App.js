@@ -19,7 +19,7 @@ al contestar una pregunta desaparece
 //preguntas
 const preguntas = [
   {
-    pregunta: "Cuando mandas un mensaje por whatsapp esperas siempre al doble check. Si no aparece vuelves a abrir el terminal para revisarlo al rato.",
+    pregunta: "1. Cuando mandas un mensaje por whatsapp esperas siempre al doble check. Si no aparece vuelves a abrir el terminal para revisarlo al rato.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -32,7 +32,7 @@ const preguntas = [
     ]
   },
   {
-    pregunta: "Antes de acostarte siempre miras el móvil a ver si tienes mensajes o notificaciones.",
+    pregunta: "2. Antes de acostarte siempre miras el móvil a ver si tienes mensajes o notificaciones.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -45,7 +45,7 @@ const preguntas = [
     ]
   },
   {
-    pregunta: "Te despiertas antes de tiempo para jugar, mandar mensajes, actualizar perfiles,… con el teléfono móvil.",
+    pregunta: "3. Te despiertas antes de tiempo para jugar, mandar mensajes, actualizar perfiles,… con el teléfono móvil.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -58,7 +58,7 @@ const preguntas = [
     ]
   },
   {
-    pregunta: "Si sales de casa sin el móvil volverías a cogerlo aunque llegues tarde a tu cita.",
+    pregunta: "4. Si sales de casa sin el móvil volverías a cogerlo aunque llegues tarde a tu cita.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -71,7 +71,7 @@ const preguntas = [
     ]
   },
   {
-    pregunta: "Tienes miedo a quedarte sin batería.",
+    pregunta: "5. Tienes miedo a quedarte sin batería.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -84,7 +84,7 @@ const preguntas = [
     ]
   },
   {
-    pregunta: "Cuando tienes la batería baja desactivas ciertas aplicaciones u opciones del teléfono como la WiFi, bluetooth para no quedarte sin batería.",
+    pregunta: "6. Cuando tienes la batería baja desactivas ciertas aplicaciones u opciones del teléfono como la WiFi, bluetooth para no quedarte sin batería.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -97,7 +97,7 @@ const preguntas = [
     ]
   },
   {
-    pregunta: "Tienes ansiedad cuando tienes llamadas perdidas. Llamas a los números y te preocupas si no responden.",
+    pregunta: "7. Tienes ansiedad cuando tienes llamadas perdidas. Llamas a los números y te preocupas si no responden.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -110,7 +110,7 @@ const preguntas = [
     ]
   },
   {
-    pregunta: "Miras la cobertura cuando estas en algún sitio con los amigos, esperando, etc.",
+    pregunta: "8. Miras la cobertura cuando estas en algún sitio con los amigos, esperando, etc.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -123,7 +123,7 @@ const preguntas = [
     ]
   },
   {
-    pregunta: "Sueles hacer alguna otra cosa mientras que miras al móvil como comer, lavarte los dientes, etc.",
+    pregunta: "9. Sueles hacer alguna otra cosa mientras que miras al móvil como comer, lavarte los dientes, etc.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -136,7 +136,7 @@ const preguntas = [
     ]
   },
   {
-    pregunta: "Vas al baño siempre con el móvil.",
+    pregunta: "10. Vas al baño siempre con el móvil.",
     respuestas: [
       {
         respuesta: "Sí",
@@ -189,16 +189,16 @@ function App() {
     let resultado = "";
     let color = "";
 
-    if (puntuacion <= 4) {
+    if (puntuacionTotal <= 4) {
       resultado = "En principio no tienes nada de que preocuparte.";
       color = "success";
-    } else if (puntuacion >= 5 && puntuacion <= 6) {
+    } else if (puntuacionTotal >= 5 && puntuacionTotal <= 6) {
       resultado = "Empiezas a tener signos de dependencia del móvil. Puedes utilizar técnicas como apagar el móvil cuando no lo necesitas, cuando duermes, etc";
       color = "info";
-    } else if (puntuacion >= 7 && puntuacion <= 8) {
+    } else if (puntuacionTotal >= 7 && puntuacionTotal <= 8) {
       resultado = "Tienes una gran dependencia del móvil. Deberías seguir un plan de «desintoxicación» del móvil como por ejemplo dejar el móvil en casa cuando vas a comprar, apagarlo durante la noche, apagarlo durante horas de clase o trabajo, etc.";
       color = "warning";
-    } else if (puntuacion >= 9) {
+    } else if (puntuacionTotal >= 9) {
       resultado = "Tus síntomas de dependencia son muy preocupantes. Además de todas las técnicas de los apartados anteriores deberías plantearte un plan de desintoxicación del móvil que consista en estar una o dos semanas sin utilizarlo. Si ves que no puedes hacerlo por ti mismo, pide ayuda a un profesional.";
       color = "danger";
     }
@@ -215,10 +215,8 @@ function App() {
         <Form>
            {preguntas.map((pregunta, index) => (
           !respondidas.includes(index) && (
-            <FormGroup key={index}>
-              <Label>
-                <strong>Pregunta {index + 1}:</strong> {pregunta.pregunta}
-              </Label>
+            <FormGroup key={index} className='p-3 mb-3 border rounded bg-light'>
+              <Label>{pregunta.pregunta}</Label>
               {pregunta.respuestas.map((respuesta, idx) => (
                 <FormGroup check key={idx}>
                   <Label check>
