@@ -3,6 +3,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Component } from 'react';
 import { Button } from 'reactstrap';
 
+const VentanaModal=(props)=>{
+  const {className}=props;
+  return(
+    ctrlc_ctrlv
+
+  );
+}
+
 class App extends Component {
   render() {
     return (
