@@ -1,103 +1,253 @@
-import React, { Component, useState } from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-const Altas = (props) => {
-  const { nuevoContacto } = props;
-  // UTILICE HOOKS EN ESTE COMPONENTE
-  const [nombre, setNombre] = useState('');
-  const [apellidos, setApellidos] = useState('');
-  const [telefono, setTelefono] = useState('');
+import React, { Component, useState } from "react";
+import { Button, Input, FormGroup, Label, Col, Table, ButtonGroup } from 'reactstrap';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-  //manejo de cambiar el estado
-  const handleChange = (e) => {
-    if (e.target.name === "nombre") {
-      setNombre(e.target.value);
+
+const Saldo = ({ titulo, cambiaSaldo }) => {
+
+  //GESTIÓN DE SALDO (SUMAR Y GASTAR)
+  const [telefono, setTelefono] = useState("");
+  const [saldo, setSaldo] = useState(0);
+
+  const handleChange = (event) => {
+    if (event.target.name === "telefono") {
+      setTelefono(event.target.value)
     }
-    if (e.target.name === "apellidos") {
-      setApellidos(e.target.value);
-    }
-    if (e.target.name === "telefono") {
-      setTelefono(e.target.value);
+    if (event.target.name === "saldo") {
+      setSaldo(event.target.value);
     }
   }
 
-  //manejo del envio del formulario
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (nombre.trim() && apellidos.trim() && telefono.trim()) {
-      nuevoContacto(nombre, apellidos, telefono);
-    } else {
-      alert("no dejes campos vacíos");
+  const handleClick = () => {
+    if (titulo === "Añadir saldo") {
+      cambiaSaldo({ telefono: telefono, saldo: Number(saldo), tipo: "sumo" })
+    } 
+    if(titulo === "Gastar saldo"){
+      cambiaSaldo({ telefono: telefono, saldo: Number(saldo), tipo: "gasto" })
     }
+
   }
+
   return (
-    <Form onSubmit={handleSubmit}>
-      <FormGroup>
-        <Label for="Nombre">Nombre:</Label>
-        <Input name="nombre" id="nombre" placeholder="introduzca nombre" onChange={handleChange} />
-        <Label for="Nombre">Apellidos:</Label>
-        <Input name="apellidos" id="apellidos" placeholder="introduzca apellidos" onChange={handleChange} />
-        <Label for="Nombre">Telefono:</Label>
-        <Input name="telefono" id="telefono" type='number' placeholder="introduzca telefono" onChange={handleChange} />
+    <div>
+      <h3>{titulo}</h3>
+      <FormGroup row>
+        <Label sm={1} > Teléfono: </Label>
+        <Col sm={2}>
+          <Input
+            id="telefono"
+            name="telefono"
+            type="Text" onChange={handleChange} />
+        </Col>
+        <Label sm={1} > Saldo: </Label>
+        <Col sm={2}>
+          <Input
+            id="saldo"
+            name="saldo"
+            type="Number" onChange={handleChange} />
+        </Col>
       </FormGroup>
-      <Button>Añadir</Button>
-    </Form>
+      <Button color="primary" onClick={handleClick}>ACTUALIZAR</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+
+
   );
 }
 
-const Mostrar = (props) => {
-  // ESTE COMPONENTE MUESTRA EL LISTÍN TELEFÓNICO.
-  const { contactos, borrarContacto } = props;
+
+const Altas = ({ alta }) => {
+  // ALTAS DE USUARIOS
+  const [nombre, setNombre] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [saldo, setSaldo] = useState(0);
+
+
+  const handleChange = (event) => {
+    if (event.target.name === "nombre") {
+      setNombre(event.target.value);
+    }
+    if (event.target.name === "telefono") {
+      setTelefono(event.target.value);
+    }
+    if (event.target.name === "saldo") {
+      setSaldo(event.target.value);
+    }
+  }
+
+  const handleClick = () => {
+    alta({ nombre: nombre, telefono: telefono, saldo: Number(saldo) })
+  }
+
+
   return (
-    <ul>
-      {contactos.map(e => { return (<li>{e.nombre + ' ' + e.apellidos + ' ' + e.telefono + ' '}<Button onClick={() => borrarContacto(e.telefono)}>x</Button></li>) })}
-    </ul>
-  );
+    <div>
+      <h3>Alta de usuario</h3>
+      <FormGroup row>
+        <Label sm={1} > Nombre: </Label>
+        <Col sm={3}>
+          <Input
+            id="nombre"
+            name="nombre"
+            type="Text" onChange={handleChange} />
+        </Col>
+        <Label sm={1} > Teléfono: </Label>
+        <Col sm={2}>
+          <Input
+            id="telefono"
+            name="telefono"
+            type="Text" onChange={handleChange} />
+        </Col>
+        <Label sm={1} > Saldo: </Label>
+        <Col sm={2}>
+          <Input
+            id="saldo"
+            name="saldo"
+            type="Number" onChange={handleChange} />
+        </Col>
+      </FormGroup>
 
+
+      <Button color="primary" onClick={handleClick}>ALTA</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+
+
+  );
 }
+
+
+const Mostrar = ({ datos, borrar }) => {
+  // ESTE COMPONENTE MUESTRA LA TABLA
+
+  return (
+    <>
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Teléfono</th>
+            <th>Nombre</th>
+            <th>Saldo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {datos.map(e => {
+            return (<tr><td><Button onClick={() => borrar(e.telefono)}>Borrar</Button></td><td>{e.telefono}</td><td>{e.nombre}</td><td>{e.saldo}</td></tr>)
+          })}
+        </tbody>
+      </Table>
+    </>
+  );
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // INSERTE AQUÍ EL ESTADO NECESARIO. AQUÍ SE GUARDARÁ TODA LA INFORMACIÓN DE LA APLICACIÓN. EL LISTÍN TELEFÓNICO
-      contactos: [
-        { nombre: 'asdf', apellidos: 'zxcv', telefono: '123' }
+      // INSERTE AQUÍ EL ESTADO NECESARIO. AQUÍ SE GUARDARÁ TODA LA INFORMACIÓN
+      listaUsuarios: [
+        { nombre: "Gabriel", telefono: "607666356", saldo: 10 },
+        { nombre: "Usuario 2", telefono: "123456789", saldo: 100 },
+        { nombre: "Usuario 3", telefono: "987654321", saldo: 1000 }
       ],
+      opcion: 0,
     };
   }
-  //nuevoContacto
-  nuevoContacto(nombre, apellidos, telefono) {
-    let copia = this.state;
-    let aux = [];
-    if (copia.contactos.find(e => e.telefono === telefono) === undefined) {
-      aux.nombre = nombre;
-      aux.apellidos = apellidos;
-      aux.telefono = telefono;
-      copia.contactos.push(aux);
-    }
-    this.setState({ copia });
-  }
-  //borrarContacto
-  borrarContacto = (telefono) => {
-    let copia = this.state;
-    let aux = []
 
-    copia.contactos.filter(e => {
-      if(telefono !== e.telefono){
-        aux.push(e)
+  borrar = (telefono) => {
+    let copiaState = this.state;
+
+    let aux = [];
+
+    copiaState.listaUsuarios.map(e => {
+      if (e.telefono !== telefono) {
+        aux.push(e);
       }
     })
 
-    copia.contactos = aux;
-    
-    this.setState({copia})
+    copiaState.listaUsuarios = aux;
+
+    this.setState({ copiaState })
   }
+  ////////////////////////
+  alta = (usuario) => {
+    let copiaState = this.state;
+
+    if (!copiaState.listaUsuarios.find(e => e.telefono === usuario.telefono) && usuario.nombre !== "") {
+      copiaState.listaUsuarios.push(usuario);
+    }
+
+    this.setState({ copiaState });
+  }
+  ////////////////////////
+  cambiaOpcion = (opc) => {
+    let copiaState = this.state;
+
+    copiaState.opcion = opc;
+
+    this.setState({ copiaState });
+  }
+  ////////////////////////
+  cambiaSaldo = (usuario) => {
+    let copiaState = this.state;
+
+    if (usuario.tipo === "sumo") {
+      copiaState.listaUsuarios.map(e => {
+        if (e.telefono === usuario.telefono) {
+          e.saldo += usuario.saldo
+        }
+      })
+    } else {
+      copiaState.listaUsuarios.map(e => {
+        if (e.telefono === usuario.telefono) {
+          e.saldo -= usuario.saldo
+          if(e.saldo <= 0){
+            e.saldo = 0;
+          }
+        }
+      })
+    }
+
+
+
+    this.setState({ copiaState });
+  }
+
   render() {
+    let obj = [];
+
+    if (this.state.opcion === 1) {
+      obj.push(<Altas
+        alta={(usuario) => this.alta(usuario)}
+      />)
+    } else if (this.state.opcion === 2) {
+      obj.push(<Saldo
+        titulo={"Añadir saldo"}
+        cambiaSaldo={(usuario) => this.cambiaSaldo(usuario)}
+      />)
+    } else if (this.state.opcion === 3) {
+      obj.push(<Saldo
+        titulo={"Gastar saldo"}
+        cambiaSaldo={(usuario) => this.cambiaSaldo(usuario)}
+      />)
+    }
+
     return (
       <div className="App">
-        {/* DEBERÁ RENDERIZAR AL MENOS LOS DOS COMPONENTES ANTERIORES*/}
-        <Mostrar contactos={this.state.contactos} borrarContacto={(telefono) => this.borrarContacto(telefono)} />
-        <Altas nuevoContacto={(nombre, apellidos, telefono) => this.nuevoContacto(nombre, apellidos, telefono)} />
+        <h1>GESTION USUARIOS</h1>
+
+        <Mostrar datos={this.state.listaUsuarios} borrar={(t) => this.borrar(t)} />
+        <ButtonGroup>
+          <Button color="info" onClick={() => this.cambiaOpcion(1)}>
+            Alta usuario
+          </Button>
+          <Button color="success" onClick={() => this.cambiaOpcion(2)}>
+            Sumar saldo
+          </Button>
+          <Button color="danger" onClick={() => this.cambiaOpcion(3)}>
+            Gastar saldo
+          </Button>
+        </ButtonGroup>
+        {obj}
       </div>
     );
   }
