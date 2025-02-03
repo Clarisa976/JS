@@ -7,8 +7,7 @@ const Alta = (props) => {
   const [nombre, setNombre] = useState('');
   const [apellidos, setApellidos] = useState('');
   const [telefono, setTelefono] = useState('');
-  const { className } = props;
-  const { nuevoContacto } = props;
+  const { className, nuevoContacto } = props;
 
   const handleCambio = (e) => {
     if (e.target.name === 'nombre') {
@@ -25,45 +24,49 @@ const Alta = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     nuevoContacto(nombre, apellidos, telefono);
+    setNombre('');
+    setApellidos('');
+    setTelefono('');
     props.toggle();
+    
   }
   return (
     <div>
       <Modal isOpen={props.mostrar} toggle={props.toggle} className={className} onEntering={"//ESTO SE EJECUTA CUANDO MUESTRAS LA VENTANA"}>
         <ModalHeader toggle={props.toggle}>{props.titulo}</ModalHeader>
         <ModalBody>
-    
-    <Form onSubmit={handleSubmit}>
-      <FormGroup>
-        <Label for="Nombre">Nombre:</Label>
-        <Input
-          name="nombre"
-          id="nombre"
-          placeholder="introduzca nombre"
-          onChange={handleCambio}
-        />
-        <Label for="Nombre">Apellidos:</Label>
-        <Input
-          name="apellidos"
-          id="apellidos"
-          placeholder="introduzca apellidos"
-          onChange={handleCambio}
-        />
-        <Label for="Nombre">Telefono:</Label>
-        <Input
-          name="telefono"
-          id="telefono"
-          placeholder="introduzca telefono"
-          onChange={handleCambio}
-        />
-      </FormGroup>
+
+          <Form onSubmit={handleSubmit}>
+            <FormGroup>
+              <Label for="Nombre">Nombre:</Label>
+              <Input
+                name="nombre"
+                id="nombre"
+                placeholder="introduzca nombre"
+                onChange={handleCambio}
+              />
+              <Label for="Nombre">Apellidos:</Label>
+              <Input
+                name="apellidos"
+                id="apellidos"
+                placeholder="introduzca apellidos"
+                onChange={handleCambio}
+              />
+              <Label for="Nombre">Telefono:</Label>
+              <Input
+                name="telefono"
+                id="telefono"
+                placeholder="introduzca telefono"
+                onChange={handleCambio}
+              />
+            </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={handleSubmit}>{props.botonAceptar}</Button>
         </ModalFooter>
       </Modal>
-        </div>
+    </div>
   );
 }
 const Mostrar = ({ contactos, borrarContacto }) => {
@@ -82,12 +85,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // INSERTE AQUÑI EL ESTADO NECESARIO. AQUÍ SE GUARDARÁ TODA LA INFORMACIÓN DE LA APLICACIÓN. EL LISTÍN TELEFÓNICO.
+      // INSERTE AQUÍ EL ESTADO NECESARIO. AQUÍ SE GUARDARÁ TODA LA INFORMACIÓN DE LA APLICACIÓN. EL LISTÍN TELEFÓNICO.
       contactos: [
         { nombre: 'Kokoro', apellidos: 'Ruiz', telefono: '123456789' },
         { nombre: 'Diomedes', apellidos: 'Álvarez', telefono: '987654321' }
       ],
-      isOpend:false,
+      isOpend: false,
     }
   }
   setIsOpen(d) {
@@ -102,10 +105,17 @@ class App extends Component {
     let copia = this.state;
     let aux = [];
     if (copia.contactos.find(e => e.telefono === telefono) === undefined) {
-      aux.nombre = nombre;
-      aux.apellidos = apellido;
-      aux.telefono = telefono;
-      copia.contactos.push(aux);
+      if (nombre.trim() !== "" && apellido.trim() !== "" && telefono.trim() !== "") {
+        aux.nombre = nombre;
+        aux.apellidos = apellido;
+        aux.telefono = telefono;
+        copia.contactos.push(aux);
+      } else {
+        alert("Campo vacío");
+      }
+      
+    } else {
+      alert("El número de teléfono ya se encuentra en la BD");
     }
     this.setState({ copia })
   }
@@ -133,13 +143,13 @@ class App extends Component {
           Alta contacto
         </Button>
 
-        
+
         <Alta
           nuevoContacto={(nombre, apellidos, telefono) => this.nuevoContacto(nombre, apellidos, telefono)}
           mostrar={this.state.isOpen}
           botonAceptar={"Alta"}
           titulo={"DAR DE ALTA"}
-          toggle={this.toggleModal}/>
+          toggle={() => this.toggleModal()} />
       </>
     );
   }
