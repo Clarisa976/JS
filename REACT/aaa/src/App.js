@@ -118,7 +118,6 @@ const Altas = (props) => {
 const Mostrar = (props) => {
  const { datos, borrar, toggleModal, opcion, alta, cambiaSaldo } = props;
   // ESTE COMPONENTE MUESTRA LA TABLA
-// Según la opción elegida se define el contenido y título de la modal
 let contenidoModal = null;
 let tituloModal = "";
 if (opcion === 1) {
@@ -157,7 +156,7 @@ if (opcion === 1) {
         </tbody>
       </Table>
 
-      {/* La Modal se define aquí, dentro del return de Mostrar */}
+      
       <Modal isOpen={props.mostrar} toggle={toggleModal}>
         <ModalHeader toggle={toggleModal}>{tituloModal}</ModalHeader>
         <ModalBody>{contenidoModal}</ModalBody>
@@ -188,23 +187,18 @@ class App extends Component {
 
   borrar = (telefono) => {
     let copiaState = this.state;
-
     let aux = [];
-
     copiaState.listaUsuarios.map(e => {
       if (e.telefono !== telefono) {
         aux.push(e);
       }
     })
-
     copiaState.listaUsuarios = aux;
-
     this.setState({ copiaState })
   }
 
   alta = (usuario) => {
     let copiaState = this.state;
-
     if (!copiaState.listaUsuarios.find(e => e.telefono === usuario.telefono) && usuario.nombre !== "") {
       copiaState.listaUsuarios.push(usuario);
     }
