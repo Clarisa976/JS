@@ -28,7 +28,7 @@ const Alta = (props) => {
     setApellidos('');
     setTelefono('');
     props.toggle();
-    
+
   }
   return (
     <div>
@@ -113,7 +113,7 @@ class App extends Component {
       } else {
         alert("Campo vacío");
       }
-      
+
     } else {
       alert("El número de teléfono ya se encuentra en la BD");
     }
@@ -147,7 +147,7 @@ class App extends Component {
         <Alta
           nuevoContacto={(nombre, apellidos, telefono) => this.nuevoContacto(nombre, apellidos, telefono)}
           mostrar={this.state.isOpen}
-          botonAceptar={"Alta"}
+          botonAceptar={"Altaa"}
           titulo={"DAR DE ALTA"}
           toggle={() => this.toggleModal()} />
       </>
