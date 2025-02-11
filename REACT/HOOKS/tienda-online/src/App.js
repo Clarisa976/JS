@@ -1,5 +1,5 @@
 import { Component, useEffect, useState } from "react";
-import { Card, CardBody, CardText, CardTitle, Modal, ModalHeader, ModalBody, ModalFooter, Button, Alert } from "reactstrap";
+import { Card, CardBody, CardText, CardTitle, Modal, ModalHeader, ModalBody, ModalFooter, Button, Alert, Table } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 export const PIELES = [
   {
@@ -7,7 +7,7 @@ export const PIELES = [
     imagen: "https://pielparaartesanos.com/cdn/shop/files/Cabra_laminada_oro.jpg",
     nombre: "Cabra laminada oro",
     texto: "Cabra laminada con acabado arrugado en color oro. ",
-    precio: 30
+    precio: 50
   },
   {
     id: 1,
@@ -85,7 +85,6 @@ const VentanaModal = (props) => {
         <br />Importe: {e.cantidad * e.precio} €
       </p>
     </div>
-
   );
 
   const handleChange = (event) => {
@@ -99,7 +98,7 @@ const VentanaModal = (props) => {
     }
   }
   const hacerPedido = () => {
-    
+
     if (nombre.trim() !== "" && direccion.trim() !== "") {
       props.comprar(nombre, direccion)
       setNombre("")
@@ -132,7 +131,7 @@ const VentanaModal = (props) => {
 
           <Button color="success" onClick={() => hacerPedido()}>COMPRAR</Button>
           <Button color="secondary" onClick={() => props.toggle()}>CERRAR</Button>
-          
+
         </ModalFooter>
       </Modal>
     </div>
@@ -142,7 +141,7 @@ const VentanaModal = (props) => {
 
 const PedidosModal = (props) => {
   return (
-    <Modal isOpen={props.isOpen} toggle={props.toggle}>
+    <Modal isOpen={props.isOpen} toggle={props.toggle} size="lg">
       <ModalHeader toggle={props.toggle}>Pedidos Realizados</ModalHeader>
       <ModalBody>
         {props.pedidos.length === 0 ? (
@@ -154,28 +153,72 @@ const PedidosModal = (props) => {
               0
             );
             return (
-              <div key={index}>
-                <h5>Pedido {index + 1}</h5>
-                <p>
-                  <strong>Nombre:</strong> {pedido.nombre}
-                </p>
-                <p>
-                  <strong>Dirección:</strong> {pedido.direccion}
-                </p>
-                <p>
+              <Table borderless key={index}>
+                <thead>
+                  <tr >
+                    <th>Pedido   </th>
+                    <th>{index + 1}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong>Nombre:</strong> </td>
+                    <td>
+                      {pedido.nombre}
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <strong>Dirección:</strong>
+                    </td>
+                    <td> {pedido.direccion}</td>
+                </tr>
+                  <tr>
+                <td>
                   <strong>Productos:</strong>
-                </p>
-                {pedido.pedidos.map((item) => (
-                  <p key={item.id}>
-                    {item.nombre} - {item.cantidad} x {item.precio} € ={" "}
-                    {item.cantidad * item.precio} €
-                  </p>
-                ))}
-                <p>
-                  <strong>Total del Pedido:</strong> {totalPedido} €
-                </p>
-                <hr />
-              </div>
+                </td>
+
+                {/*<p key={item.id}>
+                  {item.nombre} - {item.cantidad} x {item.precio} € ={" "}
+                  {item.cantidad * item.precio} €
+                </p>*/}
+
+                <Table striped>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Producto</th>
+                      <th>Unidades</th>
+                      <th>Precio unitario</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pedido.pedidos.map((item, index) => (
+                      <tr key={item.id}>
+                        <td>{index + 1}</td>
+                        <td>{item.nombre}</td>
+                        <td>{item.cantidad}</td>
+                        <td>{item.precio}</td>
+                        <td>{item.cantidad * item.precio} €</td>
+                      </tr>
+                    ))}
+                  </tbody>
+
+                </Table>
+                  </tr>
+                  <tr >
+                <td >
+                  <strong>Total del Pedido:</strong> 
+                    </td>
+                    <td>
+                      {totalPedido} €
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
             );
           })
         )}
@@ -218,7 +261,7 @@ class App extends Component {
   crearPedido(nombre, direccion) {
     let copiaCarrito = this.state.carrito
       .filter(u => u.cantidad > 0).map(u => ({ ...u }));
-    
+
 
     let pedido = { nombre, direccion, pedidos: copiaCarrito }
 
