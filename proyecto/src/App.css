@@ -1,7 +1,10 @@
 .App {
   text-align: center;
 }
-
+html,
+body {
+  overflow-x: hidden;
+}
 /* NAV STYLE */
 .nav-category {
   border-bottom: 1px solid #fff;
@@ -28,29 +31,46 @@
   flex-grow: 1;
   text-align: center;
 }
+.logo {
+  height: 80px;
+  width: auto;
+}
+.dropdown-menu {
+  background-color: #343a40 !important;
+  border: none;
+}
+
+.dropdown-menu .dropdown-item {
+  color: #fff;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #5b5b6b;
+}
+
 .desktop-nav {
   width: 100%;
-  justify-content: space-around; /* O el valor que prefieras */
+  justify-content: space-around; 
 }
 
 .desktop-nav .nav-category {
-  margin: 0 10px; /* Ajusta la separación entre categorías */
-}
-/* Asegúrate de que el contenedor del Collapse se posicione sobre la cabecera */
-.mobile-collapse {
-  position: absolute;
-  top: 100%; /* Justo debajo de la cabecera */
-  left: 0;
-  right: 0;
-  background-color: #343a40; /* O el color de fondo que uses en la cabecera */
-  z-index: 1050; /* Asegura que esté por encima */
+  margin: 0 10px;
 }
 
-/* Ejemplo para el menú desktop */
+.mobile-collapse {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #343a40; 
+  z-index: 1050;
+}
+
 .desktop-nav {
   width: 100%;
-  justify-content: space-around; /* Distribuye las categorías con separación */
+  justify-content: center; 
 }
+/*************************/
 
 .App-logo {
   height: 40vmin;

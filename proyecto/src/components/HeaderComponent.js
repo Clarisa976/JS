@@ -15,6 +15,8 @@ import {
 } from 'reactstrap';
 import { PIELES } from '../data/Pieles.js';
 import Login from './LoginComponent';
+import logo from '../img/logo2.png';
+
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +66,7 @@ const Header = () => {
 
   return (
     <Navbar dark expand="md" className="mb-3 bg-dark" style={{ position: 'relative' }}>
-      <div className="container">
+      <div className="container-fluid">
         <div className="cabecera" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           {/* Hamburguesa en mobile */}
           <div className="hamburger d-md-none">
@@ -72,7 +74,9 @@ const Header = () => {
           </div>
           {/* Título centrado */}
           <div className="titulo" style={{ flexGrow: 1, textAlign: 'center' }}>
-            <NavbarBrand className="m-0">React Project</NavbarBrand>
+            <NavbarBrand className="m-0">
+              <img src={logo} alt="Logo" style={{ height: '80px', width: 'auto' }} />
+            </NavbarBrand>
           </div>
           {/* Botón de Login a la derecha */}
           <div className="login">
@@ -116,7 +120,7 @@ const Header = () => {
       {/* Menú de navegación para mobile: se muestra en el Collapse con la clase "mobile-collapse" */}
       <div className="d-md-none mobile-collapse">
         <Collapse isOpen={isOpen} navbar>
-          <div className="container">
+          <div className="container-fluid">
             <Nav navbar className="nav-categories">
               {navCategoriesArr.map((cat, index) =>
                 cat.subcategories.length > 1 ? (
