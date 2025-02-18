@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Collapse,
   Navbar,
@@ -13,7 +13,6 @@ import {
   DropdownItem,
   Button
 } from 'reactstrap';
-import { PIELES } from '../data/Pieles.js';
 import Login from './LoginComponent';
 import logo from '../img/logo2.png';
 
@@ -21,7 +20,7 @@ import logo from '../img/logo2.png';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-
+  const [productos, setProductos] = useState([]);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const toggleLoginModal = () => setLoginModalOpen(!loginModalOpen);
 
@@ -41,9 +40,25 @@ const Header = () => {
     'Edge Dyes': 'Dyes'
   };
 
+  useEffect(() => {
+    fetch('https://icarosproject.com/2daw/pieles.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error al traer datos: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setProductos(data.productos);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
   let navCategories = {};
 
-  PIELES.productos.forEach(producto => {
+  productos.forEach(producto => {
     if (!producto.categoria) return;
     const originalCat = producto.categoria;
     // Se asigna la main category usando el mapping (o se conserva la original si no está mapeada)
