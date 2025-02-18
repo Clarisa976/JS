@@ -1,93 +1,152 @@
 import React, { useState } from 'react';
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Button
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Button
 } from 'reactstrap';
 import { PIELES } from '../data/Pieles.js';
-import Login from "./LoginComponent";
+import Login from './LoginComponent';
 
 const Header = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const toggle = () => setIsOpen(!isOpen);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
-    const [loginModalOpen, setLoginModalOpen] = useState(false);
-    const toggleLoginModal = () => setLoginModalOpen(!loginModalOpen);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const toggleLoginModal = () => setLoginModalOpen(!loginModalOpen);
 
-    const categorias = [];
+  // Mapeo de las categorías originales a categorías de navegación en inglés
+  const categoryMapping = {
+    'Scraps': 'Leather Scraps',
+    'Leather remnants': 'Leather Scraps',
+    'Cowhides': 'Cow',
+    'Cowhide': 'Cow',
+    'Pig Lining': 'Pig',
+    'Pigskin Lining': 'Pig',
+    'Leather Straps for Handles': 'Handles & Accessories',
+    'Leather Handles': 'Handles & Accessories',
+    'Adhesives': 'Adhesives',
+    'Finishes': 'Finishes',
+    'Dyes': 'Dyes',
+    'Edge Dyes': 'Dyes'
+  };
 
-    PIELES.productos.forEach(producto => {
-        if (!producto.categoria) return;
+  let navCategories = {};
 
-        if (producto.categoria.includes(' > ')) {
-            const [categoriaPrincipal, subcategoria] = producto.categoria
-                .split(' > ')
-                .map(s => s.trim());
-            let catExistente = categorias.find(cat => cat.nombre === categoriaPrincipal);
-            if (!catExistente) {
-                catExistente = { nombre: categoriaPrincipal, subcategorias: [] };
-                categorias.push(catExistente);
-            }
-            if (!catExistente.subcategorias.find(sub => sub === subcategoria)) {
-                catExistente.subcategorias.push(subcategoria);
-            }
-        } else {
-            let catExistente = categorias.find(cat => cat.nombre === producto.categoria);
-            if (!catExistente) {
-                categorias.push({ nombre: producto.categoria, subcategorias: [] });
-            }
-        }
-    });
+  PIELES.productos.forEach(producto => {
+    if (!producto.categoria) return;
+    const originalCat = producto.categoria;
+    // Se asigna la main category usando el mapping (o se conserva la original si no está mapeada)
+    const mainCat = categoryMapping[originalCat] || originalCat;
 
-    return (
-        <>
-            <Navbar dark expand="md" className="mb-3 bg-dark">
-                <div className="container cabecera">
-                    <NavbarBrand >Proyecto REACT</NavbarBrand>
-                    <NavbarToggler onClick={toggle} className="my-toggler" />
-                    <Button color="primary" onClick={toggleLoginModal} className="my-login-btn">
-                        Login
-                    </Button>
-                </div>
-                <Collapse isOpen={isOpen} navbar>
-                    <div className="container">
-                        <Nav navbar className="nav-categorias">
-                            {categorias.map((cat, index) =>
-                                cat.subcategorias.length > 0 ? (
-                                    <UncontrolledDropdown nav inNavbar key={index} className="nav-category">
-                                        <DropdownToggle nav caret>
-                                            {cat.nombre}
-                                        </DropdownToggle>
-                                        <DropdownMenu>
-                                            {cat.subcategorias.map((subcat, i) => (
-                                                <DropdownItem key={i} href={`/categoria/${cat.nombre}/${subcat}`}>
-                                                    {subcat}
-                                                </DropdownItem>
-                                            ))}
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
-                                ) : (
-                                    <NavItem key={index} className="nav-category">
-                                        <NavLink href={`/categoria/${cat.nombre}`}>{cat.nombre}</NavLink>
-                                    </NavItem>
-                                )
-                            )}
-                        </Nav>
-                    </div>
-                </Collapse>
-            </Navbar>
-            <Login show={loginModalOpen} toggle={toggleLoginModal} />
-        </>
-    );
+    if (!navCategories[mainCat]) {
+      navCategories[mainCat] = { subcategories: [] };
+    }
+    // Si la subcategoría (original) aún no se agregó, la añadimos
+    if (!navCategories[mainCat].subcategories.includes(originalCat)) {
+      navCategories[mainCat].subcategories.push(originalCat);
+    }
+  });
+
+  // Convertimos el objeto en un array para mapearlo en JSX
+  const navCategoriesArr = Object.keys(navCategories).map(mainCat => ({
+    mainCategory: mainCat,
+    subcategories: navCategories[mainCat].subcategories
+  }));
+
+  return (
+    <Navbar dark expand="md" className="mb-3 bg-dark" style={{ position: 'relative' }}>
+      <div className="container">
+        <div className="cabecera" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {/* Hamburguesa en mobile */}
+          <div className="hamburger d-md-none">
+            <NavbarToggler onClick={toggle} />
+          </div>
+          {/* Título centrado */}
+          <div className="titulo" style={{ flexGrow: 1, textAlign: 'center' }}>
+            <NavbarBrand className="m-0">React Project</NavbarBrand>
+          </div>
+          {/* Botón de Login a la derecha */}
+          <div className="login">
+            <Button color="primary" onClick={toggleLoginModal}>
+              Login
+            </Button>
+          </div>
+        </div>
+
+        {/* Menú de navegación para desktop: aparece en una línea debajo (solo md y superiores) */}
+        <div className="row d-none d-md-block mt-2">
+          <div className="col">
+            <Nav navbar className="nav-categories desktop-nav">
+              {navCategoriesArr.map((cat, index) =>
+                cat.subcategories.length > 1 ? (
+                  <UncontrolledDropdown nav inNavbar key={index} className="nav-category">
+                    <DropdownToggle nav caret>
+                      {cat.mainCategory}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      {cat.subcategories.map((subcat, i) => (
+                        <DropdownItem key={i} href={`/category/${cat.mainCategory}/${subcat}`}>
+                          {subcat}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                ) : (
+                  <NavItem key={index} className="nav-category">
+                    <NavLink href={`/category/${cat.mainCategory}`}>
+                      {cat.mainCategory}
+                    </NavLink>
+                  </NavItem>
+                )
+              )}
+            </Nav>
+          </div>
+        </div>
+      </div>
+
+      {/* Menú de navegación para mobile: se muestra en el Collapse con la clase "mobile-collapse" */}
+      <div className="d-md-none mobile-collapse">
+        <Collapse isOpen={isOpen} navbar>
+          <div className="container">
+            <Nav navbar className="nav-categories">
+              {navCategoriesArr.map((cat, index) =>
+                cat.subcategories.length > 1 ? (
+                  <UncontrolledDropdown nav inNavbar key={index} className="nav-category">
+                    <DropdownToggle nav caret>
+                      {cat.mainCategory}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      {cat.subcategories.map((subcat, i) => (
+                        <DropdownItem key={i} href={`/category/${cat.mainCategory}/${subcat}`}>
+                          {subcat}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                ) : (
+                  <NavItem key={index} className="nav-category">
+                    <NavLink href={`/category/${cat.mainCategory}`}>
+                      {cat.mainCategory}
+                    </NavLink>
+                  </NavItem>
+                )
+              )}
+            </Nav>
+          </div>
+        </Collapse>
+      </div>
+
+      <Login show={loginModalOpen} toggle={toggleLoginModal} />
+    </Navbar>
+  );
 };
-
 export default Header;

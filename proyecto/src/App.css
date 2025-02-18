@@ -14,9 +14,42 @@
   color: #000;
   cursor: pointer;
 }
-.cabecera{
+.cabecera {
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px; 
+}
+.cabecera .hamburger,
+.cabecera .login {
+  width: 100px; 
+}
+.cabecera .titulo {
+  flex-grow: 1;
+  text-align: center;
+}
+.desktop-nav {
+  width: 100%;
+  justify-content: space-around; /* O el valor que prefieras */
+}
+
+.desktop-nav .nav-category {
+  margin: 0 10px; /* Ajusta la separación entre categorías */
+}
+/* Asegúrate de que el contenedor del Collapse se posicione sobre la cabecera */
+.mobile-collapse {
+  position: absolute;
+  top: 100%; /* Justo debajo de la cabecera */
+  left: 0;
+  right: 0;
+  background-color: #343a40; /* O el color de fondo que uses en la cabecera */
+  z-index: 1050; /* Asegura que esté por encima */
+}
+
+/* Ejemplo para el menú desktop */
+.desktop-nav {
+  width: 100%;
+  justify-content: space-around; /* Distribuye las categorías con separación */
 }
 
 .App-logo {
