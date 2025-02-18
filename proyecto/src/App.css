@@ -2,6 +2,23 @@
   text-align: center;
 }
 
+/* NAV STYLE */
+.nav-category {
+  border-bottom: 1px solid #fff;
+  padding: 1px;
+  border-radius: 4px;
+  align-items: center;
+}
+.nav-category:hover {
+  background-color: #5b5b6b;
+  color: #000;
+  cursor: pointer;
+}
+.cabecera{
+  display: flex;
+  justify-content: space-around;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

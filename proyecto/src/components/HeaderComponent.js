@@ -10,15 +10,19 @@ import {
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    Button
 } from 'reactstrap';
-import { PIELES } from '../datos/Pieles.js';
+import { PIELES } from '../data/Pieles.js';
+import Login from "./LoginComponent";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
 
-    // Construir el array de categorías y subcategorías sin duplicados
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
+    const toggleLoginModal = () => setLoginModalOpen(!loginModalOpen);
+
     const categorias = [];
 
     PIELES.productos.forEach(producto => {
@@ -45,36 +49,44 @@ const Header = () => {
     });
 
     return (
-        <Navbar dark expand="md" className="mb-3 bg-dark">
-            <div className="container">
-                <NavbarBrand href="/">Proyecto REACT</NavbarBrand>
-                <NavbarToggler onClick={toggle} />
+        <>
+            <Navbar dark expand="md" className="mb-3 bg-dark">
+                <div className="container cabecera">
+                    <NavbarBrand >Proyecto REACT</NavbarBrand>
+                    <NavbarToggler onClick={toggle} className="my-toggler" />
+                    <Button color="primary" onClick={toggleLoginModal} className="my-login-btn">
+                        Login
+                    </Button>
+                </div>
                 <Collapse isOpen={isOpen} navbar>
-                    <Nav className="ml-auto" navbar>
-                        {categorias.map((cat, index) =>
-                            cat.subcategorias.length > 0 ? (
-                                <UncontrolledDropdown nav inNavbar key={index}>
-                                    <DropdownToggle nav caret>
-                                        {cat.nombre}
-                                    </DropdownToggle>
-                                    <DropdownMenu>
-                                        {cat.subcategorias.map((subcat, i) => (
-                                            <DropdownItem key={i} href={`/categoria/${cat.nombre}/${subcat}`}>
-                                                {subcat}
-                                            </DropdownItem>
-                                        ))}
-                                    </DropdownMenu>
-                                </UncontrolledDropdown>
-                            ) : (
-                                <NavItem key={index}>
-                                    <NavLink href={`/categoria/${cat.nombre}`}>{cat.nombre}</NavLink>
-                                </NavItem>
-                            )
-                        )}
-                    </Nav>
+                    <div className="container">
+                        <Nav navbar className="nav-categorias">
+                            {categorias.map((cat, index) =>
+                                cat.subcategorias.length > 0 ? (
+                                    <UncontrolledDropdown nav inNavbar key={index} className="nav-category">
+                                        <DropdownToggle nav caret>
+                                            {cat.nombre}
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                            {cat.subcategorias.map((subcat, i) => (
+                                                <DropdownItem key={i} href={`/categoria/${cat.nombre}/${subcat}`}>
+                                                    {subcat}
+                                                </DropdownItem>
+                                            ))}
+                                        </DropdownMenu>
+                                    </UncontrolledDropdown>
+                                ) : (
+                                    <NavItem key={index} className="nav-category">
+                                        <NavLink href={`/categoria/${cat.nombre}`}>{cat.nombre}</NavLink>
+                                    </NavItem>
+                                )
+                            )}
+                        </Nav>
+                    </div>
                 </Collapse>
-            </div>
-        </Navbar>
+            </Navbar>
+            <Login show={loginModalOpen} toggle={toggleLoginModal} />
+        </>
     );
 };
 
