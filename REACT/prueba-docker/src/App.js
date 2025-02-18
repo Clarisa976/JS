@@ -1,94 +1,53 @@
-import React, { useState } from 'react';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from "react";
+import { Button } from 'reactstrap';
+import HeaderComponent from './components/HeaderComponent';
+import FooterComponent from './components/FooterComponent';
+import ProductComponent from './components/ProductComponent';
+import Login from "./components/LoginComponent";
+import 'font-awesome/css/font-awesome.css';
+import 'bootstrap-social/bootstrap-social.css';
+import { PIELES } from '../data/pieles';
 
-function App() {
-  const [usuario, setUsuario] = useState('');
-  const [clave, setClave] = useState('');
-  const [mensaje, setMensaje] = useState('');
-  const [productos, setProductos] = useState([]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setMensaje('Procesando...');
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+      productos: PIELES.productos,
+      //productos: [],
+    };
+  }
 
-    try {
-      ///login - redirige al microservicio
-      const resp = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usuario, clave })
-      });
-      const data = await resp.json();
-      if (data.login) {
-        setMensaje(`¡Login correcto! ${data.mensaje}`);
-      } else {
-        setMensaje(`Error de credenciales: ${data.mensaje}`);
-      }
-    } catch (error) {
-      setMensaje(`Error de conexión: ${error}`);
-    }
+  componentDidMount() {
+    fetch('/2daw/pieles.json')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ productos: data.productos });
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }
+
+  toggleModal = () => {
+    this.setState({ isOpen: !this.state.isOpen });
   };
 
-  const verProductos = async () => {
-    setMensaje('Cargando productos...');
-
-    try {
-      ///productos - microservicio de productos
-      const resp = await fetch('/productos');
-      const data = await resp.json();
-      if (data.productos) {
-        setProductos(data.productos);
-        setMensaje(`Se obtuvieron ${data.productos.length} productos`);
-      } else if (data.error) {
-        setMensaje(`Error: ${data.error}`);
-      } else {
-        setMensaje('No se pudo interpretar la respuesta de productos');
-      }
-    } catch (error) {
-      setMensaje(`Error al cargar productos: ${error}`);
-    }
-  };
-
-  return (
-    <div style={{margin:'2rem'}}>
-      <h1>Aplicación React - Ejemplo</h1>
-
-      <form onSubmit={handleLogin}>
-        <h2>Login</h2>
-        <div>
-          <label>Usuario: </label>
-          <input
-            type="text"
-            value={usuario}
-            onChange={(e) => setUsuario(e.target.value)}
-          />
+  render() {
+    return (
+      <>
+        <div className="App">
+          <HeaderComponent productos={this.state.productos} />
+          <ProductComponent productos={this.state.productos} />
+          <Login mostrar={this.state.isOpen} toggle={this.toggleModal} />
         </div>
-        <div>
-          <label>Clave: </label>
-          <input
-            type="password"
-            value={clave}
-            onChange={(e) => setClave(e.target.value)}
-          />
-        </div>
-        <button type="submit">Enviar</button>
-      </form>
-
-      <p>{mensaje}</p>
-
-      <hr />
-
-      <button onClick={verProductos}>Ver productos</button>
-      {productos.length > 0 && (
-        <ul>
-          {productos.map((prod) => (
-            <li key={prod.cod}>
-              {prod.cod} - {prod.nombre_corto} - {prod.PVP}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+        <FooterComponent />
+      </>
+    );
+  }
 }
+
+
 
 export default App;
