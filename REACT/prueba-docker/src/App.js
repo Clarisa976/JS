@@ -8,7 +8,7 @@ import ProductComponent from './components/ProductComponent';
 import Login from "./components/LoginComponent";
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap-social/bootstrap-social.css';
-import { PIELES } from '../data/pieles';
+import { PIELES } from '../src/data/Pieles';
 
 
 class App extends Component {
@@ -21,14 +21,14 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
+ /* componentDidMount() {
     fetch('/2daw/pieles.json')
       .then(response => response.json())
       .then(data => {
         this.setState({ productos: data.productos });
       })
       .catch(error => console.error('Error fetching data:', error));
-  }
+  }*/
 
   toggleModal = () => {
     this.setState({ isOpen: !this.state.isOpen });
@@ -39,9 +39,10 @@ class App extends Component {
       <>
         <div className="App">
           <HeaderComponent productos={this.state.productos} />
-          <ProductComponent productos={this.state.productos} />
+          
           <Login mostrar={this.state.isOpen} toggle={this.toggleModal} />
         </div>
+        <ProductComponent productos={this.state.productos} />
         <FooterComponent />
       </>
     );

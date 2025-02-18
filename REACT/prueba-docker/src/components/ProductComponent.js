@@ -1,6 +1,5 @@
-// ProductComponent.js
 import React from 'react';
-import { Card, CardBody, CardTitle, CardText, CardImg } from 'reactstrap';
+import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
 
 const ProductComponent = ({ productos }) => {
   if (!productos || productos.length === 0) {
@@ -10,16 +9,22 @@ const ProductComponent = ({ productos }) => {
   return (
     <div className="container">
       <div className="row">
-        {productos.map(producto => (
-          <div key={producto.id} className="col-md-4 mb-4">
+        {productos.map((producto, index) => (
+          <div key={index} className="col-md-4 mb-4">
             <Card>
-              {/* Si el objeto tiene una propiedad "foto", se muestra la imagen */}
-              {producto.foto && (
-                <CardImg top width="100%" src={producto.foto} alt={producto.nombre} />
+              {producto.imagen_url && (
+                <CardImg
+                  top
+                  width="100%"
+                  src={producto.imagen_url}
+                  alt={producto.nombre}
+                />
               )}
               <CardBody>
                 <CardTitle tag="h5">{producto.nombre}</CardTitle>
-                  <CardText><strong>Price:</strong> {producto.precio}</CardText>
+                <CardText>
+                  <strong>Price:</strong> {producto.precio}€
+                </CardText>
                 <CardText>{producto.descripcion}</CardText>
               </CardBody>
             </Card>
