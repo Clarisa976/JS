@@ -1,44 +1,60 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { USUARIOS } from "../data/users.js"; 
+import axios from 'axios';
+import md5 from 'md5';
+//import { USUARIOS } from "../data/users.js"; 
 
 const Login = (props) => {
-    console.log('Users:', USUARIOS);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const URL_API = 'http://localhost/Proyectos/JS/REACT/prueba-docker/build/API/login.php';
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'username') {
-            setUsername(value);
-        } else if (name === 'password') {
-            setPassword(value);
+        if (e.target.name === 'username') {
+            setUsername(e.target.value);
+        } else if (e.target.name === 'password') {
+            setPassword(e.target.value);
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (username.trim() === '' || password.trim() === '') {
             setError("Please fill out all fields.");
             return;
         }
 
-        const userFound = USUARIOS.find(
-            (user) => user.username === username && user.password === password
+        try {
+           // Preparamos los datos en formato JSON y encriptamos el password con MD5
+           const response = await axios.post(URL_API, JSON.stringify({
+                usuario: username,
+                password: md5(password)
+            }),
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
         );
 
-        if (!userFound) {
-            setError("User not registered or incorrect password.");
-            return;
+        const data = response.data;
+        // Verificamos el mensaje que nos devuelve el PHP
+        if (data.mensaje === "Acceso correcto") {
+            //alert(`Holis, ${data.usuario.usuario}!`);
+            props.onLogin(data.usuario);//para devolver los datos del usuario
+            setError('');
+            props.toggle();
+            setUsername('');
+            setPassword('');
+        } else {
+            setError(data.mensaje);
         }
-
-        setError('');
-        console.log("Authenticated user:", userFound);
-        props.toggle();
-        setUsername('');
-        setPassword('');
-    };
+    } catch (err) {
+        console.error("Error during login:", err);
+        setError("An error occurred. Please try again.");
+    }
+};
 
     return (
         <Modal isOpen={props.show} toggle={props.toggle}>
@@ -77,5 +93,4 @@ const Login = (props) => {
         </Modal>
     );
 };
-
-export default Login;
+export default Login; 
