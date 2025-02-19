@@ -1,43 +1,53 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { USUARIOS } from "../data/users.js"; 
+import axios from 'axios';
+//import { USUARIOS } from "../data/users.js"; 
 
 const Login = (props) => {
-    console.log('Users:', USUARIOS);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'username') {
-            setUsername(value);
-        } else if (name === 'password') {
-            setPassword(value);
+        if (e.target.name === 'username') {
+            setUsername(e.target.value);
+        } else if (e.target.name === 'password') {
+            setPassword(e.target.value);
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (username.trim() === '' || password.trim() === '') {
             setError("Please fill out all fields.");
             return;
         }
 
-        const userFound = USUARIOS.find(
-            (user) => user.username === username && user.password === password
-        );
+        try {
+            // Preparamos los datos en formato URL-encoded
+            const params = new URLSearchParams();
+            params.append('username', username);
+            params.append('password', password);
 
-        if (!userFound) {
-            setError("User not registered or incorrect password.");
-            return;
+            const response = await axios.post('http://localhost/Proyectos/DWECL/DWECL/proyecto/build/API/login.php', params, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            const data = response.data;
+            if (data.status === 'success') {
+                alert(`Holis, ${data.user.username}!`);
+                setError('');
+                props.toggle();
+                setUsername('');
+                setPassword('');
+            } else {
+                setError(data.message);
+            }
+        } catch (err) {
+            console.error("Error during login:", err);
+            setError("An error occurred. Please try again.");
         }
-
-        setError('');
-        console.log("Authenticated user:", userFound);
-        props.toggle();
-        setUsername('');
-        setPassword('');
     };
 
     return (
@@ -77,5 +87,4 @@ const Login = (props) => {
         </Modal>
     );
 };
-
 export default Login;

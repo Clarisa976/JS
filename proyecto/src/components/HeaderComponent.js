@@ -24,18 +24,19 @@ const Header = ({ productos }) => {
   const toggleLoginModal = () => setLoginModalOpen(!loginModalOpen);
 
   const categoryMapping = {
-    'Scraps': 'Leather Scraps',
-    'Leather remnants': 'Leather Scraps',
+    'Scraps': 'Scraps',
+    'Leather remnants': 'Scraps',
     'Cowhides': 'Cow',
     'Cowhide': 'Cow',
     'Pig Lining': 'Pig',
+    'Pig lining': 'Pig',
     'Pigskin Lining': 'Pig',
     'Leather Straps for Handles': 'Handles & Accessories',
     'Leather Handles': 'Handles & Accessories',
-    'Adhesives': 'Adhesives',
-    'Finishes': 'Finishes',
-    'Dyes': 'Dyes',
-    'Edge Dyes': 'Dyes'
+    'Adhesives': 'Dyes & Adhesives',
+    'Finishes': 'Dyes & Adhesives',
+    'Dyes': 'Dyes & Adhesives',
+    'Edge Dyes': 'Dyes & Adhesives'
   };
 
   let navCategories = {};

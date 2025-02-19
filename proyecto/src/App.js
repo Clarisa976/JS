@@ -31,6 +31,8 @@ class App extends Component {
       .catch(error => console.error('Error fetching data with axios:', error));
   }
 
+
+
   toggleModal = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
@@ -41,9 +43,10 @@ class App extends Component {
       <>
         <div className="App">
           <HeaderComponent productos={this.state.productos} />
-
-          <Login mostrar={this.state.isOpen} toggle={this.toggleModal} />
+          <Login show={this.state.isOpen} toggle={this.toggleModal}/>
         </div>
+        <h1>Productos</h1>
+        <hr />
         <ProductComponent productos={this.state.productos} />
         <FooterComponent />
       </>
