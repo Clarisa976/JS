@@ -8,7 +8,7 @@ function Footer(props) {
 
                 <div className="row justify-content-center">
                     <div className="bg-dark  text-center text-light py-3 mt-5">
-                        <p>© Copyright 2025 company</p>
+                        <p>© Copyright 2025 Leathers for Artisans</p>
                     </div>
                 </div>
         </footer>

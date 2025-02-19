@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Collapse,
   Navbar,
@@ -17,14 +17,12 @@ import Login from './LoginComponent';
 import logo from '../img/logo2.png';
 
 
-const Header = () => {
+const Header = ({ productos }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  const [productos, setProductos] = useState([]);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const toggleLoginModal = () => setLoginModalOpen(!loginModalOpen);
 
-  // Mapeo de las categorías originales a categorías de navegación en inglés
   const categoryMapping = {
     'Scraps': 'Leather Scraps',
     'Leather remnants': 'Leather Scraps',
@@ -40,40 +38,21 @@ const Header = () => {
     'Edge Dyes': 'Dyes'
   };
 
-  useEffect(() => {
-    fetch('https://icarosproject.com/2daw/pieles.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Error al traer datos: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        setProductos(data.productos);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-
   let navCategories = {};
 
   productos.forEach(producto => {
     if (!producto.categoria) return;
     const originalCat = producto.categoria;
-    // Se asigna la main category usando el mapping (o se conserva la original si no está mapeada)
     const mainCat = categoryMapping[originalCat] || originalCat;
 
     if (!navCategories[mainCat]) {
       navCategories[mainCat] = { subcategories: [] };
     }
-    // Si la subcategoría (original) aún no se agregó, la añadimos
     if (!navCategories[mainCat].subcategories.includes(originalCat)) {
       navCategories[mainCat].subcategories.push(originalCat);
     }
   });
 
-  // Convertimos el objeto en un array para mapearlo en JSX
   const navCategoriesArr = Object.keys(navCategories).map(mainCat => ({
     mainCategory: mainCat,
     subcategories: navCategories[mainCat].subcategories
@@ -83,20 +62,25 @@ const Header = () => {
     <Navbar dark expand="md" className="mb-3 bg-dark" style={{ position: 'relative' }}>
       <div className="container-fluid">
         <div className="cabecera" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          {/* Hamburguesa en mobile */}
+          {/*Hamburguesa*/}
           <div className="hamburger d-md-none">
             <NavbarToggler onClick={toggle} />
           </div>
-          {/* Título centrado */}
+          {/*Logo*/}
           <div className="titulo" style={{ flexGrow: 1, textAlign: 'center' }}>
             <NavbarBrand className="m-0">
               <img src={logo} alt="Logo" style={{ height: '80px', width: 'auto' }} />
             </NavbarBrand>
           </div>
-          {/* Botón de Login a la derecha */}
+          {/*Login*/}
           <div className="login">
             <Button color="primary" onClick={toggleLoginModal}>
-              Login
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQJJREFUSEvFVIENwjAMcz6BS2CfwCXAJfAJ+4RxSZilFW1dm5R1E5EmTWplN45jwcYlG+OjiEBVdwAuAE791wFoAdxEhP9muQSqegTwTKAQ/CwiJMtWCcELADtIVSci+8UEqkpJ7o4KjdWF2YGqXgftLQ7OgveS5RHk9B+DcQ6PpQTUngPeZgZ8leEiHpv684LrooEk7AElYwWL1u+Bt0jeeVEHHkjNHtB+hz4agjRjrBAZ759tOgyWC5ZzT/zobGzMJHJc46k1c1WKwMoej2CWTROCwmjwSCbRERNQdwZcTbUi0gSAmKBGnoA5kSkm0Jqnf1/d+zbZwRrgMcZ/N3mNjj45MFsZKcZxbQAAAABJRU5ErkJggg==" alt='user icon'/>
+            </Button>
+          </div>
+          <div className="cart">
+            <Button color="success" onClick={toggleLoginModal}>
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAShJREFUSEvNlb1Vw0AQhOfLXQQO6QKXAREOCSCBHCiABDISTEQZuAtCXAT5oOXpeIdsyecz4nGhdNrZ+dkVGvkwcn39HYBtt2xWkp6Bm99g980gA0h1Z8ByX5A1iWyfSnqStARmYwAcSHpvC+/NYqPJtoNBMKk9K2AaH/cB5CxqQIYBoqLt18aHo5rqTeO3KYW9c5CZXYMxBSLu/YNmu1amBTBPXQ1OcjN7MWzXO1KYA4tSgJ1Z0IifN7R1F+1o9g95Bj1IXdiOJEWiSs7aYG5l0Ea2xIuNq6UU4BB4sz0BPnIq6ZntrztdmqUA95LOJb0AJ5l8E0mPko4lPQAXtQDpX6FuSvI1331XanJ0GR5cdrsMWSSdtezuGvmuqhiUxKfvTpEH/xrgE9prchlIVheaAAAAAElFTkSuQmCC" alt='cart icon'/>
             </Button>
           </div>
         </div>
