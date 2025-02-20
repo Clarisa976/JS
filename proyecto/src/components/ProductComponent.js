@@ -10,7 +10,7 @@ const ProductComponent = ({ productos, addToCart }) => {
     <div className="container">
       <div className="row">
         {productos.map((producto, index) => (
-          <div key={index} className="col-6 col-md-4 col-lg-3 mb-4">
+          <div key={index} className="col-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center">
             <Card>
               {producto.imagen_url && (
                 <CardImg
@@ -20,13 +20,13 @@ const ProductComponent = ({ productos, addToCart }) => {
                   alt={producto.nombre}
                 />
               )}
-              <CardBody>
+              <CardBody className='d-flex flex-column'>
                 <CardTitle tag="h5">{producto.nombre}</CardTitle>
                 <CardText>
                   <strong>Price:</strong> {producto.precio}€
                 </CardText>
                 {/*<CardText>{producto.descripcion}</CardText>*/}
-                <Button color="success"
+                <Button color="success" className='mt-auto'
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

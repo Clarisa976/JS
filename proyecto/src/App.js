@@ -34,11 +34,6 @@ class App extends Component {
     axios.get('/2daw/pieles.json')
       .then(response => {
         this.setState({ productos: response.data.productos });
-        /*const productosConId = response.data.productos.map((p, index) => ({
-          ...p,
-          id: index
-        }));
-        this.setState({ productos: productosConId });*/
       })
       .catch(error => console.error('Error fetching data with axios:', error));
   }
@@ -55,18 +50,6 @@ class App extends Component {
     this.setState(prevState => ({ showPurchaseModal: !prevState.showPurchaseModal }));
   };
 
-  /* addToCart = (producto) => {
-     this.setState(prevState => {
-       const cart = [...prevState.cart];
-       const index = cart.findIndex(item => item.id === producto.id);
-       if (index > -1) {
-         cart[index].quantity += 1;
-       } else {
-         cart.push({ id: producto.id, nombre: producto.nombre, precio: producto.precio, quantity: 1 });
-       }
-       return { cart };
-     });
-   };*/
   addToCart = (producto, e) => {
     if (e) {
       e.preventDefault();
@@ -74,7 +57,6 @@ class App extends Component {
     }
     this.setState(prevState => {
       const cart = [...prevState.cart];
-      // Usamos producto.id si existe; de lo contrario, usamos producto.nombre
       const identifier = producto.id !== undefined ? producto.id : producto.nombre;
       const index = cart.findIndex(item => {
         const itemId = item.id !== undefined ? item.id : item.nombre;
@@ -189,45 +171,14 @@ class App extends Component {
             <hr />
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <h4>
-                Total:{' '}
-                {this.state.cart.reduce((acc, item) => acc + item.quantity * item.precio, 0)}€
+                Total: {this.state.cart.reduce((acc, item) => acc + item.quantity * item.precio, 0)}€
               </h4>
             </div>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="success" onClick={() => {
-              this.toggleCart();       //cierra el modal del carrito
-              this.togglePurchaseModal(); //abre el modal para datos de compra
-            }}>
-              Purchase
-            </Button>
-            <Button color="secondary" onClick={this.toggleCart}>Close</Button>
-          </ModalFooter>
-        </Modal>
-
-
-        <Modal isOpen={this.state.showPurchaseModal} toggle={this.togglePurchaseModal}>
-          <ModalHeader toggle={this.togglePurchaseModal}>SHOPPING CART</ModalHeader>
-          <ModalBody>
-            {this.state.cart.length === 0 ? (
-              <p>Your cart is empty.</p>
-            ) : (
-              this.state.cart.map(item => (
-                <div key={item.id}>
-                  <p>
-                    {item.nombre} - {item.quantity} x {item.precio}€
-                    <Button size="sm" onClick={() => this.modifyCart(item.id, 1)}>+</Button>{' '}
-                    <Button size="sm" onClick={() => this.modifyCart(item.id, -1)}>-</Button>
-                    <br />
-                    Total: {item.quantity * item.precio}€
-                  </p>
-                </div>
-              ))
-            )}
             <hr />
-            <h5>Fill in the details to complete your order:</h5>
+
+            <h5>Fill in your details to complete the purchase:</h5>
             <div>
-              <label>Name: </label><br />
+              <label>Name:</label><br />
               <input
                 type="text"
                 onChange={this.handleChange}
@@ -237,7 +188,7 @@ class App extends Component {
               <br /><br />
             </div>
             <div>
-              <label>Address: </label><br />
+              <label>Address:</label><br />
               <input
                 type="text"
                 onChange={this.handleChange}
@@ -246,7 +197,11 @@ class App extends Component {
               />
               <br /><br />
             </div>
-            Your order total is: {this.state.cart.reduce((acc, item) => acc + item.quantity * item.precio, 0)}€
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <h4>
+                Your order total is: {this.state.cart.reduce((acc, item) => acc + item.quantity * item.precio, 0)}€
+              </h4>
+            </div>
             {this.state.showAlert && (
               <Alert color={this.state.alertColor} toggle={() => this.setState({ showAlert: false, alertMessage: "" })}>
                 {this.state.alertMessage}
@@ -255,9 +210,10 @@ class App extends Component {
           </ModalBody>
           <ModalFooter>
             <Button color="success" onClick={this.handlePurchase}>Purchase</Button>
-            <Button color="secondary" onClick={this.togglePurchaseModal}>Close</Button>
+            <Button color="secondary" onClick={this.toggleCart}>Close</Button>
           </ModalFooter>
         </Modal>
+
 
 
         <h1>Products</h1>
