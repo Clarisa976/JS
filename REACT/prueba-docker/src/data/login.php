@@ -20,7 +20,7 @@ $usuarioInput = trim($_POST['usuario']);
 $passwordInput = trim($_POST['password']);
 
 // En este ejemplo se usa MD5 para comparar las contraseñas (aunque no es lo más seguro)
-$passwordMd5 = md5($passwordInput);
+//$passwordMd5 = md5($passwordInput);
 
 // Array de usuarios a pelo
 $usuarios = [
@@ -38,7 +38,7 @@ $usuarios = [
 
 $usuarioEncontrado = null;
 foreach ($usuarios as $usuario) {
-    if ($usuario['usuario'] === $usuarioInput && $usuario['password'] === $passwordMd5) {
+    if ($usuario['usuario'] === $usuarioInput && $usuario['password'] === $passwordInput) {
         $usuarioEncontrado = $usuario;
         break;
     }

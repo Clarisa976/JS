@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
+import { Card, CardImg, CardBody, CardTitle, CardText, Button } from 'reactstrap';
 
-const ProductComponent = ({ productos }) => {
+const ProductComponent = ({ productos, addToCart }) => {
   if (!productos || productos.length === 0) {
     return <p>No products available</p>;
   }
@@ -10,7 +10,7 @@ const ProductComponent = ({ productos }) => {
     <div className="container">
       <div className="row">
         {productos.map((producto, index) => (
-          <div key={index} className="col-md-4 mb-4">
+          <div key={index} className="col-6 col-md-4 col-lg-3 mb-4">
             <Card>
               {producto.imagen_url && (
                 <CardImg
@@ -25,7 +25,15 @@ const ProductComponent = ({ productos }) => {
                 <CardText>
                   <strong>Price:</strong> {producto.precio}€
                 </CardText>
-                <CardText>{producto.descripcion}</CardText>
+                {/*<CardText>{producto.descripcion}</CardText>*/}
+                <Button color="success"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addToCart(producto);
+                  }}>
+                  Add to Cart
+                </Button>
               </CardBody>
             </Card>
           </div>

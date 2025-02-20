@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
+import md5 from 'md5';
 //import { USUARIOS } from "../data/users.js"; 
 
 const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+   // const URL_API = 'http://localhost/Proyectos/JS/REACT/prueba-docker/build/API/login.php';//casa
+    const URL_API = 'http://localhost/Proyectos/DWECL/DWECL/proyecto/build/API/login.php';
 
     const handleChange = (e) => {
         if (e.target.name === 'username') {
@@ -24,25 +27,29 @@ const Login = (props) => {
         }
 
         try {
-            // Preparamos los datos en formato URL-encoded
-            const params = new URLSearchParams();
-            params.append('username', username);
-            params.append('password', password);
-
-            const response = await axios.post('http://localhost/Proyectos/DWECL/DWECL/proyecto/build/API/login.php', params, {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+            // Preparamos los datos en formato JSON y encriptamos el password con MD5
+            const response = await axios.post(URL_API, JSON.stringify({
+                usuario: username,
+                password: md5(password)
+            }),
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }
-            });
+            );
+
             const data = response.data;
-            if (data.status === 'success') {
-                alert(`Holis, ${data.user.username}!`);
+            // Verificamos el mensaje que nos devuelve el PHP
+            if (data.mensaje === "Acceso correcto") {
+                //alert(`Holis, ${data.usuario.usuario}!`);
+                props.onLogin(data.usuario);//para devolver los datos del usuario
                 setError('');
                 props.toggle();
                 setUsername('');
                 setPassword('');
             } else {
-                setError(data.message);
+                setError(data.mensaje);
             }
         } catch (err) {
             console.error("Error during login:", err);
@@ -87,4 +94,4 @@ const Login = (props) => {
         </Modal>
     );
 };
-export default Login;
+export default Login; 
