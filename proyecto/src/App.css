@@ -5,6 +5,9 @@ html,
 body {
   overflow-x: hidden;
 }
+.modal-custom-size .modal-dialog {
+  max-width: 90%; 
+}
 /* NAV STYLE */
 .nav-category {
   border-bottom: 1px solid #fff;

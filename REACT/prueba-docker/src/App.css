@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+.modal-custom-size .modal-dialog {
+  max-width: 90%; 
+}
 
 /* NAV STYLE */
 .nav-category {
