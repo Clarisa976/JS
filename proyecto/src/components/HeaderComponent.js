@@ -16,13 +16,12 @@ import {
 import Login from './LoginComponent';
 import logo from '../img/logo2.png';
 
-
 const Header = ({ productos, toggleCart, cartItemCount }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const toggleLoginModal = () => setLoginModalOpen(!loginModalOpen);
-  const [loggedUser, setLoggedUser] = useState(null);//usuario logueado
+  const [loggedUser, setLoggedUser] = useState(null); // logged in user
 
   const categoryMapping = {
     'Scraps': 'Scraps',
@@ -64,27 +63,34 @@ const Header = ({ productos, toggleCart, cartItemCount }) => {
     <Navbar dark expand="md" className="mb-3 bg-dark" style={{ position: 'relative' }}>
       <div className="container-fluid">
         <div className="cabecera" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          {/*Hamburguesa*/}
+          {/* Hamburger for mobile */}
           <div className="hamburger d-md-none">
             <NavbarToggler onClick={toggle} />
           </div>
-          {/*Logo*/}
+          {/* Logo */}
           <div className="titulo" style={{ flexGrow: 1, textAlign: 'center' }}>
             <NavbarBrand className="m-0">
               <img src={logo} alt="Logo" style={{ height: '80px', width: 'auto' }} />
             </NavbarBrand>
           </div>
-          {/*Login para escritorio*/}
+          {/* Desktop Login / User Dropdown */}
           <div className="login d-none d-md-flex align-items-center">
             {loggedUser ? (
-              <>
-                <img
-                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQJJREFUSEvFVIENwjAMcz6BS2CfwCXAJfAJ+4RxSZilFW1dm5R1E5EmTWplN45jwcYlG+OjiEBVdwAuAE791wFoAdxEhP9muQSqegTwTKAQ/CwiJMtWCcELADtIVSci+8UEqkpJ7o4KjdWF2YGqXgftLQ7OgveS5RHk9B+DcQ6PpQTUngPeZgZ8leEiHpv684LrooEk7AElYwWL1u+Bt0jeeVEHHkjNHtB+hz4agjRjrBAZ759tOgyWC5ZzT/zobGzMJHJc46k1c1WKwMoej2CWTROCwmjwSCbRERNQdwZcTbUi0gSAmKBGnoA5kSkm0Jqnf1/d+zbZwRrgMcZ/N3mNjj45MFsZKcZxbQAAAABJRU5ErkJggg=="
-                  alt="user icon"
-                  style={{ marginRight: '0.5rem' }}
-                />
-                <span style={{ color: 'white' }}>{loggedUser.usuario}</span>
-              </>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret style={{ display: 'flex', alignItems: 'center' }}>
+                  <img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQJJREFUSEvFVIENwjAMcz6BS2CfwCXAJfAJ+4RxSZilFW1dm5R1E5EmTWplN45jwcYlG+OjiEBVdwAuAE791wFoAdxEhP9muQSqegTwTKAQ/CwiJMtWCcELADtIVSci+8UEqkpJ7o4KjdWF2YGqXgftLQ7OgveS5RHk9B+DcQ6PpQTUngPeZgZ8leEiHpv684LrooEk7AElYwWL1u+Bt0jeeVEHHkjNHtB+hz4agjRjrBAZ759tOgyWC5ZzT/zobGzMJHJc46k1c1WKwMoej2CWTROCwmjwSCbRERNQdwZcTbUi0gSAmKBGnoA5kSkm0Jqnf1/d+zbZwRrgMcZ/N3mNjj45MFsZKcZxbQAAAABJRU5ErkJggg=="
+                    alt="user icon"
+                    style={{ marginRight: '0.5rem' }}
+                  />
+                  <span style={{ color: 'white' }}>{loggedUser.usuario}</span>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem href="/orders">My Orders</DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={() => setLoggedUser(null)}>Logout</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             ) : (
               <Button color="primary" onClick={toggleLoginModal}>
                 <img
@@ -94,7 +100,7 @@ const Header = ({ productos, toggleCart, cartItemCount }) => {
               </Button>
             )}
           </div>
-          {/*Login para móvil*/}
+          {/* Mobile Login */}
           <div className="login d-md-none">
             <Button color="primary" onClick={toggleLoginModal}>
               {loggedUser ? (
@@ -107,7 +113,7 @@ const Header = ({ productos, toggleCart, cartItemCount }) => {
               )}
             </Button>
           </div>
-          {/*Carrito*/}
+          {/* Cart */}
           <div className="cart">
             <Button color="success" onClick={toggleCart}>
               <img
@@ -119,7 +125,7 @@ const Header = ({ productos, toggleCart, cartItemCount }) => {
           </div>
         </div>
 
-        {/*Menú para escritorio*/}
+        {/* Desktop Navigation Menu */}
         <div className="row d-none d-md-block mt-2">
           <div className="col">
             <Nav navbar className="nav-categories desktop-nav">
@@ -150,7 +156,7 @@ const Header = ({ productos, toggleCart, cartItemCount }) => {
         </div>
       </div>
 
-      {/*Menú para móvil */}
+      {/* Mobile Navigation Menu */}
       <div className="d-md-none mobile-collapse">
         <Collapse isOpen={isOpen} navbar>
           <div className="container-fluid">
@@ -190,4 +196,5 @@ const Header = ({ productos, toggleCart, cartItemCount }) => {
     </Navbar>
   );
 };
+
 export default Header;
