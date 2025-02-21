@@ -36,6 +36,36 @@ class App extends Component {
       .catch(error => console.error('Error fetching data with axios:', error));
   }
 
+
+  fetchOrders = () => {
+    const URL_API = 'http://localhost/Proyectos/DWECL/DWECL/proyecto/build/API/pedidos.php';
+    if (!this.state.loggedUser) return;
+    axios.post(
+     URL_API,
+      { action: "get", userId: this.state.loggedUser.id },
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+      .then(response => {
+        console.log("Orders fetched:", response.data);
+        this.setState({ pedidos: response.data.pedidos || [] }, () => {
+          this.togglePedidosModal();
+        });
+      })
+      .catch(error => {
+        console.error("Error fetching orders:", error);
+      });
+  };
+
+  saveOrder = (order) => {
+    const URL_API = 'http://localhost/Proyectos/DWECL/DWECL/proyecto/build/API/pedidos.php';
+    return axios.post(
+      URL_API,
+      { action: "save", order },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+  };
+
+
   toggleLoginModal = () => {
     this.setState({ isLoginOpen: !this.state.isLoginOpen });
   };
@@ -104,9 +134,8 @@ class App extends Component {
     });
   };
 
-  // Procesa la compra: crea un pedido
   purchase = (name, address) => {
-    const { cart } = this.state;
+    const { cart, loggedUser } = this.state;
     if (cart.length === 0) {
       this.setState({
         showAlert: true,
@@ -115,21 +144,42 @@ class App extends Component {
       });
       return;
     }
-    const newPedido = {
+    const newOrder = {
       nombre: name,
       direccion: address,
-      pedidos: cart
+      pedidos: cart,
+      userId: loggedUser.id
     };
-    console.log("Compra realizada:", newPedido);
-    this.setState(prevState => ({
-      pedidos: [...prevState.pedidos, newPedido],
-      cart: []
-    }));
-    this.setState({
-      showAlert: true,
-      alertMessage: "Purchase completed!",
-      alertColor: "success"
-    });
+    console.log("Attempting to save order:", newOrder);
+    this.saveOrder(newOrder)
+      .then(response => {
+        console.log("Order saved:", response.data);
+        if (response.data.success) {
+          this.setState(prevState => ({
+            pedidos: [...prevState.pedidos, newOrder],
+            cart: []
+          }));
+          this.setState({
+            showAlert: true,
+            alertMessage: "Purchase completed!",
+            alertColor: "success"
+          });
+        } else {
+          this.setState({
+            showAlert: true,
+            alertMessage: "Failed to save order",
+            alertColor: "danger"
+          });
+        }
+      })
+      .catch(error => {
+        console.error("Error saving order:", error);
+        this.setState({
+          showAlert: true,
+          alertMessage: "Error saving order",
+          alertColor: "danger"
+        });
+      });
   };
 
   handlePurchase = () => {
@@ -161,10 +211,12 @@ class App extends Component {
 
   // Ventana del carrito y formulario para el pedido
   carritoModal = () => {
-    const totalPrice = this.state.cart.reduce(
-      (acc, item) => acc + item.quantity * item.precio,
-      0
-    );
+    const totalPrice = this.state.cart.reduce((acc, item) => {
+      // Cambiar los puntos por comas para que no pete
+      const price = parseFloat(item.precio.replace(',', '.'));
+      return acc + item.quantity * price;
+    }, 0);
+
     return (
       <Modal
         isOpen={this.state.showCart}
@@ -177,38 +229,29 @@ class App extends Component {
           {this.state.cart.length === 0 ? (
             <p>No products in cart</p>
           ) : (
-            this.state.cart.map((item) => (
-              <div
-                key={item.id}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: '10px'
-                }}
-              >
-                <span style={{ flex: '2' }}>{item.nombre}</span>
-                <span style={{ flex: '3', textAlign: 'center' }}>
-                  {item.quantity} x {item.precio}€ = {item.quantity * item.precio}€
-                </span>
-                <span style={{ flex: '1', textAlign: 'center' }}>
-                  <Button
-                    color="primary"
-                    size="sm"
-                    onClick={() => this.modifyCart(item.id, 1)}
-                  >
-                    +
-                  </Button>{' '}
-                  <Button
-                    color="secondary"
-                    size="sm"
-                    onClick={() => this.modifyCart(item.id, -1)}
-                  >
-                    -
-                  </Button>
-                </span>
-              </div>
-            ))
+            this.state.cart.map(item => {
+              const price = parseFloat(item.precio.replace(',', '.'));
+              return (
+                <div
+                  key={item.id}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '10px'
+                  }}
+                >
+                  <span style={{ flex: '2' }}>{item.nombre}</span>
+                  <span style={{ flex: '3', textAlign: 'center' }}>
+                    {item.quantity} x {item.precio}€ = {item.quantity * price}€
+                  </span>
+                  <span style={{ flex: '1', textAlign: 'center' }}>
+                    <Button color="primary" size="sm" onClick={() => this.modifyCart(item.id, 1)}>+</Button>{' '}
+                    <Button color="secondary" size="sm" onClick={() => this.modifyCart(item.id, -1)}>-</Button>
+                  </span>
+                </div>
+              );
+            })
           )}
           <hr />
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -249,35 +292,30 @@ class App extends Component {
             <br /><br />
           </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <h4 style={{ textAlign: 'right' }}>
-              Your order total is: {totalPrice}€
-            </h4>
+            <h4 style={{ textAlign: 'right' }}>Your order total is: {totalPrice}€</h4>
           </div>
           {this.state.showAlert && (
             <Alert
+              fade={false}
               color={this.state.alertColor}
-              toggle={() =>
-                this.setState({ showAlert: false, alertMessage: "" })
-              }
+              toggle={() => this.setState({ showAlert: false, alertMessage: "" })}
             >
               {this.state.alertMessage}
             </Alert>
           )}
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={this.handlePurchase}>
-            Purchase
-          </Button>
-          <Button color="secondary" onClick={this.toggleCart}>
-            Close
-          </Button>
+          <Button color="success" onClick={this.handlePurchase}>Purchase</Button>
+          <Button color="secondary" onClick={this.toggleCart}>Close</Button>
         </ModalFooter>
       </Modal>
     );
   };
 
+
   // Ventana pedidos realizados
   pedidosModal = () => {
+    const pedidos = this.state.pedidos || [];
     return (
       <Modal
         isOpen={this.state.showPedidosModal}
@@ -287,14 +325,14 @@ class App extends Component {
       >
         <ModalHeader toggle={this.togglePedidosModal}>Orders</ModalHeader>
         <ModalBody>
-          {this.state.pedidos.length === 0 ? (
+          {pedidos.length === 0 ? (
             <p>No orders have been placed.</p>
           ) : (
-            this.state.pedidos.map((order, index) => {
-              const orderTotal = order.pedidos.reduce(
-                (accum, item) => accum + item.quantity * item.precio,
-                0
-              );
+            pedidos.map((order, index) => {
+              const orderTotal = order.pedidos.reduce((accum, item) => {
+                const price = parseFloat(item.precio.replace(',', '.'));
+                return accum + item.quantity * price;
+              }, 0);
               return (
                 <Table borderless key={index}>
                   <thead>
@@ -326,24 +364,27 @@ class App extends Component {
                             </tr>
                           </thead>
                           <tbody>
-                            {order.pedidos.map((item, idx) => (
-                              <tr key={item.id}>
-                                <td>{idx + 1}</td>
-                                <td>{item.nombre}</td>
-                                <td>{item.quantity}</td>
-                                <td>{item.precio}</td>
-                                <td style={{ textAlign: "right" }}>
-                                  {item.quantity * item.precio} €
-                                </td>
-                              </tr>
-                            ))}
+                            {order.pedidos.map((item, idx) => {
+                              const price = parseFloat(item.precio.replace(',', '.'));
+                              return (
+                                <tr key={item.id}>
+                                  <td>{idx + 1}</td>
+                                  <td>{item.nombre}</td>
+                                  <td>{item.quantity}</td>
+                                  <td>{item.precio}</td>
+                                  <td style={{ textAlign: 'right' }}>
+                                    {item.quantity * price} €
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </Table>
                       </td>
                     </tr>
                     <tr>
                       <td><strong>Order Total:</strong></td>
-                      <td style={{ textAlign: "right" }}>{orderTotal} €</td>
+                      <td style={{ textAlign: 'right' }}>{orderTotal} €</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -352,13 +393,13 @@ class App extends Component {
           )}
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.togglePedidosModal}>
-            Close
-          </Button>
+          <Button color="primary" onClick={this.togglePedidosModal}>Close</Button>
         </ModalFooter>
       </Modal>
     );
   };
+
+
 
 
   render() {
@@ -375,7 +416,7 @@ class App extends Component {
             loggedUser={this.state.loggedUser}
             onLogout={this.handleLogout}
             onOpenLogin={this.toggleLoginModal}
-            onOpenPedidos={this.togglePedidosModal}/>
+            onOpenPedidos={this.fetchOrders} />
           <Login
             show={this.state.isLoginOpen}
             toggle={this.toggleLoginModal}
