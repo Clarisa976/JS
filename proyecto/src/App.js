@@ -58,8 +58,11 @@ class App extends Component {
   };
 
   handleLogout = () => {
-    this.setState({ loggedUser: null, name: "" });
+    this.setState({ loggedUser: null, name: "" }, () => {
+      window.location.reload();
+    });
   };
+
 
   addToCart = (producto, e) => {
     if (e) { e.preventDefault(); e.stopPropagation(); }
@@ -154,6 +157,7 @@ class App extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  
 
   // Ventana del carrito y formulario para el pedido
   carritoModal = () => {

@@ -58,11 +58,11 @@ const Login = (props) => {
     }
 };
 
-return (
+  return (
     <Modal isOpen={props.show} toggle={props.toggle} size="xl" modalClassName="modal-custom-size">
       <ModalHeader toggle={props.toggle}>Login</ModalHeader>
-      <ModalBody>
-        <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
+        <ModalBody>
           <FormGroup>
             <Label for="username">Username:</Label>
             <Input
@@ -85,13 +85,13 @@ return (
               onChange={handleChange}
             />
           </FormGroup>
-        </Form>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={handleSubmit}>Login</Button>{' '}
-        <Button color="secondary" onClick={props.toggle}>Cancel</Button>
-      </ModalFooter>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </ModalBody>
+        <ModalFooter>
+          <Button type="submit" color="primary">Login</Button>{' '}
+          <Button type="button" color="secondary" onClick={props.toggle}>Cancel</Button>
+        </ModalFooter>
+      </Form>
     </Modal>
   );
 };

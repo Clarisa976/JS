@@ -63,9 +63,10 @@ const HeaderComponent = ({ productos, toggleCart, cartItemCount, loggedUser, onL
           </div>
           {/* Logo */}
           <div className="titulo" style={{ flexGrow: 1, textAlign: 'center' }}>
-            <NavbarBrand className="m-0">
+            <NavbarBrand className="m-0" onClick={() => window.location.reload()}>
               <img src={logo} alt="Logo" style={{ height: '80px', width: 'auto' }} />
             </NavbarBrand>
+
           </div>
           {/* Desktop Login / User Dropdown */}
           <div className="login d-none d-md-flex align-items-center">
@@ -84,7 +85,12 @@ const HeaderComponent = ({ productos, toggleCart, cartItemCount, loggedUser, onL
                     My Orders
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem onClick={onLogout}>Logout</DropdownItem>
+                  <DropdownItem onClick={() => {
+                    onLogout();
+                    window.location.reload();
+                  }}>
+                    Logout
+                  </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             ) : (
